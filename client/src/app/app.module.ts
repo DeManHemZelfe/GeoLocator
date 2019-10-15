@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MapViewComponent } from './components/map-view/map-view.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MapViewComponent
   ],
   imports: [
     BrowserModule,
