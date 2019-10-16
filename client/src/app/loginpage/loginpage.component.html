@@ -1,0 +1,57 @@
+ <p>DIT IS DE LOGIN PAGINA</p>
+
+
+<app-header></app-header>
+
+<br><br><br>
+
+<div class="example-container">
+  <mat-form-field>
+    <input matInput placeholder="Enter your email" [formControl]="email" required>
+    <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+    <mat-icon></mat-icon>
+    </button>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Rol">
+      <mat-option value="option">Ik ben het woord vergeten</mat-option>
+      <mat-option value="option">Admin</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <br>
+
+  <div class="loginpage_div_button">
+    <button mat-button class="loginpage_button_submit">Submit</button>
+    <button mat-button class="loginpage_button_regrister">Regristrer</button>
+  </div>
+</div>
+
+
+ <!-- <mat-toolbar>
+  <span>LOGIN</span>
+</mat-toolbar>
+<mat-card class="my-card">
+   <mat-card-content>
+      <form class="my-form">
+         <mat-form-field class="full-width">
+            <mat-label>Email</mat-label>
+            <input  matInput  placeholder="Email" name="email">
+         </mat-form-field>
+         <mat-form-field class="full-width">
+            <mat-label>Password</mat-label>
+            <input  matInput  placeholder="Password" name="password">
+         </mat-form-field>
+      </form>
+   </mat-card-content>
+   <mat-card-actions>
+      <button mat-raised-button (click)="login()" color="primary">LOGIN</button>
+   </mat-card-actions>
+</mat-card>   -->
+

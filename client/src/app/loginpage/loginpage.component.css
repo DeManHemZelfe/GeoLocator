@@ -1,0 +1,50 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 300px;
+  margin: auto;
+  border: 2px solid black;
+}
+
+.example-container > * {
+  width: 100%;
+}
+
+.example-container form {
+  margin-bottom: 20px;
+}
+
+.example-container form > * {
+  margin: 5px 0;
+}
+
+.example-container .mat-radio-button {
+  margin: 0 12px;
+}
+.loginpage_div_button {
+  width: 100%;
+  background: red;
+}
+.loginpage_button_submit {
+  background: black;
+  color: aliceblue;
+  height: 50px;
+  width: 35%;
+}
+
+.loginpage_button_regrister {
+  background: lightblue;
+  width: 35%;
+  height: 50px;
+  margin-left: 30%;
+}
+
+
+
+
+

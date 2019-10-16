@@ -1,0 +1,23 @@
+<app-header></app-header>
+
+<div class="row">
+  <div class="col s8 offset-s2">
+    <div class="card">
+      <div class="sm-jumbrotron center-align">
+        <h2>Registration</h2>
+      </div>
+      <form UserRegistrationForm= "ngForm">
+        <div class="row">
+          <div class="input-field col s6">
+            <input type="text" name="Username" #Username="ngModel" [(ngModel)]="user.UserName" placeholder="UserName">
+            <label>Username</label>
+          </div>
+          <div class="input-field col s6">
+              <input type="text" name="Password" #Password="ngModel" [(ngModel)]="user.Password" placeholder="Paaword">
+              <label>Username</label>
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
