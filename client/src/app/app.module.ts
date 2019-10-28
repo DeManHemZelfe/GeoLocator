@@ -34,6 +34,7 @@ import { HomeComponent } from './components/admin/home/home.component';
 import { UpdateComponent } from './components/admin/update/update.component';
 import { NewComponent } from './components/admin/new/new.component';
 import { DeleteComponent } from './components/admin/delete/delete.component';
+import { MapViewBingComponent } from './components/map-view-bing/map-view-bing.component';
 // import { InterfacesComponent } from './components/admin/interfaces/interfaces.component';
 
 
@@ -61,6 +62,7 @@ import { DeleteComponent } from './components/admin/delete/delete.component';
     UpdateComponent,
     NewComponent,
     DeleteComponent,
+    MapViewBingComponent,
     // InterfacesComponent,
     // MatSidenavModule,
     // MatSliderModule,
