@@ -5,6 +5,62 @@
 
 <br><br><br>
 
+
+<div class="row example-wrapper">
+  <div class="col-xs-12 col-sm-6 offset-sm-3 example-col">
+      <div class="card">
+          <div class="card-block">
+              <form class="k-form">
+                  <fieldset>
+                      <legend>User Details</legend>
+
+                      <!-- <label class="k-form-field">
+                          <span>First Name</span>
+                          <input class="k-textbox" placeholder="Your Name" />
+                      </label>
+                      <label class="k-form-field">
+                          <span>Last Name</span>
+                          <input class="k-textbox" value="" placeholder="Your Last Name" />
+                      </label> -->
+
+                      <label class="k-form-field">
+                          <span>Email <span class="k-required">*</span></span>
+                          <input type="email" class="k-textbox" value="" placeholder="Your Email" />
+                      </label>
+
+                      <!-- <label class="k-form-field">
+                        <span>Username</span>
+                        <input class="k-textbox" value="" placeholder="Your username" />
+                    </label> -->
+
+                    <label class="k-form-field-1" value="Rol">
+
+                      <mat-select matNativeControl required placeholder="rol">
+                        <mat-option value="User">User</mat-option>
+                        <mat-option value="Admin">Admin</mat-option>
+                      </mat-select>
+                  </label>
+
+                    <label class="k-form-field">
+                        <span>Password</span>
+                        <input type="password" class="k-textbox" value="" placeholder="Your password"/>
+                    </label>
+
+                  </fieldset>
+
+
+
+
+                  <div class="text-right">
+                    <button type="button" class="k-button">Cancel</button>
+                    <button type="button" class="k-button k-primary">Submit</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+<!--
 <div class="example-container">
   <mat-form-field>
     <input matInput placeholder="Enter your email" [formControl]="email" required>
@@ -20,7 +76,7 @@
 
   <mat-form-field>
     <mat-select placeholder="Rol">
-      <mat-option value="option">Ik ben het woord vergeten</mat-option>
+      <mat-option value="option">User</mat-option>
       <mat-option value="option">Admin</mat-option>
     </mat-select>
   </mat-form-field>
@@ -31,7 +87,7 @@
     <button mat-button class="loginpage_button_submit">Submit</button>
     <button mat-button class="loginpage_button_regrister">Regristrer</button>
   </div>
-</div>
+</div> -->
 
 
  <!-- <mat-toolbar>

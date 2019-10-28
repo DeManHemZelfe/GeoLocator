@@ -14,7 +14,7 @@ export class LoginpageComponent implements OnInit {
 
 
   options: FormGroup;
-  hide: true;
+  hide: false;
 
   email = new FormControl('', [Validators.required, Validators.email]);
 

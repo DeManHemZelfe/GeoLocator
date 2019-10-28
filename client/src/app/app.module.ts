@@ -18,6 +18,25 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import {MatIconModule} from '@angular/material/icon';
 import { RegistrationpageComponent } from './registrationpage/registrationpage.component';
+import { AlertComponent } from './directives';
+// import { AuthGuard } from './_guards';
+// import { JwtInterceptor, ErrorInterceptor } from './_helpers';
+import { UserService } from './service/user.service';
+import { AlertService } from './service/alert.service';
+import { AuthenticationService } from './service/authentication.service';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSliderModule } from '@angular/material/slider';
+import {MatSidenav} from '@angular/material/sidenav';
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { SidebarFunctionsDrawComponent } from './sidebar-functions-draw/sidebar-functions-draw.component';
+import { HomeComponent } from './components/admin/home/home.component';
+import { UpdateComponent } from './components/admin/update/update.component';
+import { NewComponent } from './components/admin/new/new.component';
+import { DeleteComponent } from './components/admin/delete/delete.component';
+// import { InterfacesComponent } from './components/admin/interfaces/interfaces.component';
+
+
 
 
 
@@ -35,6 +54,17 @@ import { RegistrationpageComponent } from './registrationpage/registrationpage.c
     SearchingComponent,
     HomepageComponent,
     RegistrationpageComponent,
+    AlertComponent,
+    SidebarComponent,
+    SidebarFunctionsDrawComponent,
+    HomeComponent,
+    UpdateComponent,
+    NewComponent,
+    DeleteComponent,
+    // InterfacesComponent,
+    // MatSidenavModule,
+    // MatSliderModule,
+
   ],
   imports: [
     BrowserModule,
@@ -44,9 +74,16 @@ import { RegistrationpageComponent } from './registrationpage/registrationpage.c
     BrowserModule,
     MatInputModule, MatOptionModule, MatSelectModule, MatIconModule,
     FormsModule,
-    ReactiveFormsModule
+    MatSliderModule,
+    MatSidenavModule,
+    ReactiveFormsModule,
+    ButtonsModule
   ],
-  providers: [],
+  providers: [
+    AlertService,
+        AuthenticationService,
+        UserService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

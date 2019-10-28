@@ -62,7 +62,7 @@ export class MapViewOpenStreetComponent implements OnInit {
         center: [0, 0],
         // center: [-244780.24508882355, 5986452.183179816],
         // projection: 'EPSG:4326',
-        zoom: 15
+        zoom: 0
       })
     });
   }
