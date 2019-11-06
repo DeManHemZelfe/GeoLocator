@@ -43,6 +43,14 @@
       </mat-radio-group>
     </div>
  </form>
+ <form class="form-inline">
+  <label>brtKaarten &nbsp;</label><br>
+  <select id="type" [formControl]="brttypeSelect" (change)="brtswitchMode()">
+  <option value="brtachtergrondkaart">Kaart Default</option>
+  <option value="brtachtergrondkaartwater">Kaart Water</option>
+  <!-- <option value="">None</option> -->
+</select>
+</form><br><br>
    <!-- ----------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
   </div>
 </div>

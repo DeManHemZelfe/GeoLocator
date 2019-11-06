@@ -12,7 +12,8 @@ import Layer from 'ol/layer/Layer';
 import BaseTileLayer from 'ol/layer/BaseTile';
 import PluggableMap from 'ol/PluggableMap';
 import Draw from 'ol/interaction/Draw';
-import { OSM, Vector as VectorSource, TileJSON, TileWMS } from 'ol/source';
+import { OSM, Vector as VectorSource, TileJSON} from 'ol/source';
+import TileWMS from 'ol/source/TileWMS';
 import Point from 'ol/geom/Point';
 import { Icon, Stroke, Style, Fill, } from 'ol/style';
 import OlDraw from 'ol/interaction/Draw';
@@ -33,14 +34,9 @@ import LocationSuggestData from '../interface/location-suggest-data.interface';
 import { HttpResponse } from '@angular/common/http';
 import Overlays from 'ol/Overlay';
 import BaseLayer from 'ol/layer/Base';
-import { imageOverlay } from 'leaflet';
+import { imageOverlay, geoJSON } from 'leaflet';
 import GeoJSON from 'ol/format/GeoJSON';
-
-
-
-
-
-
+import { timingSafeEqual } from 'crypto';
 
 // import { __values } from 'tslib';
 
@@ -55,19 +51,25 @@ import GeoJSON from 'ol/format/GeoJSON';
 })
 export class SidebarComponent implements OnInit {
 
-
   titles = 'Suggestie';
   typeSelect = new FormControl('');
   searchInput = new FormControl('');
+  brttypeSelect = new FormControl('');
   // searchResults: object;
   searchSuggestions = new Array<object>();
 
    private map: Map;
    private draw: OlDraw;
+   layer: Layer;
 
-  //  raster = new TileLayer({
-  //   source: new OSM()
-  // });
+   wmsSource = new TileWMS({
+     url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms',
+     params: {LAYERS: 'gemeente', TILED: true},
+   });
+
+   wmsLayer = new TileLayer({
+    source: this.wmsSource
+  });
 
   source = new VectorSource({
     wrapX: false
@@ -110,23 +112,13 @@ export class SidebarComponent implements OnInit {
   ];
   private matrixIds = new Array(15);
 
-  // https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?request=GetCapabilities&service=wms
-
-  // trailsLayer = new FeatureLayer({
-  //   url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?request=GetCapabilities&service=wms'
-  // });
-
-
   private layers = {
-    brt: 'brtachtergrondkaart',
+    brt:  'brtachtergrondkaart',
     brtGrijs: 'brtachtergrondkaartgrijs',
     brtPastel: 'brtachtergrondkaartpastel',
     brtWater: 'brtachtergrondkaartwater',
     bestuurlijkegrenzen: '',
   };
-
-
-
 
     base = new TileLayer({
     opacity: 0.7,
@@ -147,6 +139,23 @@ export class SidebarComponent implements OnInit {
     }),
   });
 
+  brtWater = new TileLayer({
+    source: new WMTS({
+      attributions: 'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
+      url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
+      layer: this.layers.brtWater,
+      matrixSet: 'EPSG:28992',
+      format: 'image/png',
+      projection: this.projection,
+      tileGrid: new WMTSTileGrid({
+        origin: getTopLeft(this.projectionExtent),
+        resolutions: this.resolutions,
+        matrixIds: this.matrixIds,
+      }),
+      style: 'default',
+      wrapX: false
+    }),
+  });
 
   overlays = new TileLayer({
     opacity: 0.7,
@@ -168,6 +177,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.initializeMap();
     this.addInteraction();
+    console.log(this.layers);
   }
 
 
@@ -180,6 +190,14 @@ export class SidebarComponent implements OnInit {
     this.map = new Map({
       target: 'map',
       layers: [
+
+        new TileLayer({
+
+        }),
+        new TileLayer({
+
+        }),
+        this.wmsLayer,
         this.base,
         this.overlays,
         this.vector,
