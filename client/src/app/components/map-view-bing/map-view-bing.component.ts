@@ -16,8 +16,6 @@ export class MapViewBingComponent implements OnInit {
 
   private map: Map;
 
-  constructor() { }
-
   ngOnInit() {
     this.initializeMap();
   }
