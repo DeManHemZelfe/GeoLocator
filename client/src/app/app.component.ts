@@ -8,6 +8,8 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
   title = 'client';
+  lat = 52.370216;
+  lng = 4.895168;
 
   onButtonClick() {
     console.log('click');

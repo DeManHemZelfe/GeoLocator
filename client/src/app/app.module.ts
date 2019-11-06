@@ -1,8 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {MatMenuModule} from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule,  Routes } from '@angular/router';
+
+import { AgmCoreModule } from '@agm/core';
 
 import { AppComponent } from './app.component';
 import { MapViewComponent } from './components/map-view/map-view.component';
@@ -14,7 +17,7 @@ import { SearchingComponent } from './components/searching/searching.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule, MatOptionModule, MatSelectModule } from '@angular/material';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule, FormControlName} from '@angular/forms';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import {MatIconModule} from '@angular/material/icon';
 import { RegistrationpageComponent } from './registrationpage/registrationpage.component';
@@ -35,6 +38,14 @@ import { UpdateComponent } from './components/admin/update/update.component';
 import { NewComponent } from './components/admin/new/new.component';
 import { DeleteComponent } from './components/admin/delete/delete.component';
 import { MapViewBingComponent } from './components/map-view-bing/map-view-bing.component';
+import { GooglemapsComponent } from './components/googlemaps/googlemaps.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { HttpClientModule } from '@angular/common/http';
+import { SuggestService } from './components/service/suggest.service';
+import {MatRadioModule} from '@angular/material/radio';
+
+
 // import { InterfacesComponent } from './components/admin/interfaces/interfaces.component';
 
 
@@ -63,6 +74,10 @@ import { MapViewBingComponent } from './components/map-view-bing/map-view-bing.c
     NewComponent,
     DeleteComponent,
     MapViewBingComponent,
+    GooglemapsComponent,
+
+
+
     // InterfacesComponent,
     // MatSidenavModule,
     // MatSliderModule,
@@ -79,12 +94,19 @@ import { MapViewBingComponent } from './components/map-view-bing/map-view-bing.c
     MatSliderModule,
     MatSidenavModule,
     ReactiveFormsModule,
-    ButtonsModule
+    ButtonsModule,
+    MatMenuModule,
+    MatCheckboxModule,
+    MatExpansionModule,
+    HttpClientModule,
+    MatRadioModule,
+
   ],
   providers: [
     AlertService,
         AuthenticationService,
         UserService,
+        SuggestService
   ],
   bootstrap: [AppComponent]
 })

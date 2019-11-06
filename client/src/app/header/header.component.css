@@ -1,27 +1,32 @@
 .header_header {
-  background-color: gray;
+  background-color: black;
 }
 .nav {
   display: flex;
 }
 a.a {
   float: left;
-  color: black;
+  color: white;
   text-align: center;
-  padding: 1px;
+  padding: 4px;
   text-decoration: none;
   font-size: 18px;
   line-height: 25px;
-  border-radius: 4px;
   width: 100%;
 }
 a:hover {
-  background-color: #ddd;
+  background-color: white;
   color: black;
 }
 .a.active {
-  background-color: dodgerblue;
-  color: white;
+  background-color: white;
+  color: black;
+  width: 93%;
+}
+.kendobutton {
+  background: black;
+  padding: 0px 0px;
+  margin: 0px;
 }
 
 

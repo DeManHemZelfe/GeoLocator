@@ -1,39 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 
+import 'ol/ol.css';
 import Map from 'ol/Map';
 import View from 'ol/View';
-import TileLayer from 'ol/layer/Tile';
-import XYZ from 'ol/source/XYZ';
-import { TouchSequence } from 'selenium-webdriver';
-import { OSM } from 'ol/source';
+import {Draw, Modify, Snap} from 'ol/interaction';
+import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
+import {OSM, Vector as VectorSource} from 'ol/source';
+import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style';
+
 
 @Component({
   selector: 'app-map-view-bing',
   templateUrl: './map-view-bing.component.html',
   styleUrls: ['./map-view-bing.component.css']
 })
+
 export class MapViewBingComponent implements OnInit {
 
   private map: Map;
 
+  constructor() { }
+
   ngOnInit() {
-    this.initializeMap();
-  }
-  private initializeMap() {
-    this.map = new Map({
-      target: 'map',
-      layers: [
-        new TileLayer({
-          source: new XYZ({
-            url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-          })
-        })
-      ],
-      view: new View({
-        center: [0, 0],
-        zoom: 2
-      })
-    });
   }
 
 }

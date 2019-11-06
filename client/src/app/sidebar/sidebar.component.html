@@ -1,27 +1,48 @@
 <app-header></app-header>
 
-<div class="div">
+<div class="container_container_cc1">
 
-<div id="map" class="map"></div>
+    <div class="style_for_map">
+      <div id="map" class="map"></div>
+    </div>
 
-<mat-drawer-container class="example-container">
-  <p style="justify-content: center; justify-items: center; display: flex;">Filter</p>
-  <button type="button" mat-button (click)="('click')">Geometry type</button>
-  <br>
-  <br>
+    <div class="box_from_container_container_cc1">
 
+      <form class="form-inline">
+        <label>Tekenen &nbsp;</label><br>
+        <select id="type" [formControl]="typeSelect" (change)="switchMode()">
+        <option value="Point">Point</option>
+        <option value="LineString">LineString</option>
+        <option value="Polygon">Polygon</option>
+        <option value="Circle">Circle</option>
+        <option value="">None</option>
+      </select>
+    </form><br><br>
+  <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
 
-</mat-drawer-container>
-
+    <div class="searchbox">
+      <form class="form-inline waves-light" mdbWavesEffect>
+        <div class="md-form mt-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="searchSuggest"
+                 style="width: 320%; height: 30px; background-color: whitesmoke; color: black;"
+                 [formControl]="searchInput" (change)="searchEntity()">
+          <div *ngIf="searchSuggestions" class="searchBoxresults">
+            <p *ngFor="let suggestion of searchSuggestions" class="suggestion_weergave">
+                  {{ suggestion.weergavenaam }}
+           </p>
+        </div>
+       </div>
+     </form>
+   </div>
+   <form class="form-inline waves-light" mdbWavesEffect><br><br>
+    <div class="radio">
+      <mat-radio-group aria-label="Select an option" class="radiobutton" >
+            <mat-radio-button kendobutton value="landsgrens">landsgrens</mat-radio-button>
+            <mat-radio-button value="gemeentegrens">gemeentegrens</mat-radio-button>
+            <mat-radio-button value="provinciegrens">provinciegrens</mat-radio-button>
+      </mat-radio-group>
+    </div>
+ </form>
+   <!-- ----------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+  </div>
 </div>
-
-<form [formGroup]="drawForm" class="type">
-  <label>Geometry type &nbsp;</label>
-  <!-- <button class="button" type="submit">test</button><br> -->
-  <select id="type" class="type">
-    <option value="LineString">LineString</option>
-    <option value="Polygon">Polygon</option>
-    <option value="Circle">Circle</option>
-    <option value="None">None</option>
-  </select>
-</form><br>

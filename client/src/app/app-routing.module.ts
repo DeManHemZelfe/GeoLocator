@@ -8,6 +8,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { SidebarFunctionsDrawComponent } from './sidebar-functions-draw/sidebar-functions-draw.component';
 import { MapViewBingComponent } from './components/map-view-bing/map-view-bing.component';
+import { GooglemapsComponent } from './components/googlemaps/googlemaps.component';
 // import { from } from 'rxjs';
 // import { MapViewGridComponent } from './components/map-view-open-street/map-view-open-street.component';
 
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'sidebar', component: SidebarComponent },
   { path: 'sidebar-functions-draw', component: SidebarFunctionsDrawComponent },
   { path: 'map-view-bing', component: MapViewBingComponent },
+  { path: 'googlemaps', component: GooglemapsComponent},
   // { path: 'options',  component:   OptionsComponent },
 
   // { path: '',   redirectTo: '/heroes', pathMatch: 'full' },
