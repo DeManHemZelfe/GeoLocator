@@ -52,48 +52,18 @@ import { timingSafeEqual } from 'crypto';
 export class SidebarComponent implements OnInit {
 
   titles = 'Suggestie';
-  typeSelect = new FormControl('');
-  searchInput = new FormControl('');
+  typeSelect    = new FormControl('');
   brttypeSelect = new FormControl('');
-  // searchResults: object;
+  searchInput   = new FormControl('');
   searchSuggestions = new Array<object>();
 
    private map: Map;
    private draw: OlDraw;
-   layer: Layer;
 
-   wmsSource = new TileWMS({
-     url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms',
-     params: {LAYERS: 'gemeente', TILED: true},
-   });
-
-   wmsLayer = new TileLayer({
-    source: this.wmsSource
-  });
-
-  source = new VectorSource({
-    wrapX: false
-  });
-
-  vector = new VectorLayer({
-    source: this.source,
-    style: new Style({
-      fill: new Fill({
-        color: 'lightgreen',
-      }),
-      stroke: new Stroke({
-        color: 'black',
-        width: 3
-      })
-    })
-  });
-
-
-
-  private projectionExtent = [-285401.92, 22598.08, 595401.92, 903401.92];
-  private projection = new Projection({ code: 'EPSG:28992', units: 'm', extent: this.projectionExtent });
-
-  private resolutions = [
+   private projectionExtent = [-285401.92, 22598.08, 595401.92, 903401.92];
+   private projection = new Projection({ code: 'EPSG:28992', units: 'm', extent: this.projectionExtent });
+   private matrixIds = new Array(15);
+   private resolutions = [
     3440.640,
     1720.320,
     860.160,
@@ -110,18 +80,135 @@ export class SidebarComponent implements OnInit {
     0.420,
     0.210
   ];
-  private matrixIds = new Array(15);
 
   private layers = {
+    aan: 'aan',
     brt:  'brtachtergrondkaart',
     brtGrijs: 'brtachtergrondkaartgrijs',
     brtPastel: 'brtachtergrondkaartpastel',
     brtWater: 'brtachtergrondkaartwater',
-    bestuurlijkegrenzen: '',
+    bestuurlijkegrenzen: {
+    },
   };
 
-    base = new TileLayer({
-    opacity: 0.7,
+  source = new VectorSource({
+    wrapX: false
+  });
+  vector = new VectorLayer({
+    source: this.source,
+    style: new Style({
+      fill: new Fill({
+        color: 'lightgreen',
+      }),
+      stroke: new Stroke({
+        color: 'black',
+        width: 3
+      })
+    })
+  });
+
+  landsgrensTile = new TileWMS({
+    url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms',
+    params: {LAYERS: 'landsgrens', TILED: true},
+    crossOrigin: 'anonymous',
+  });
+
+  landsgrensLayer = new TileLayer({
+   source: this.landsgrensTile
+  });
+
+  gemeentenTile = new TileWMS({
+   url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms',
+   params: {LAYERS: 'gemeenten', TILED: true},
+   crossOrigin: 'anonymous',
+  });
+
+  gemeentenLayer = new TileLayer({
+   source: this.gemeentenTile
+  });
+
+  provinciesTile = new TileWMS({
+   url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms',
+   params: {LAYERS: 'provincies', TILED: true},
+   crossOrigin: 'anonymous',
+  });
+
+  provinciesLayer = new TileLayer({
+   source: this.provinciesTile
+  });
+
+  AgrarischAreaalNederlandTile = new TileWMS({
+   url: 'https://geodata.nationaalgeoregister.nl/aan/wms?',
+   params: {LAYERS: 'aan', TILED: true},
+   crossOrigin: 'anonymous',
+  });
+
+  AgrarischAreaalNederlandLayer = new TileLayer({
+   source: this.AgrarischAreaalNederlandTile
+  });
+
+  BagLigplaatsTile = new TileWMS({
+   url: 'https://geodata.nationaalgeoregister.nl/bag/wms?',
+   params: {LAYERS: 'pand', TILED: true},
+   crossOrigin: 'anonymous',
+  });
+
+  BagLigplaatsLayer = new TileLayer({
+   source: this.BagLigplaatsTile
+  });
+
+  BagPandTile = new TileWMS({
+   url: 'https://geodata.nationaalgeoregister.nl/bag/wms?',
+   params: {LAYERS: 'pand', TILED: true},
+   crossOrigin: 'anonymous',
+  });
+
+  BagPandLayer = new TileLayer({
+   source: this.BagPandTile
+  });
+
+  BagVerblijfsobjectTile = new TileWMS({
+   url: 'https://geodata.nationaalgeoregister.nl/bag/wms?',
+   params: {LAYERS: 'verblijfsobject', TILED: true},
+   crossOrigin: 'anonymous',
+  });
+
+  BagVerblijfsobjectLayer = new TileLayer({
+   source: this.BagVerblijfsobjectTile
+  });
+
+  BagWoonsplaatsTile = new TileWMS({
+   url: 'https://geodata.nationaalgeoregister.nl/bag/wms?',
+   params: {LAYERS: 'woonplaats', TILED: true},
+   crossOrigin: 'anonymous',
+  });
+
+ BagWoonplaatsLayer = new TileLayer({
+  source: this.BagWoonsplaatsTile
+ });
+
+ BagStandplaatsTile = new TileWMS({
+  url: 'https://geodata.nationaalgeoregister.nl/bag/wms?',
+  params: {LAYERS: 'standplaats', TILED: true},
+  crossOrigin: 'anonymous',
+ });
+
+ BagStandplaatsLayer = new TileLayer({
+  source: this.BagStandplaatsTile
+ });
+
+ OverheidsDienstenTile = new TileWMS({
+  url: 'https://geodata.nationaalgeoregister.nl/overheidsdiensten/wms?',
+  params: {LAYERS: 'overheidsdiensten', TILED: true},
+  crossOrigin: 'anonymous',
+ });
+
+ OverheidsdienstenLayer = new TileLayer({
+  source: this.OverheidsDienstenTile,
+});
+
+  baseLayer = new TileLayer({
+   opacity: 0.7,
     source: new WMTS({
       attributions: 'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
       url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
@@ -134,12 +221,13 @@ export class SidebarComponent implements OnInit {
         resolutions: this.resolutions,
         matrixIds: this.matrixIds,
       }),
-      style: 'default',
-      wrapX: false
+     style: 'default',
+     wrapX: false
     }),
   });
 
   brtWater = new TileLayer({
+   opacity: 0.7,
     source: new WMTS({
       attributions: 'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
       url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
@@ -152,27 +240,12 @@ export class SidebarComponent implements OnInit {
         resolutions: this.resolutions,
         matrixIds: this.matrixIds,
       }),
-      style: 'default',
-      wrapX: false
+     style: 'default',
+     wrapX: false
     }),
   });
 
-  overlays = new TileLayer({
-    opacity: 0.7,
-    source: new TileWMS({
-      url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?request=GetCapabilities',
-      params: {
-        layers: this.layers.bestuurlijkegrenzen,
-        format: 'image.png',
-        matrixSet: 'EPSG:28992',
-      },
-      wrapX: false
-    })
-  });
-
-
-
-  constructor(private suggestService: SuggestService) { }
+  constructor(private suggestService: SuggestService) {}
 
   ngOnInit() {
     this.initializeMap();
@@ -180,9 +253,7 @@ export class SidebarComponent implements OnInit {
     console.log(this.layers);
   }
 
-
   initializeMap() {
-
     for (let i = 0; i < this.matrixIds.length; i++) {
       this.matrixIds[i] = 'EPSG:28992:' + i;
     }
@@ -190,18 +261,37 @@ export class SidebarComponent implements OnInit {
     this.map = new Map({
       target: 'map',
       layers: [
-
         new TileLayer({
-
+          opacity: 0.7,
+          source: new WMTS({
+            url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts?request=GetCapabilities&service=WMTS',
+            layer: this.layers.aan,
+            matrixSet: 'EPSG:28992',
+            format: 'image/png',
+            projection: this.projection,
+            tileGrid: new WMTSTileGrid({
+              origin: getTopLeft(this.projectionExtent),
+              resolutions: this.resolutions,
+              matrixIds: this.matrixIds,
+            }),
+            style: 'default',
+            wrapX: false
+          }),
         }),
-        new TileLayer({
-
-        }),
-        this.wmsLayer,
-        this.base,
-        this.overlays,
+        new TileLayer({}),
+        new TileLayer({}),
+        this.landsgrensLayer,
+        this.gemeentenLayer,
+        this.provinciesLayer,
+        this.AgrarischAreaalNederlandLayer,
+        this.BagLigplaatsLayer,
+        this.BagPandLayer,
+        this.BagVerblijfsobjectLayer,
+        this.BagWoonplaatsLayer,
+        this.BagStandplaatsLayer,
+        this.OverheidsdienstenLayer,
+        this.baseLayer,
         this.vector,
-        // this.raster,
       ],
       overlays: [],
       view: new View({
@@ -211,12 +301,13 @@ export class SidebarComponent implements OnInit {
         minZoom: 0,
         maxZoom: 15
       }),
-
     });
   }
 
+  tooltip() {}
+  helptooltip() {}
 
-    addInteraction() {
+  addInteraction() {
     const value = this.typeSelect.value;
     if (value !== '') {
       this.draw = new OlDraw({
