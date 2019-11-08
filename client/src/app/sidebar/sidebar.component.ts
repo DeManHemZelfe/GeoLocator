@@ -1,6 +1,6 @@
 
 import { Component, OnInit, } from '@angular/core';
-import { Map, View, Feature } from 'ol';
+import { Map, View, } from 'ol';
 
 // -----------------------------------------------------------------------------------------------
 
@@ -36,7 +36,13 @@ import Overlays from 'ol/Overlay';
 import BaseLayer from 'ol/layer/Base';
 import { imageOverlay, geoJSON } from 'leaflet';
 import GeoJSON from 'ol/format/GeoJSON';
-import { timingSafeEqual } from 'crypto';
+import { BestuurlijkegrenzenService } from '../layers/bestuurlijkegrenzen.service';
+import { BagService } from '../layers/bag.service';
+import { SpoorwegenService } from '../layers/spoorwegen.service';
+import Feature from 'ol/Feature';
+import Geolocation from 'ol/Geolocation';
+import { viewClassName } from '@angular/compiler';
+
 
 // import { __values } from 'tslib';
 
@@ -52,9 +58,10 @@ import { timingSafeEqual } from 'crypto';
 export class SidebarComponent implements OnInit {
 
   titles = 'Suggestie';
-  typeSelect    = new FormControl('');
-  brttypeSelect = new FormControl('');
-  searchInput   = new FormControl('');
+  typeSelect        = new FormControl('');
+  typeSelectborder  = new FormControl('');
+  typeSelectbrt     = new FormControl('');
+  searchInput       = new FormControl('');
   searchSuggestions = new Array<object>();
 
    private map: Map;
@@ -82,13 +89,12 @@ export class SidebarComponent implements OnInit {
   ];
 
   private layers = {
-    aan: 'aan',
+    aan:  'aan',
     brt:  'brtachtergrondkaart',
     brtGrijs: 'brtachtergrondkaartgrijs',
     brtPastel: 'brtachtergrondkaartpastel',
     brtWater: 'brtachtergrondkaartwater',
-    bestuurlijkegrenzen: {
-    },
+    bestuurlijkegrenzen: {},
   };
 
   source = new VectorSource({
@@ -207,6 +213,93 @@ export class SidebarComponent implements OnInit {
   source: this.OverheidsDienstenTile,
 });
 
+KruisingTile = new TileWMS({
+  url: 'https://geodata.nationaalgeoregister.nl/spoorwegen/wms?',
+  params: {LAYERS: 'kruising', TILED: true},
+  crossOrigin: 'anonymous',
+});
+
+KruisingLayer = new TileLayer({
+ source: this.KruisingTile
+});
+
+OverwegTile = new TileWMS({
+  url: 'https://geodata.nationaalgeoregister.nl/spoorwegen/wms?',
+  params: {LAYERS: 'overweg', TILED: true},
+  crossOrigin: 'anonymous',
+});
+
+OverwegLayer = new TileLayer({
+ source: this.OverwegTile
+});
+
+SpoorasTile = new TileWMS({
+  url: 'https://geodata.nationaalgeoregister.nl/spoorwegen/wms?',
+  params: {LAYERS: 'spooras', TILED: true},
+  crossOrigin: 'anonymous',
+});
+
+SpoorasLayer = new TileLayer({
+ source: this.SpoorasTile
+});
+
+StationTile = new TileWMS({
+  url: 'https://geodata.nationaalgeoregister.nl/spoorwegen/wms?',
+  params: {LAYERS: 'station', TILED: true},
+  crossOrigin: 'anonymous',
+});
+
+StationLayer = new TileLayer({
+ source: this.StationTile
+});
+
+
+TraceTile = new TileWMS({
+  url: 'https://geodata.nationaalgeoregister.nl/spoorwegen/wms?.',
+  params: {LAYERS: 'trace', TILED: true},
+  crossOrigin: 'anonymous',
+});
+
+TraceLayer = new TileLayer({
+ source: this.TraceTile
+});
+
+WisselTile = new TileWMS({
+  url: 'https://geodata.nationaalgeoregister.nl/spoorwegen/wms?',
+  params: {LAYERS: 'wissel', TILED: true},
+  crossOrigin: 'anonymous',
+});
+
+WisselLayer = new TileLayer({
+ source: this.WisselTile
+});
+
+KilometreringTile = new TileWMS({
+  url: 'https://geodata.nationaalgeoregister.nl/spoorwegen/wms?',
+  params: {LAYERS: 'kilometrering', TILED: true},
+  crossOrigin: 'anonymous',
+});
+
+KilometreringLayer = new TileLayer({
+ source: this.KilometreringTile
+});
+
+GeografischenameTile = new TileWMS({
+  url: 'https://geodata.nationaalgeoregister.nl/inspire/gn/wms?',
+  params: {LAYERS: 'GN.GeographicalNames', TILED: true},
+  crossOrigin: 'anonymous',
+});
+
+GeografischenamenLayer = new TileLayer({
+ source: this.GeografischenameTile
+});
+
+ geolocation = new Geolocation({
+   trackingOptions: {
+     enableHighAccuracy: true
+   },
+ });
+
   baseLayer = new TileLayer({
    opacity: 0.7,
     source: new WMTS({
@@ -245,7 +338,10 @@ export class SidebarComponent implements OnInit {
     }),
   });
 
-  constructor(private suggestService: SuggestService) {}
+  constructor(private suggestService: SuggestService,
+              private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
+              private bagService: BagService,
+               ) {}
 
   ngOnInit() {
     this.initializeMap();
@@ -283,13 +379,27 @@ export class SidebarComponent implements OnInit {
         this.landsgrensLayer,
         this.gemeentenLayer,
         this.provinciesLayer,
+
         this.AgrarischAreaalNederlandLayer,
+
         this.BagLigplaatsLayer,
         this.BagPandLayer,
         this.BagVerblijfsobjectLayer,
         this.BagWoonplaatsLayer,
         this.BagStandplaatsLayer,
+
         this.OverheidsdienstenLayer,
+
+        this.GeografischenamenLayer,
+
+        this.KruisingLayer,
+        this.OverwegLayer,
+        this.SpoorasLayer,
+        this.StationLayer,
+        this.TraceLayer,
+        this.WisselLayer,
+        this.KilometreringLayer,
+
         this.baseLayer,
         this.vector,
       ],
@@ -318,12 +428,25 @@ export class SidebarComponent implements OnInit {
       console.log('addInteraction()');
     }
   }
-
   switchMode() {
     this.map.removeInteraction(this.draw);
     this.addInteraction();
     console.log('switchMode()');
   }
+
+  kaartInteraction() {
+    const value = this.typeSelectbrt.value;
+    if (value !== '') {}
+    console.log(this.typeSelectbrt.value);
+  }
+  switchMapMode() {
+    this.kaartInteraction();
+    console.log(this.switchMapMode);
+  }
+
+  switchBorderMode() {}
+  switchLocationMode() {}
+  switchRoutesMode() {}
 
   searchEntity() {
     const input = this.searchInput.value;

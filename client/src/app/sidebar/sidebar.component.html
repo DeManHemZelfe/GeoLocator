@@ -77,14 +77,21 @@
                 </mat-expansion-panel-header>
 
                 <form class="form-inline">
-                    <label>Layers &nbsp;</label>
-                    <select id="type" [formControl]="typeSelect" (change)="switchMapMode()">
+                    <label>Kaart &nbsp;</label>
+                     <select id="type" [formControl]="typeSelectbrt" (change)="switchMapMode()">
                       <option value="brtachtergrondkaart">achtergrondkaart</option>
                       <option value="brtGrijs">brtGrijs</option>
-                      <option value="brtPsteel">brtPasteel</option>
+                      <option value="brtPasteel">brtPasteel</option>
                       <option value="brtWater">brtWater</option>
-                      <option value="dftbrtachtergrondkaart">(dft)achtergrondkaart</option>
-                    </select>
+                      <option value="">(dft)achtergrondkaart</option>
+                     </select><br><br>
+                    <label>Border &nbsp;</label>
+                     <select id="type" [formControl]="typeSelectborder" (change)="switchBorderMode()">
+                      <option value="landsgrenzen">Landsgrens</option>
+                      <option value="gemeenten">Gemeentegrens</option>
+                      <option value="provincies">Provinciegrens</option>
+                      <option value="">(dft) none</option>
+                     </select>
                   </form>
 
                   <h2>ToolTips</h2>
@@ -111,7 +118,7 @@
                     </form>
 
                     <h2>ToolTips</h2>
-                    <mat-checkbox>Monuments</mat-checkbox><br>
+                    <mat-checkbox value="monuments">Monuments</mat-checkbox><br>
                     <mat-checkbox>Food & Drinks</mat-checkbox><br>
                     <mat-checkbox>Car</mat-checkbox><br>
                     <mat-checkbox>Walking</mat-checkbox><br>
@@ -128,12 +135,12 @@
                     <form class="form-inline">
                         <label>Routes &nbsp;</label>
                         <select id="type" [formControl]="typeSelect" (change)="switchRoutesMode()">
-                          <option value="Point">WandelRoute</option>
-                          <option value="LineString">FietsRoute</option>
-                          <option value="Polygon">Snelwegen</option>
-                          <option value="Circle">Spoorwegen</option>
+                          <option value="wandelroute">WandelRoute</option>
+                          <option value="fietsroute">FietsRoute</option>
+                          <option value="snelweg">Snelwegen</option>
+                          <option value="spooras">Spoorwegen</option>
                           <option value="busbaan">Busbaan</option>
-                          <option value="default">deafault</option>
+                          <option value="">deafault</option>
                         </select>
                       </form>
 
@@ -159,7 +166,12 @@
      </form>
    </div>
 
-     <form class="form-inline waves-light" mdbWavesEffect><br><br>
+   <label for="track">
+      track position
+      <input id="track" type="checkbox"/>
+    </label>
+
+     <!-- <form class="form-inline waves-light" mdbWavesEffect><br><br>
       <div class="radio">
        <mat-radio-group aria-label="Select an option" class="radiobutton" >
             <mat-radio-button kendobutton value="landsgrens">landsgrens</mat-radio-button>
@@ -167,7 +179,7 @@
             <mat-radio-button value="provinciegrens">provinciegrens</mat-radio-button>
        </mat-radio-group>
       </div>
-    </form>
+    </form> -->
 
   </div>
 </div>

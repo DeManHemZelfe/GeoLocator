@@ -43,7 +43,10 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 import { SuggestService } from './components/service/suggest.service';
+import { BagService } from './layers/bag.service';
+import { BestuurlijkegrenzenService } from './layers/bestuurlijkegrenzen.service';
 import {MatRadioModule} from '@angular/material/radio';
+import { SpoorwegenService } from './layers/spoorwegen.service';
 
 
 // import { InterfacesComponent } from './components/admin/interfaces/interfaces.component';
@@ -106,7 +109,10 @@ import {MatRadioModule} from '@angular/material/radio';
     AlertService,
         AuthenticationService,
         UserService,
-        SuggestService
+        SuggestService,
+        BagService,
+        BestuurlijkegrenzenService,
+        SpoorwegenService,
   ],
   bootstrap: [AppComponent]
 })
