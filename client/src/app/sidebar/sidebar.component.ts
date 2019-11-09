@@ -294,12 +294,6 @@ GeografischenamenLayer = new TileLayer({
  source: this.GeografischenameTile
 });
 
- geolocation = new Geolocation({
-   trackingOptions: {
-     enableHighAccuracy: true
-   },
- });
-
   baseLayer = new TileLayer({
    opacity: 0.7,
     source: new WMTS({
@@ -374,6 +368,7 @@ GeografischenamenLayer = new TileLayer({
             wrapX: false
           }),
         }),
+
         new TileLayer({}),
         new TileLayer({}),
         this.landsgrensLayer,
@@ -436,7 +431,8 @@ GeografischenamenLayer = new TileLayer({
 
   kaartInteraction() {
     const value = this.typeSelectbrt.value;
-    if (value !== '') {}
+    if (value !== '') {
+    }
     console.log(this.typeSelectbrt.value);
   }
   switchMapMode() {
@@ -444,7 +440,15 @@ GeografischenamenLayer = new TileLayer({
     console.log(this.switchMapMode);
   }
 
-  switchBorderMode() {}
+  grenzenInteraction() {
+    const value = this.typeSelectborder.value;
+    if (value !== '') {}
+  }
+  switchBorderMode() {
+    this.grenzenInteraction();
+    console.log(this.switchBorderMode);
+  }
+
   switchLocationMode() {}
   switchRoutesMode() {}
 

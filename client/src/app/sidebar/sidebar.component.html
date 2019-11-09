@@ -80,9 +80,9 @@
                     <label>Kaart &nbsp;</label>
                      <select id="type" [formControl]="typeSelectbrt" (change)="switchMapMode()">
                       <option value="brtachtergrondkaart">achtergrondkaart</option>
-                      <option value="brtGrijs">brtGrijs</option>
-                      <option value="brtPasteel">brtPasteel</option>
-                      <option value="brtWater">brtWater</option>
+                      <option value="brtachtergrondkaartGrijs">brtGrijs</option>
+                      <option value="brtachtergrondkaartPasteel">brtPasteel</option>
+                      <option value="brtachtergrondkaartWater">brtWater</option>
                       <option value="">(dft)achtergrondkaart</option>
                      </select><br><br>
                     <label>Border &nbsp;</label>
@@ -166,10 +166,10 @@
      </form>
    </div>
 
-   <label for="track">
+   <!-- <label for="track">
       track position
       <input id="track" type="checkbox"/>
-    </label>
+    </label> -->
 
      <!-- <form class="form-inline waves-light" mdbWavesEffect><br><br>
       <div class="radio">
