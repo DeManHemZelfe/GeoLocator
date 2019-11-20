@@ -22,8 +22,6 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import {MatIconModule} from '@angular/material/icon';
 import { RegistrationpageComponent } from './registrationpage/registrationpage.component';
 import { AlertComponent } from './directives';
-// import { AuthGuard } from './_guards';
-// import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { UserService } from './service/user.service';
 import { AlertService } from './service/alert.service';
 import { AuthenticationService } from './service/authentication.service';
@@ -47,6 +45,9 @@ import { BagService } from './layers/bag.service';
 import { BestuurlijkegrenzenService } from './layers/bestuurlijkegrenzen.service';
 import {MatRadioModule} from '@angular/material/radio';
 import { SpoorwegenService } from './layers/spoorwegen.service';
+import { BrtwaterComponent } from './brtwater/brtwater.component';
+import { BrtpasteelComponent } from './brtpasteel/brtpasteel.component';
+
 
 
 // import { InterfacesComponent } from './components/admin/interfaces/interfaces.component';
@@ -78,6 +79,9 @@ import { SpoorwegenService } from './layers/spoorwegen.service';
     DeleteComponent,
     MapViewBingComponent,
     GooglemapsComponent,
+    BrtwaterComponent,
+    BrtpasteelComponent,
+
 
 
 

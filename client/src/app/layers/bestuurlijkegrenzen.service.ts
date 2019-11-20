@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import TileWMS from 'ol/source/TileWMS';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
+
 export class BestuurlijkegrenzenService {
 
     landsgrensTile = new TileWMS({

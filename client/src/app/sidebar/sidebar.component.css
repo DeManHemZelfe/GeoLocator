@@ -6,6 +6,11 @@
   width: 80vw;
   height: 90vh;
 }
+.brtWater {
+  width: 80vw;
+  height: 90vh;
+}
+
 .box_from_container_container_cc1 {
   width: 20vw;
   margin-left: 1px;
@@ -35,9 +40,23 @@
   width: 10%;
 }
 
-/* .searchbox {
-  width: 30%;
-} */
+.buttondiv {
+  background-color: gray;
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  color: black;
+  margin: 0%;
+  padding: 0%;
+}
+.k-primary {
+  width: 100%;
+  background-color: whitesmoke;
+  margin: 0%;
+  padding: 2%;
+  border: black;
+}
 
-/* //////////////////////////////////////////// */
+.displaydingetje {
 
+  background-color:white;
+}

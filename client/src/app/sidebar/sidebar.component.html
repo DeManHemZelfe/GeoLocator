@@ -10,6 +10,55 @@
       <div class="container_menu">
         <h2>Kies je dingetjes</h2>
 
+        <div class="buttondiv" id="type">
+            <button kendobutton  (click)="bLayervisible()" class="k-primary" value="brtachtergrondkaart">brt</button><br>
+            <button kendobutton  (click)="bLayervisible()" id="primaryTextButton" class="k-primary" value="brtachtergrondkaartGrijs">brtGrijs</button><br>
+          </div><br><br>
+
+
+        <!-- <div class="displaydingetje">
+          <ul>
+          <li><span>OSM layer</span>
+            <fieldset id="layer0">
+              <label class="checkbox" for="visible0">
+                <input id="visible0" class="visible" type="checkbox"/>visibility
+              </label>
+              <label>opacity</label>
+              <input class="opacity" type="range" min="0" max="1" step="0.01"/>
+            </fieldset>
+          </li>
+          <li><span>Layer group</span>
+            <fieldset id="layer1">
+              <label class="checkbox" for="visible1">
+                <input id="visible1" class="visible" type="checkbox"/>visibility
+              </label>
+              <label>opacity</label>
+              <input class="opacity" type="range" min="0" max="1" step="0.01"/>
+            </fieldset>
+            <ul>
+              <li><span>Food insecurity layer</span>
+                <fieldset id="layer10">
+                  <label class="checkbox" for="visible10">
+                    <input id="visible10" class="visible" type="checkbox"/>visibility
+                  </label>
+                  <label>opacity</label>
+                  <input class="opacity" type="range" min="0" max="1" step="0.01"/>
+                </fieldset>
+              </li>
+              <li><span>World borders layer</span>
+                <fieldset id="layer11">
+                  <label class="checkbox" for="visible11">
+                    <input id="visible11" class="visible" type="checkbox"/>visibility
+                  </label>
+                  <label>opacity</label>
+                  <input class="opacity" type="range" min="0" max="1" step="0.01"/>
+                </fieldset>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        </div> -->
+
         <mat-accordion >
             <mat-expansion-panel class="mat-expansion-panel">
               <mat-expansion-panel-header class="mat-expansion-header">
@@ -76,15 +125,28 @@
                   </mat-panel-title>
                 </mat-expansion-panel-header>
 
+                <div><button kenndobutton (click)="toggleDisplay()">Hide</button></div><br>
+
                 <form class="form-inline">
                     <label>Kaart &nbsp;</label>
-                     <select id="type" [formControl]="typeSelectbrt" (change)="switchMapMode()">
+                     <select id="type" [formControl]="typeSelectbrt">
                       <option value="brtachtergrondkaart">achtergrondkaart</option>
                       <option value="brtachtergrondkaartGrijs">brtGrijs</option>
                       <option value="brtachtergrondkaartPasteel">brtPasteel</option>
                       <option value="brtachtergrondkaartWater">brtWater</option>
-                      <option value="">(dft)achtergrondkaart</option>
                      </select><br><br>
+
+                     <div>selectvalue: {{ typeSelectbrt.value }}</div><br><br>
+
+                     <label>BUTTON &nbsp;</label>
+                     <div class="buttondiv" id="type">
+                       <p>knopjes</p>
+                       <!-- <button kendobutton  (click)="bLayervisible()" class="k-primary" value="brtachtergrondkaart">brt</button><br>
+                       <button kendobutton  (click)="bLayervisible()" id="primaryTextButton" class="k-primary" value="brtachtergrondkaartGrijs">brtGrijs</button><br>
+                       <button kendobutton  (click)="bLayervisible()" id="primaryTextButton" class="k-primary" value="brtachtergrondkaartPasteel">brtPasteel</button><br>
+                       <button kendobutton  (click)="bLayervisible()" id="primaryTextButton" class="k-primary"value="brtachtergrondkaartWater">brtWater</button><br> -->
+                     </div><br><br>
+
                     <label>Border &nbsp;</label>
                      <select id="type" [formControl]="typeSelectborder" (change)="switchBorderMode()">
                       <option value="landsgrenzen">Landsgrens</option>
@@ -161,6 +223,21 @@
                  [formControl]="searchInput" (change)="searchEntity()">
           <div *ngIf="searchSuggestions" class="searchBoxresults">
             <p *ngFor="let suggestion of searchSuggestions" class="suggestion_weergave">{{ suggestion.weergavenaam }}</p>
+        </div>
+       </div>
+     </form>
+   </div>
+
+   <!-- etetetetetetetetetetyetetyeteteteteteteteteetettetete -->
+
+   <div class="searchbox">
+      <form class="form-inline waves-light" mdbWavesEffect>
+        <div class="md-form mt-0">
+          <input class="form-control mr-sm-2" type="search" MatInput placeholder="searchSpecificSuggestions"
+                 style="width: 320%; height: 30px; background-color: whitesmoke; color: black;"
+                 [formControl]="searchInput" (change)="searchEntity()">
+          <div *ngIf="searchSuggestions" class="searchBoxresults">
+            <p *ngFor="let specificsuggestion of searchSpecificSuggestions" class="suggestion_weergave">{{ specificsuggestion }}</p>
         </div>
        </div>
      </form>

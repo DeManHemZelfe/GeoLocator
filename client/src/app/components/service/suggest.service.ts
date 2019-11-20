@@ -13,14 +13,13 @@ export class SuggestService {
   fl = ['id', 'weergavenaam', 'type', 'score'];
 
 
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   searchSuggest(input: string): Observable<HttpResponse<object>> {
     return this.http.get(`https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?q=${input}`, { observe: 'response' });
   }
   searchSpecific(id: string) {
-    this.http.get(`https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=${id}`);
+     this.http.get(`https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=${id}`);
   }
   searchLocation(location: string) {
     this.http.get(`https://geodata.nationaalgeoregister.nl/locatieserver/v3/free?q=${location}`);
