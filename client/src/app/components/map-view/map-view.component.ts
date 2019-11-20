@@ -66,7 +66,7 @@ export class MapViewComponent implements OnInit {
           source: new WMTS({
             attributions: 'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
             url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
-            layer: this.layers.brtWater,
+            layer: this.layers.brt,
             matrixSet: 'EPSG:28992',
             format: 'image/png',
             projection: this.projection,
