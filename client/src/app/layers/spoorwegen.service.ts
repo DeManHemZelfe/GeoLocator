@@ -14,7 +14,8 @@ export class SpoorwegenService {
   });
   KruisingLayer = new TileLayer({
    source: this.KruisingTile,
-   title: 'Kruising'
+   title: 'Kruising',
+   visible: false,
   } as ITileOptions);
 
   OverwegTile = new TileWMS({
@@ -24,7 +25,8 @@ export class SpoorwegenService {
   });
   OverwegLayer = new TileLayer({
    source: this.OverwegTile,
-   title: 'OverWeg'
+   title: 'OverWeg',
+   visible: false,
   } as ITileOptions);
 
   SpoorasTile = new TileWMS({
@@ -35,6 +37,7 @@ export class SpoorwegenService {
   SpoorasLayer = new TileLayer({
    source: this.SpoorasTile,
    title: 'SpoorAs',
+   visible: false,
   } as ITileOptions);
 
   StationTile = new TileWMS({
@@ -45,6 +48,7 @@ export class SpoorwegenService {
   StationLayer = new TileLayer({
    source: this.StationTile,
    title: 'Station',
+   visible: false,
   } as ITileOptions);
 
   TraceTile = new TileWMS({
@@ -54,6 +58,7 @@ export class SpoorwegenService {
   });
   TraceLayer = new TileLayer({
    source: this.TraceTile,
+   visible: false,
    title: 'Trace',
   } as ITileOptions);
 
@@ -75,6 +80,7 @@ export class SpoorwegenService {
   KilometreringLayer = new TileLayer({
    source: this.KilometreringTile,
    title: 'Kilometering',
+   visible: false,
   } as ITileOptions);
 }
 export interface ITileOptions extends TileOptions {

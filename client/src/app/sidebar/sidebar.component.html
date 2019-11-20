@@ -92,7 +92,7 @@
                      <label>BUTTON &nbsp;</label>
                      <div class="buttondiv" id="type">
                        <p>knopjes</p>
-                       <button *ngFor="let layer of getLayers()" (click)="layer.setVisible(!layer.getVisible())" [class.k-primary]="layer.getVisible()" kendoButton>{{layer.get('title')}}</button>
+                       <button kendoButton id="test" *ngFor="let layer of getLayers()" (click)="layer.setVisible(!layer.getVisible())" [class.k-primary]="layer.getVisible()">{{layer.get('title')}}</button>
                        <!-- <button kendobutton  (click)="bLayervisible()" class="k-primary" value="brtachtergrondkaart">brt</button><br>
                        <button kendobutton  (click)="bLayervisible()" id="primaryTextButton" class="k-primary" value="brtachtergrondkaartGrijs">brtGrijs</button><br>
                        <button kendobutton  (click)="bLayervisible()" id="primaryTextButton" class="k-primary" value="brtachtergrondkaartPasteel">brtPasteel</button><br>
@@ -174,7 +174,7 @@
                  style="width: 320%; height: 30px; background-color: whitesmoke; color: black;"
                  [formControl]="searchInput" (change)="searchEntity()">
           <div *ngIf="searchSuggestions" class="searchBoxresults">
-            <p *ngFor="let suggestion of searchSuggestions" class="suggestion_weergave">{{ suggestion.weergavenaam }}</p>
+            <p *ngFor="let suggestion of searchSuggestions" class="suggestion_weergave">{{suggestion.weergavenaam}}</p>
         </div>
        </div>
      </form>

@@ -11,6 +11,10 @@
   height: 90vh;
 }
 
+#test {
+  width: 100%;
+}
+
 .box_from_container_container_cc1 {
   width: 20vw;
   margin-left: 1px;
@@ -22,7 +26,6 @@
   justify-content: center;
   background-color: white;
   border-bottom: solid black 2px;
-  /* margin: 0px, 0px, 0px, 0px; */
   padding: 0px;
 }
 
@@ -57,6 +60,5 @@
 }
 
 .displaydingetje {
-
   background-color:white;
 }

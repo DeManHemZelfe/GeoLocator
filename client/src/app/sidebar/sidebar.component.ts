@@ -53,15 +53,10 @@ export class SidebarComponent implements OnInit {
   searchSuggestions     = new Array<object>();
   searchSpecificSuggestions = new Array<object>();
 
-
   invisible = false;
   Hide = false;
   isNotVisible = true;
   isVisible = false;
-
-  MapLayerFalseOrTrueVisibleBaseLayer = false;
-  MapLayerFalseOrTrueVisibleBrtWaterLayer = false;
-
 
    private map: Map;
    private draw: OlDraw;
@@ -86,13 +81,6 @@ export class SidebarComponent implements OnInit {
     0.420,
     0.210
   ];
-
-  remove = {
-    testLandsgrensLayer: this.bestuurlijkegrenzenservice.landsgrensLayer,
-    testLandsgrensTile: this.bestuurlijkegrenzenservice.landsgrensTile,
-  };
-
-  laaggroepje = new LayerGroup();
 
   private layers = {
     brt:  'brtachtergrondkaart',
@@ -135,6 +123,7 @@ export class SidebarComponent implements OnInit {
  baseLayer = new TileLayer({
    source: this.baseTile,
    opacity: 0.7,
+   visible: true,
    title: 'BaseLayer',
  } as ITileOptions);
 
@@ -157,6 +146,7 @@ export class SidebarComponent implements OnInit {
  brtWaterLayer = new TileLayer({
    source: this.brtWaterTile,
    opacity: 0.7,
+   visible: false,
    title: 'BrtWaterLayer',
  } as ITileOptions);
 
@@ -179,8 +169,36 @@ export class SidebarComponent implements OnInit {
  brtGrijsLayer = new TileLayer({
    source: this.brtGrijsTile,
    opacity: 0.7,
+   visible: false,
    title: 'BrtGrijsLayer',
  }as ITileOptions);
+
+  mybaselayer     = [this.baseLayer];
+  mymaplayers     = [this.brtWaterLayer,
+                     this.brtWaterLayer,
+                    ];
+  mygrenzenlayers = [this.bestuurlijkegrenzenservice.provinciesLayer,
+                     this.bestuurlijkegrenzenservice.gemeentenLayer,
+                     this.bestuurlijkegrenzenservice.provinciesLayer,
+                    ];
+  mybaglayers     = [this.bagService.BagLigplaatsLayer,
+                     this.bagService.BagPandLayer,
+                     this.bagService.BagStandplaatsLayer,
+                     this.bagService.BagVerblijfsobjectLayer,
+                     this.bagService.BagWoonplaatsLayer,
+                    ];
+  myspoorwegenlayer = [this.spoorwegService.KruisingLayer,
+                       this.spoorwegService.OverwegLayer,
+                       this.spoorwegService.SpoorasLayer,
+                       this.spoorwegService.StationLayer,
+                       this.spoorwegService.TraceLayer,
+                       this.spoorwegService.WisselLayer,
+                       this.spoorwegService.KilometreringLayer,
+                      ];
+  myoverigedienstenlayer = [this.overigedienstenSerivce.OverheidsdienstenLayer,
+                            this.overigedienstenSerivce.AgrarischAreaalNederlandLayer,
+                            this.overigedienstenSerivce.GeografischenamenLayer,
+                           ];
 
   constructor(private suggestService: SuggestService,
               private spoorwegService: SpoorwegenService,
@@ -234,9 +252,7 @@ export class SidebarComponent implements OnInit {
         maxZoom: 15
       }),
     });
-    // this.mylayers =
-
-
+      // this.mylayers =
     this.map.getLayers().extend([
       // this.bestuurlijkegrenzenservice.landsgrensLayer,
       // this.bestuurlijkegrenzenservice.gemeentenLayer,
@@ -244,11 +260,9 @@ export class SidebarComponent implements OnInit {
       // this.bagService.BagPandLayer,
       ]);
     }
-
     getLayers() {
       return this.map.getLayers().getArray();
     }
-
 
     bLayervisible() {
       this.invisible = !this.invisible;
