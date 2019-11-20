@@ -14,6 +14,6 @@
 /home/lucas/Documents/GeoLocator/Server/API/bin/Debug/netcoreapp2.2/Core.dll
 /home/lucas/Documents/GeoLocator/Server/API/bin/Debug/netcoreapp2.2/Core.pdb
 /home/lucas/Documents/GeoLocator/Server/API/obj/Debug/netcoreapp2.2/API.csproj.CopyComplete
-/home/lucas/Documents/GeoLocator/Server/API/obj/Debug/netcoreapp2.2/API.csproj.CoreCompileInputs.cache
 /home/lucas/Documents/GeoLocator/Server/API/bin/Debug/netcoreapp2.2/Infrastructure.dll
 /home/lucas/Documents/GeoLocator/Server/API/bin/Debug/netcoreapp2.2/Infrastructure.pdb
+/home/lucas/Documents/GeoLocator/Server/API/obj/Debug/netcoreapp2.2/API.csproj.CoreCompileInputs.cache

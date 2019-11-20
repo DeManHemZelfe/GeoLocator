@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Server.Core;
 using Server.Core.Domain;
@@ -14,6 +15,13 @@ namespace Server.API.Controllers
         public GroupController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+
+        // api/group
+        [HttpGet]
+        public IEnumerable<Group> GetAllGroups()
+        {
+            return _unitOfWork.Groups.GetAll();
         }
 
         // api/group/{id}

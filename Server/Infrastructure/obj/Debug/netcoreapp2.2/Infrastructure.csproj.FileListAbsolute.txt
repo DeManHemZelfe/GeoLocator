@@ -9,8 +9,16 @@
 /home/lucas/Documents/GeoLocator/Server/Infrastructure/obj/Debug/netcoreapp2.2/Infrastructure.csproj.CopyComplete
 /home/lucas/Documents/GeoLocator/Server/Infrastructure/obj/Debug/netcoreapp2.2/Infrastructure.dll
 /home/lucas/Documents/GeoLocator/Server/Infrastructure/obj/Debug/netcoreapp2.2/Infrastructure.pdb
-/home/lucas/Documents/GeoLocator/Server/Infrastructure/obj/Debug/netcoreapp2.2/Infrastructure.csproj.CoreCompileInputs.cache
 /home/lucas/Documents/GeoLocator/Server/Infrastructure/bin/Debug/netcoreapp2.2/Infrastructure.runtimeconfig.json
 /home/lucas/Documents/GeoLocator/Server/Infrastructure/bin/Debug/netcoreapp2.2/Infrastructure.runtimeconfig.dev.json
 /home/lucas/Documents/GeoLocator/Server/Infrastructure/bin/Debug/netcoreapp2.2/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 /home/lucas/Documents/GeoLocator/Server/Infrastructure/bin/Debug/netcoreapp2.2/Microsoft.AspNetCore.Cryptography.KeyDerivation.xml
+/home/lucas/Documents/GeoLocator/Server/Infrastructure/bin/Debug/netcoreapp2.2/Microsoft.Extensions.Identity.Core.dll
+/home/lucas/Documents/GeoLocator/Server/Infrastructure/bin/Debug/netcoreapp2.2/Microsoft.IdentityModel.Tokens.dll
+/home/lucas/Documents/GeoLocator/Server/Infrastructure/bin/Debug/netcoreapp2.2/System.IdentityModel.Tokens.Jwt.dll
+/home/lucas/Documents/GeoLocator/Server/Infrastructure/bin/Debug/netcoreapp2.2/Microsoft.Extensions.Identity.Core.xml
+/home/lucas/Documents/GeoLocator/Server/Infrastructure/bin/Debug/netcoreapp2.2/System.IdentityModel.Tokens.Jwt.pdb
+/home/lucas/Documents/GeoLocator/Server/Infrastructure/bin/Debug/netcoreapp2.2/System.IdentityModel.Tokens.Jwt.xml
+/home/lucas/Documents/GeoLocator/Server/Infrastructure/bin/Debug/netcoreapp2.2/Microsoft.IdentityModel.Tokens.pdb
+/home/lucas/Documents/GeoLocator/Server/Infrastructure/bin/Debug/netcoreapp2.2/Microsoft.IdentityModel.Tokens.xml
+/home/lucas/Documents/GeoLocator/Server/Infrastructure/obj/Debug/netcoreapp2.2/Infrastructure.csproj.CoreCompileInputs.cache

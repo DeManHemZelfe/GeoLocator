@@ -77,6 +77,16 @@ namespace Server.API.Controllers
                     Lastname = user.Lastname
                 };
 
+                if (newUser.Middlename == null)
+                {
+                    newUser.Middlename = "";
+                }
+
+                if (newUser.Infix == null)
+                {
+                    newUser.Infix = "";
+                }
+
                 _unitOfWork.Users.Add(newUser);
                 _unitOfWork.Complete();
 
@@ -122,7 +132,7 @@ namespace Server.API.Controllers
 
         // api/user/{userId}/add-group/{groupId}
         [HttpPost]
-        [Route("{userId:int}/add-group/{groupId:int}")]
+        [Route("add-group")]
         public ActionResult<UserGroup> AddGroupToUser(int userId, int groupId)
         {
             User user = _unitOfWork.Users.Get(userId);
@@ -148,6 +158,18 @@ namespace Server.API.Controllers
             }
 
             return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("authenticate")] 
+        public ActionResult Authenticate([FromBody] AuthenticationDataModel authenticationData)
+        {
+            var result = _unitOfWork.Users.Authenticate(authenticationData.Email, authenticationData.Password, authenticationData.Group);
+
+            if (result == null)
+                return Ok(new { error = "Email, wachtwoord of groep is incorrect" });
+
+            return Ok(result);
         }
     }
 }
