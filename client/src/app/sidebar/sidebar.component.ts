@@ -2,8 +2,10 @@ import 'ol/ol.css';
 import { Component, OnInit, } from '@angular/core';
 import { Map, View, Collection, } from 'ol';
 
-import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
-import TileWMS from 'ol/source/TileWMS';
+import { Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
+import TileWMS, {Options as TileWMSOptions} from 'ol/source/TileWMS';
+import {Options as TileOptions} from 'ol/layer/tile';
+
 import { OSM, Vector as VectorSource, TileJSON} from 'ol/source';
 import OlDraw from 'ol/interaction/Draw';
 import { Icon, Stroke, Style, Fill, } from 'ol/style';
@@ -31,6 +33,9 @@ import LayerGroup from 'ol/layer/Group';
 import Stamen from 'ol/source/Stamen';
 import OlTileLayer from 'ol/layer/Tile';
 
+
+
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -40,6 +45,7 @@ export class SidebarComponent implements OnInit {
 
   titles = 'Suggestie';
   typeSelect            = new FormControl('');
+  typeSelectdikzak      = new FormControl('');
   typeSelectborder      = new FormControl('');
   typeSelectbrt         = new FormControl('');
   searchInput           = new FormControl('');
@@ -47,13 +53,14 @@ export class SidebarComponent implements OnInit {
   searchSuggestions     = new Array<object>();
   searchSpecificSuggestions = new Array<object>();
 
+
   invisible = false;
   Hide = false;
   isNotVisible = true;
   isVisible = false;
 
-    MapLayerFalseOrTrueVisibleBaseLayer = false;
-    MapLayerFalseOrTrueVisibleBrtWaterLayer = false;
+  MapLayerFalseOrTrueVisibleBaseLayer = false;
+  MapLayerFalseOrTrueVisibleBrtWaterLayer = false;
 
 
    private map: Map;
@@ -79,14 +86,13 @@ export class SidebarComponent implements OnInit {
     0.420,
     0.210
   ];
+
   remove = {
     testLandsgrensLayer: this.bestuurlijkegrenzenservice.landsgrensLayer,
     testLandsgrensTile: this.bestuurlijkegrenzenservice.landsgrensTile,
   };
 
   laaggroepje = new LayerGroup();
-
-
 
   private layers = {
     brt:  'brtachtergrondkaart',
@@ -126,11 +132,11 @@ export class SidebarComponent implements OnInit {
   style: 'default',
   wrapX: false
  });
-
  baseLayer = new TileLayer({
    source: this.baseTile,
    opacity: 0.7,
- });
+   title: 'BaseLayer',
+ } as ITileOptions);
 
 
  brtWaterTile = new WMTS({
@@ -151,7 +157,8 @@ export class SidebarComponent implements OnInit {
  brtWaterLayer = new TileLayer({
    source: this.brtWaterTile,
    opacity: 0.7,
- });
+   title: 'BrtWaterLayer',
+ } as ITileOptions);
 
 
  brtGrijsTile = new WMTS({
@@ -171,10 +178,9 @@ export class SidebarComponent implements OnInit {
  });
  brtGrijsLayer = new TileLayer({
    source: this.brtGrijsTile,
-
    opacity: 0.7,
- });
-
+   title: 'BrtGrijsLayer',
+ }as ITileOptions);
 
   constructor(private suggestService: SuggestService,
               private spoorwegService: SpoorwegenService,
@@ -183,59 +189,40 @@ export class SidebarComponent implements OnInit {
               private kaartService: KaartService,
               private overigedienstenSerivce: OverigeDienstenService,
                ) {}
-
   ngOnInit() {
     this.initializeMap();
     this.addInteraction();
     console.log(this.layers);
   }
 
-
-
   initializeMap() {
     for (let i = 0; i < this.matrixIds.length; i++) {
       this.matrixIds[i] = 'EPSG:28992:' + i;
     }
-
     this.map = new Map({
       target: 'map',
       layers: [
-        new TileLayer({
-          opacity: 0.7,
-          source: this.baseTile,
-          // visible: false,
-          visible: true,
-        }), new LayerGroup({
-          layers: [
-            new TileLayer({
-              opacity: 0.7,
-              source: this.brtWaterTile,
-              // visible: false,
-              visible: true,
-            }),
-          ],
-        }),
-        // this.baseLayer,
-        // this.brtWaterLayer,
-        // this.brtGrijsLayer,
-        // this.bestuurlijkegrenzenservice.landsgrensLayer,
-        // this.bestuurlijkegrenzenservice.gemeentenLayer,
-        // this.bestuurlijkegrenzenservice.provinciesLayer,
-        // this.bagService.BagLigplaatsLayer,
-        // this.bagService.BagPandLayer,
-        // this.bagService.BagVerblijfsobjectLayer,
-        // this.bagService.BagWoonplaatsLayer,
-        // this.bagService.BagStandplaatsLayer,
-        // this.overigedienstenSerivce.OverheidsdienstenLayer,
-        // this.overigedienstenSerivce.AgrarischAreaalNederlandLayer,
-        // this.overigedienstenSerivce.GeografischenamenLayer,
-        // this.spoorwegService.KruisingLayer,
-        // this.spoorwegService.OverwegLayer,
-        // this.spoorwegService.SpoorasLayer,
-        // this.spoorwegService.StationLayer,
-        // this.spoorwegService.TraceLayer,
-        // this.spoorwegService.WisselLayer,
-        // this.spoorwegService.KilometreringLayer,
+        this.baseLayer,
+        this.brtWaterLayer,
+        this.brtGrijsLayer,
+        this.bestuurlijkegrenzenservice.landsgrensLayer,
+        this.bestuurlijkegrenzenservice.gemeentenLayer,
+        this.bestuurlijkegrenzenservice.provinciesLayer,
+        this.bagService.BagLigplaatsLayer,
+        this.bagService.BagPandLayer,
+        this.bagService.BagVerblijfsobjectLayer,
+        this.bagService.BagWoonplaatsLayer,
+        this.bagService.BagStandplaatsLayer,
+        this.overigedienstenSerivce.OverheidsdienstenLayer,
+        this.overigedienstenSerivce.AgrarischAreaalNederlandLayer,
+        this.overigedienstenSerivce.GeografischenamenLayer,
+        this.spoorwegService.KruisingLayer,
+        this.spoorwegService.OverwegLayer,
+        this.spoorwegService.SpoorasLayer,
+        this.spoorwegService.StationLayer,
+        this.spoorwegService.TraceLayer,
+        this.spoorwegService.WisselLayer,
+        this.spoorwegService.KilometreringLayer,
         this.vector,
       ],
       overlays: [],
@@ -247,30 +234,28 @@ export class SidebarComponent implements OnInit {
         maxZoom: 15
       }),
     });
-    // this.map.getLayers().removeAt(0);
-    // this.map.getLayers().removeAt(1);
-    // this.map.getLayers().removeAt(2);
-    // this.map.getLayers().removeAt(3);
-    // this.map.getLayers().removeAt(4);
-    // this.map.getLayers().removeAt(5);
+    // this.mylayers =
+
 
     this.map.getLayers().extend([
-      this.bestuurlijkegrenzenservice.landsgrensLayer,
+      // this.bestuurlijkegrenzenservice.landsgrensLayer,
       // this.bestuurlijkegrenzenservice.gemeentenLayer,
       // this.bagService.BagLigplaatsLayer,
       // this.bagService.BagPandLayer,
       ]);
-    // this.map.getLayers().insertAt(0, this.baseLayer);
-    // this.map.getLayers().removeAt(0);
     }
+
+    getLayers() {
+      return this.map.getLayers().getArray();
+    }
+
+
     bLayervisible() {
       this.invisible = !this.invisible;
+      const value = this.typeSelectdikzak.value;
       console.log('buttonworks2');
    }
 
-   changethevisible() {
-     const soep = this.baseTile;
-   }
 
    toggleDisplay() {
    this.Hide = !this.Hide;
@@ -328,8 +313,8 @@ export class SidebarComponent implements OnInit {
     },
     (err) => console.error(err));
   }
+}
 
-
-
-
+export interface ITileOptions extends TileOptions {
+  title?: string;
 }

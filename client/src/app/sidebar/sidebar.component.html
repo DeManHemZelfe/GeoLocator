@@ -10,55 +10,6 @@
       <div class="container_menu">
         <h2>Kies je dingetjes</h2>
 
-        <div class="buttondiv" id="type">
-            <button kendobutton  (click)="bLayervisible()" class="k-primary" value="brtachtergrondkaart">brt</button><br>
-            <button kendobutton  (click)="bLayervisible()" id="primaryTextButton" class="k-primary" value="brtachtergrondkaartGrijs">brtGrijs</button><br>
-          </div><br><br>
-
-
-        <!-- <div class="displaydingetje">
-          <ul>
-          <li><span>OSM layer</span>
-            <fieldset id="layer0">
-              <label class="checkbox" for="visible0">
-                <input id="visible0" class="visible" type="checkbox"/>visibility
-              </label>
-              <label>opacity</label>
-              <input class="opacity" type="range" min="0" max="1" step="0.01"/>
-            </fieldset>
-          </li>
-          <li><span>Layer group</span>
-            <fieldset id="layer1">
-              <label class="checkbox" for="visible1">
-                <input id="visible1" class="visible" type="checkbox"/>visibility
-              </label>
-              <label>opacity</label>
-              <input class="opacity" type="range" min="0" max="1" step="0.01"/>
-            </fieldset>
-            <ul>
-              <li><span>Food insecurity layer</span>
-                <fieldset id="layer10">
-                  <label class="checkbox" for="visible10">
-                    <input id="visible10" class="visible" type="checkbox"/>visibility
-                  </label>
-                  <label>opacity</label>
-                  <input class="opacity" type="range" min="0" max="1" step="0.01"/>
-                </fieldset>
-              </li>
-              <li><span>World borders layer</span>
-                <fieldset id="layer11">
-                  <label class="checkbox" for="visible11">
-                    <input id="visible11" class="visible" type="checkbox"/>visibility
-                  </label>
-                  <label>opacity</label>
-                  <input class="opacity" type="range" min="0" max="1" step="0.01"/>
-                </fieldset>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        </div> -->
-
         <mat-accordion >
             <mat-expansion-panel class="mat-expansion-panel">
               <mat-expansion-panel-header class="mat-expansion-header">
@@ -141,6 +92,7 @@
                      <label>BUTTON &nbsp;</label>
                      <div class="buttondiv" id="type">
                        <p>knopjes</p>
+                       <button *ngFor="let layer of getLayers()" (click)="layer.setVisible(!layer.getVisible())" [class.k-primary]="layer.getVisible()" kendoButton>{{layer.get('title')}}</button>
                        <!-- <button kendobutton  (click)="bLayervisible()" class="k-primary" value="brtachtergrondkaart">brt</button><br>
                        <button kendobutton  (click)="bLayervisible()" id="primaryTextButton" class="k-primary" value="brtachtergrondkaartGrijs">brtGrijs</button><br>
                        <button kendobutton  (click)="bLayervisible()" id="primaryTextButton" class="k-primary" value="brtachtergrondkaartPasteel">brtPasteel</button><br>
