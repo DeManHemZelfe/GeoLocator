@@ -9,7 +9,6 @@
     <div class="box_from_container_container_cc1">
       <div class="container_menu">
         <h2>Kies je dingetjes</h2>
-
         <mat-accordion >
             <mat-expansion-panel class="mat-expansion-panel">
               <mat-expansion-panel-header class="mat-expansion-header">
@@ -31,17 +30,13 @@
                 <mat-checkbox>Kilometers</mat-checkbox><br>
               <mat-checkbox>Miles</mat-checkbox><br>
             </mat-expansion-panel>
-
             <!-- EINDE EINDE EINDE EINDE EINDE EINDE EINDE EINDE EINDE EINDE EINDE EINDE -->
-
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-
               <mat-expansion-panel-header class="mat-expansion-header {">
                 <mat-panel-title>Colors
                   <i class="k-icon k-i-palette" style="font-size: 10px;" style="color: black;"></i>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-
               <form>
                   <h2>Color Line</h2>
                   <select>
@@ -68,16 +63,12 @@
               </form>
             </mat-expansion-panel>
 
-
             <mat-expansion-panel class="mat-expansion-panel">
                 <mat-expansion-panel-header class="mat-expansion-header">
                   <mat-panel-title class="mat-panel-title">Layers
                     <i class="k-icon k-i-globe-outline" style="font-size: 10px;" style="color: black;"></i>
                   </mat-panel-title>
                 </mat-expansion-panel-header>
-
-                <div><button kenndobutton (click)="toggleDisplay()">Hide</button></div><br>
-
                 <form class="form-inline">
                     <label>Kaart &nbsp;</label>
                      <select id="type" [formControl]="typeSelectbrt">
@@ -107,13 +98,11 @@
                       <option value="">(dft) none</option>
                      </select>
                   </form>
-
                   <h2>ToolTips</h2>
                   <mat-checkbox>Borders</mat-checkbox><br>
                   <mat-checkbox>Airports</mat-checkbox><br>
                   <mat-checkbox>Boat docks</mat-checkbox><br>
               </mat-expansion-panel>
-
 
               <mat-expansion-panel class="mat-expansion-panel">
                   <mat-expansion-panel-header class="mat-expansion-header">
@@ -121,7 +110,6 @@
                       <i class="k-icon k-i-marker-pin" style="font-size: 10px;" style="color: black;"></i>
                     </mat-panel-title>
                   </mat-expansion-panel-header>
-
                   <form class="form-inline">
                       <label> Accessoires &nbsp;</label>
                       <select id="type" [formControl]="typeSelect" (change)="switchLocationMode()">
@@ -130,7 +118,6 @@
                         <option value="">None</option>
                       </select>
                     </form>
-
                     <h2>ToolTips</h2>
                     <mat-checkbox value="monuments">Monuments</mat-checkbox><br>
                     <mat-checkbox>Food & Drinks</mat-checkbox><br>
@@ -138,14 +125,12 @@
                     <mat-checkbox>Walking</mat-checkbox><br>
                 </mat-expansion-panel>
 
-
                 <mat-expansion-panel class="mat-expansion-panel">
                     <mat-expansion-panel-header class="mat-expansion-header">
                       <mat-panel-title class="mat-panel-title">Routes
                         <i class="k-icon k-i-marker-pin" style="font-size: 10px;" style="color: black;"></i>
                       </mat-panel-title>
                     </mat-expansion-panel-header>
-
                     <form class="form-inline">
                         <label>Routes &nbsp;</label>
                         <select id="type" [formControl]="typeSelect" (change)="switchRoutesMode()">
@@ -157,16 +142,12 @@
                           <option value="">deafault</option>
                         </select>
                       </form>
-
                       <h2>ToolTips</h2>
                       <mat-checkbox>Kilometers</mat-checkbox><br>
                       <mat-checkbox>Miles</mat-checkbox><br>
                       </mat-expansion-panel>
-
           </mat-accordion><br>
-
   <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
-
     <div class="searchbox">
       <form class="form-inline waves-light" mdbWavesEffect>
         <div class="md-form mt-0">
@@ -179,9 +160,7 @@
        </div>
      </form>
    </div>
-
    <!-- etetetetetetetetetetyetetyeteteteteteteteteetettetete -->
-
    <div class="searchbox">
       <form class="form-inline waves-light" mdbWavesEffect>
         <div class="md-form mt-0">
@@ -194,21 +173,5 @@
        </div>
      </form>
    </div>
-
-   <!-- <label for="track">
-      track position
-      <input id="track" type="checkbox"/>
-    </label> -->
-
-     <!-- <form class="form-inline waves-light" mdbWavesEffect><br><br>
-      <div class="radio">
-       <mat-radio-group aria-label="Select an option" class="radiobutton" >
-            <mat-radio-button kendobutton value="landsgrens">landsgrens</mat-radio-button>
-            <mat-radio-button value="gemeentegrens">gemeentegrens</mat-radio-button>
-            <mat-radio-button value="provinciegrens">provinciegrens</mat-radio-button>
-       </mat-radio-group>
-      </div>
-    </form> -->
-
   </div>
 </div>

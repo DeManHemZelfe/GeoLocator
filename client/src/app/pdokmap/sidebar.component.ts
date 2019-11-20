@@ -16,7 +16,6 @@ import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import { FormControl } from '@angular/forms';
 
 import LocationSuggestData from '../interface/location-suggest-data.interface';
-
 import { SuggestService } from '../components/service/suggest.service';
 import { BestuurlijkegrenzenService } from '../layers/bestuurlijkegrenzen.service';
 import { BagService } from '../layers/bag.service';
@@ -25,16 +24,6 @@ import { SpoorwegenService } from '../layers/spoorwegen.service';
 
 import { HttpResponse } from '@angular/common/http';
 import { OverigeDienstenService } from '../layers/overigediensten.service';
-import { BrtwaterComponent } from '../brtwater/brtwater.component';
-import BaseLayer from 'ol/layer/Base';
-import { layer } from 'openlayers';
-import LayerGroup from 'ol/layer/Group';
-
-import Stamen from 'ol/source/Stamen';
-import OlTileLayer from 'ol/layer/Tile';
-
-
-
 
 @Component({
   selector: 'app-sidebar',
@@ -58,28 +47,28 @@ export class SidebarComponent implements OnInit {
   isNotVisible = true;
   isVisible = false;
 
-   private map: Map;
-   private draw: OlDraw;
+  private map: Map;
+  private draw: OlDraw;
 
-   private projectionExtent = [-285401.92, 22598.08, 595401.92, 903401.92];
-   private projection = new Projection({ code: 'EPSG:28992', units: 'm', extent: this.projectionExtent });
-   private matrixIds = new Array(15);
-   private resolutions = [
-    3440.640,
-    1720.320,
-    860.160,
-    430.080,
-    215.040,
-    107.520,
-    53.750,
-    26.880,
-    13.440,
-    6.720,
-    3.360,
-    1.680,
-    0.840,
-    0.420,
-    0.210
+  private projectionExtent = [-285401.92, 22598.08, 595401.92, 903401.92];
+  private projection = new Projection({ code: 'EPSG:28992', units: 'm', extent: this.projectionExtent });
+  private matrixIds = new Array(15);
+  private resolutions = [
+   3440.640,
+   1720.320,
+   860.160,
+   430.080,
+   215.040,
+   107.520,
+   53.750,
+   26.880,
+   13.440,
+   6.720,
+   3.360,
+   1.680,
+   0.840,
+   0.420,
+   0.210
   ];
 
   private layers = {
@@ -105,73 +94,72 @@ export class SidebarComponent implements OnInit {
     })
   });
 
- baseTile = new WMTS({
-  attributions: 'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
-  url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
-  layer: this.layers.brt,
-  matrixSet: 'EPSG:28992',
-  format: 'image/png',
-  projection: this.projection,
-  tileGrid: new WMTSTileGrid({
-    origin: getTopLeft(this.projectionExtent),
-    resolutions: this.resolutions,
-    matrixIds: this.matrixIds,
-  }),
-  style: 'default',
-  wrapX: false
- });
- baseLayer = new TileLayer({
+  baseTile = new WMTS({
+   attributions: 'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
+   url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
+   layer: this.layers.brt,
+   matrixSet: 'EPSG:28992',
+   format: 'image/png',
+   projection: this.projection,
+   tileGrid: new WMTSTileGrid({
+      origin: getTopLeft(this.projectionExtent),
+      resolutions: this.resolutions,
+      matrixIds: this.matrixIds,
+    }),
+    style: 'default',
+    wrapX: false
+   });
+  baseLayer = new TileLayer({
    source: this.baseTile,
    opacity: 0.7,
    visible: true,
    title: 'BaseLayer',
- } as ITileOptions);
+  } as ITileOptions);
 
 
- brtWaterTile = new WMTS({
-  attributions: 'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
-  url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
-  layer: this.layers.brtWater,
-  matrixSet: 'EPSG:28992',
-  format: 'image/png',
-  projection: this.projection,
-  tileGrid: new WMTSTileGrid({
-    origin: getTopLeft(this.projectionExtent),
-    resolutions: this.resolutions,
-    matrixIds: this.matrixIds,
-  }),
-  style: 'default',
-  wrapX: false
- });
- brtWaterLayer = new TileLayer({
-   source: this.brtWaterTile,
-   opacity: 0.7,
-   visible: false,
-   title: 'BrtWaterLayer',
- } as ITileOptions);
+  brtWaterTile = new WMTS({
+   attributions: 'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
+   url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
+   layer: this.layers.brtWater,
+   matrixSet: 'EPSG:28992',
+   format: 'image/png',
+   projection: this.projection,
+   tileGrid: new WMTSTileGrid({
+     origin: getTopLeft(this.projectionExtent),
+     resolutions: this.resolutions,
+     matrixIds: this.matrixIds,
+   }),
+   style: 'default',
+   wrapX: false
+   });
+  brtWaterLayer = new TileLayer({
+    source: this.brtWaterTile,
+    opacity: 0.7,
+    visible: false,
+    title: 'BrtWaterLayer',
+  } as ITileOptions);
 
-
- brtGrijsTile = new WMTS({
-  attributions: 'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
-  url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
-  layer: this.layers.brtGrijs,
-  matrixSet: 'EPSG:28992',
-  format: 'image/png',
-  projection: this.projection,
-  tileGrid: new WMTSTileGrid({
-    origin: getTopLeft(this.projectionExtent),
-    resolutions: this.resolutions,
-    matrixIds: this.matrixIds,
-  }),
-  style: 'default',
-  wrapX: false
- });
+  brtGrijsTile = new WMTS({
+   attributions: 'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
+   url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
+   layer: this.layers.brtGrijs,
+   matrixSet: 'EPSG:28992',
+   format: 'image/png',
+   projection: this.projection,
+   tileGrid: new WMTSTileGrid({
+     origin: getTopLeft(this.projectionExtent),
+     resolutions: this.resolutions,
+     matrixIds: this.matrixIds,
+   }),
+   style: 'default',
+   wrapX: false
+  });
  brtGrijsLayer = new TileLayer({
    source: this.brtGrijsTile,
    opacity: 0.7,
    visible: false,
    title: 'BrtGrijsLayer',
- }as ITileOptions);
+ } as ITileOptions);
 
   mybaselayer     = [this.baseLayer];
   mymaplayers     = [this.brtWaterLayer,
@@ -252,6 +240,7 @@ export class SidebarComponent implements OnInit {
         maxZoom: 15
       }),
     });
+    // this.mybaselayer.extend();
       // this.mylayers =
     this.map.getLayers().extend([
       // this.bestuurlijkegrenzenservice.landsgrensLayer,
@@ -264,70 +253,71 @@ export class SidebarComponent implements OnInit {
       return this.map.getLayers().getArray();
     }
 
+
     bLayervisible() {
       this.invisible = !this.invisible;
       const value = this.typeSelectdikzak.value;
       console.log('buttonworks2');
-   }
-
-
-   toggleDisplay() {
-   this.Hide = !this.Hide;
-   console.log('you click on hide');
-   }
-
- isHidden() {
-  this.isNotVisible = !this.isNotVisible;
-  // this.isVisible = this.brtWaterLayer;
-  console.log('you click on hide on visible');
-}
-
-  tooltip() {}
-  helptooltip() {}
-
-  addInteraction() {
-    const value = this.typeSelect.value;
-    if (value !== '') {
-      this.draw = new OlDraw({
-        source: this.source,
-        type: this.typeSelect.value,
-      });
-      this.map.addInteraction(this.draw);
-      console.log('addInteraction()');
     }
-  }
-  switchMode() {
-    this.map.removeInteraction(this.draw);
-    this.addInteraction();
-    console.log('switchMode()');
-  }
 
-  grenzenInteraction() {
-    const value = this.typeSelectborder.value;
-    if (value !== '') {}
-  }
-  switchBorderMode() {
-    this.grenzenInteraction();
-    console.log(this.switchBorderMode);
-  }
+    toggleDisplay() {
+     this.Hide = !this.Hide;
+     console.log('you click on hide');
+    }
 
-  switchLocationMode() {}
-  switchRoutesMode() {}
+    isHidden() {
+      this.isNotVisible = !this.isNotVisible;
+      // this.isVisible = this.brtWaterLayer;
+      console.log('you click on hide on visible');
+    }
 
-  searchEntity() {
-    const input = this.searchInput.value;
-    this.suggestService.searchSuggest(input).subscribe((response) => {
-      console.log(response);
-      const data = response.body as LocationSuggestData;
-      this.searchSuggestions = data.response.docs;
-      // for (const key of Object.keys(data.response)) {
-      //   const highlight = data.highlighting[key];
-      //   this.searchSuggestions.push(highlight.suggest);
-      // }
-    },
-    (err) => console.error(err));
-  }
-}
+    tooltip() {}
+    helptooltip() {}
+
+    addInteraction() {
+      const value = this.typeSelect.value;
+      if (value !== '') {
+        this.draw = new OlDraw({
+          source: this.source,
+          type: this.typeSelect.value,
+        });
+        this.map.addInteraction(this.draw);
+        console.log('addInteraction()');
+      }
+    }
+
+    switchMode() {
+      this.map.removeInteraction(this.draw);
+      this.addInteraction();
+      console.log('switchMode()');
+    }
+
+    grenzenInteraction() {
+      const value = this.typeSelectborder.value;
+      if (value !== '') {}
+    }
+    switchBorderMode() {
+      this.grenzenInteraction();
+      console.log(this.switchBorderMode);
+    }
+
+    switchLocationMode() {}
+    switchRoutesMode() {}
+
+    searchEntity() {
+      const input = this.searchInput.value;
+      this.suggestService.searchSuggest(input).subscribe((response) => {
+        console.log(response);
+        const data = response.body as LocationSuggestData;
+        this.searchSuggestions = data.response.docs;
+        // for (const key of Object.keys(data.response)) {
+        //   const highlight = data.highlighting[key];
+        //   this.searchSuggestions.push(highlight.suggest);
+        // }
+       },
+       (err) => console.error(err));
+     }
+    }
 
 export interface ITileOptions extends TileOptions {
   title?: string;

@@ -4,7 +4,7 @@ import { LoginpageComponent } from './loginpage/loginpage.component';
 import { MapViewComponent } from './components/map-view/map-view.component';
 import { MapViewOpenStreetComponent } from './components/map-view-open-street/map-view-open-street.component';
 import { RegistrationpageComponent } from './registrationpage/registrationpage.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { SidebarComponent } from './pdokmap/sidebar.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { SidebarFunctionsDrawComponent } from './sidebar-functions-draw/sidebar-functions-draw.component';
 import { MapViewBingComponent } from './components/map-view-bing/map-view-bing.component';

@@ -25,7 +25,7 @@ import { AlertComponent } from './directives';
 import { UserService } from './service/user.service';
 import { AlertService } from './service/alert.service';
 import { AuthenticationService } from './service/authentication.service';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { SidebarComponent } from './pdokmap/sidebar.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
 import {MatSidenav} from '@angular/material/sidenav';
@@ -45,19 +45,8 @@ import { BagService } from './layers/bag.service';
 import { BestuurlijkegrenzenService } from './layers/bestuurlijkegrenzen.service';
 import {MatRadioModule} from '@angular/material/radio';
 import { SpoorwegenService } from './layers/spoorwegen.service';
-import { BrtwaterComponent } from './brtwater/brtwater.component';
-import { BrtpasteelComponent } from './brtpasteel/brtpasteel.component';
-
-
 
 // import { InterfacesComponent } from './components/admin/interfaces/interfaces.component';
-
-
-
-
-
-
-
 
 @NgModule({
   declarations: [
@@ -79,16 +68,6 @@ import { BrtpasteelComponent } from './brtpasteel/brtpasteel.component';
     DeleteComponent,
     MapViewBingComponent,
     GooglemapsComponent,
-    BrtwaterComponent,
-    BrtpasteelComponent,
-
-
-
-
-    // InterfacesComponent,
-    // MatSidenavModule,
-    // MatSliderModule,
-
   ],
   imports: [
     BrowserModule,
@@ -107,7 +86,6 @@ import { BrtpasteelComponent } from './brtpasteel/brtpasteel.component';
     MatExpansionModule,
     HttpClientModule,
     MatRadioModule,
-
   ],
   providers: [
     AlertService,
