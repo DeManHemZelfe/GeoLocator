@@ -19,7 +19,7 @@ export class SuggestService {
     return this.http.get(`https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?q=${input}`, { observe: 'response' });
   }
   searchSpecific(id: string) {
-     this.http.get(`https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=${id}`);
+     return this.http.get(`https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=${id}`);
   }
   searchLocation(location: string) {
     this.http.get(`https://geodata.nationaalgeoregister.nl/locatieserver/v3/free?q=${location}`);

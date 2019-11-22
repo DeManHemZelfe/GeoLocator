@@ -14,6 +14,7 @@ export class BagService {
    BagLigplaatsLayer = new TileLayer({
     source: this.BagLigplaatsTile,
     title: 'BagLigPlaatst',
+    visible: false,
    } as ITileOptions);
 
    BagPandTile = new TileWMS({
@@ -24,6 +25,7 @@ export class BagService {
    BagPandLayer = new TileLayer({
     source: this.BagPandTile,
     title: 'BagPand',
+    visible: false,
    } as ITileOptions);
 
    BagVerblijfsobjectTile = new TileWMS({
@@ -34,6 +36,7 @@ export class BagService {
    BagVerblijfsobjectLayer = new TileLayer({
     source: this.BagVerblijfsobjectTile,
     title: 'BagVerblijf',
+    visible: false,
    } as ITileOptions);
 
    BagWoonsplaatsTile = new TileWMS({
@@ -44,6 +47,8 @@ export class BagService {
   BagWoonplaatsLayer = new TileLayer({
    source: this.BagWoonsplaatsTile,
    title: 'BagWoonplaatst',
+   visible: false,
+   id: 5,
   } as ITileOptions);
 
   BagStandplaatsTile = new TileWMS({
@@ -54,6 +59,8 @@ export class BagService {
   BagStandplaatsLayer = new TileLayer({
    source: this.BagStandplaatsTile,
    title: 'BagStandPlaats',
+   id: 7,
+   visible: false,
   } as ITileOptions);
 }
 export interface ITileOptions extends TileOptions {

@@ -16,6 +16,7 @@ export class OverigeDienstenService {
    AgrarischAreaalNederlandLayer = new TileLayer({
     source: this.AgrarischAreaalNederlandTile,
     title: 'AgrarischAreaalNederland',
+    visible: false,
    } as ITileOptions);
 
    OverheidsDienstenTile = new TileWMS({
@@ -26,6 +27,7 @@ export class OverigeDienstenService {
    OverheidsdienstenLayer = new TileLayer({
     source: this.OverheidsDienstenTile,
     title: 'OverHeidsDiensten',
+    visible: false,
    } as ITileOptions);
 
    GeografischenameTile = new TileWMS({
@@ -36,6 +38,7 @@ export class OverigeDienstenService {
    GeografischenamenLayer = new TileLayer({
    source: this.GeografischenameTile,
    title: 'GeoGrafischeMeter',
+   visible: false,
   } as ITileOptions);
 }
 

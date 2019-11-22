@@ -8,7 +8,7 @@
 
     <div class="box_from_container_container_cc1">
       <div class="container_menu">
-        <h2>Kies je dingetjes</h2>
+        <h3>Kies je dingetjes</h3>
         <mat-accordion >
             <mat-expansion-panel class="mat-expansion-panel">
               <mat-expansion-panel-header class="mat-expansion-header">
@@ -82,12 +82,46 @@
 
                      <label>BUTTON &nbsp;</label>
                      <div class="buttondiv" id="type">
-                       <p>knopjes</p>
-                       <button kendoButton id="test" *ngFor="let layer of getLayers()" (click)="layer.setVisible(!layer.getVisible())" [class.k-primary]="layer.getVisible()">{{layer.get('title')}}</button>
-                       <!-- <button kendobutton  (click)="bLayervisible()" class="k-primary" value="brtachtergrondkaart">brt</button><br>
-                       <button kendobutton  (click)="bLayervisible()" id="primaryTextButton" class="k-primary" value="brtachtergrondkaartGrijs">brtGrijs</button><br>
-                       <button kendobutton  (click)="bLayervisible()" id="primaryTextButton" class="k-primary" value="brtachtergrondkaartPasteel">brtPasteel</button><br>
-                       <button kendobutton  (click)="bLayervisible()" id="primaryTextButton" class="k-primary"value="brtachtergrondkaartWater">brtWater</button><br> -->
+                        <div>
+                            <h3>Kaarten</h3>
+                             <button kendoButton id="test" *ngFor="let layer of getLayerGroupKaart()"
+                             (click)="layer.setVisible(!layer.getVisible())"
+                             [primary]="layer.getVisible()">
+                             {{layer.get('title')}}
+                           </button>
+                       </div>
+                        <div>
+                            <h3>Grenzen</h3>
+                             <button kendoButton id="test" *ngFor="let layer of getLayerGroupGrenzen()"
+                             (click)="layer.setVisible(!layer.getVisible())"
+                             [primary]="layer.getVisible()">
+                             {{layer.get('title')}}
+                           </button>
+                       </div>
+                      <div>
+                         <h3>Woonplaats</h3>
+                          <button kendoButton id="test" *ngFor="let layer of getLayerGroupBag()"
+                          (click)="layer.setVisible(!layer.getVisible())"
+                          [primary]="layer.getVisible()">
+                          {{layer.get('title')}}
+                        </button>
+                       </div>
+                      <div>
+                          <h3>Spoorwegen</h3>
+                           <button kendoButton id="test" *ngFor="let layer of getLayerGroupSpoorwegen()"
+                           (click)="layer.setVisible(!layer.getVisible())"
+                           [primary]="layer.getVisible()">
+                           {{layer.get('title')}}
+                          </button>
+                        </div>
+                        <div>
+                            <h3>OverigeDiensten</h3>
+                             <button kendoButton id="test" *ngFor="let layer of getLayerGroupOverigeDiensten()"
+                             (click)="layer.setVisible(!layer.getVisible())"
+                             [primary]="layer.getVisible()">
+                             {{layer.get('title')}}
+                           </button>
+                       </div>
                      </div><br><br>
 
                     <label>Border &nbsp;</label>
@@ -168,7 +202,7 @@
                  style="width: 320%; height: 30px; background-color: whitesmoke; color: black;"
                  [formControl]="searchInput" (change)="searchEntity()">
           <div *ngIf="searchSuggestions" class="searchBoxresults">
-            <p *ngFor="let specificsuggestion of searchSpecificSuggestions" class="suggestion_weergave">{{ specificsuggestion }}</p>
+            <p *ngFor="let specificsuggestion of searchSpecificSuggestions" class="suggestion_weergave">{{specificsuggestion }</p>
         </div>
        </div>
      </form>
