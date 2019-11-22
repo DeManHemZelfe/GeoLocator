@@ -1,7 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import User from 'src/app/interfaces/user.interface';
 import { UserService } from 'src/app/services/user.service';
+import { FormControl } from '@angular/forms';
+import Draw from 'ol/interaction/Draw';
+import VectorSource from 'ol/source/Vector';
+import Map from 'ol/Map';
+import { MapViewComponent } from 'src/app/components/map-view/map-view.component';
 
 @Component({
   selector: 'app-index',
@@ -10,7 +15,11 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class IndexComponent implements OnInit {
 
-  JWTToken: string = localStorage.getItem('JWT');
+  @ViewChild(MapViewComponent, { static: false }) mapView;
+
+  private JWTToken: string = localStorage.getItem('JWT');
+
+  drawType = new FormControl('');
 
   constructor(private router: Router, private service: UserService) { }
 
@@ -22,5 +31,4 @@ export class IndexComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
   }
-
 }

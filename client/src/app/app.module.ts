@@ -16,11 +16,11 @@ import { LabelModule } from '@progress/kendo-angular-label';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { GroupService } from './services/group.service';
+import { JwtModule } from '@auth0/angular-jwt';
 
-
-
-
-
+export function tokenGetter() {
+  return localStorage.getItem('JWT');
+}
 
 @NgModule({
   declarations: [
@@ -39,7 +39,14 @@ import { GroupService } from './services/group.service';
     ReactiveFormsModule,
     LabelModule,
     DropDownsModule,
-    ButtonsModule
+    ButtonsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter,
+        whitelistedDomains: ['localhost:5000'],
+        blacklistedRoutes: ['localhost:5000/api/user/authenticate']
+      }
+    })
   ],
   providers: [
     UserService,

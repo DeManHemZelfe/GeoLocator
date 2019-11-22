@@ -1,1 +1,11 @@
 <div id="map" class="map"></div>
+
+<!-- The custom control for selecting layers -->
+<div #layerControlElement class="options-menu">
+  <select id="type" [formControl]="drawType" (change)="changeType()">
+    <option value="Point">Punt</option>
+    <option value="LineString">Lijn</option>
+    <option value="Polygon">Polygoon</option>
+    <option value="Circle">Cirkel</option>
+  </select>
+</div>

@@ -2,3 +2,15 @@
   width: 100vw;
   height: 100vh;
 }
+
+.options-menu {
+  background-color: rgba(0, 60, 136, 0.5);
+  border-radius: 5px;
+  width: 300px;
+  height: calc(100vh - 20px);
+
+  position: absolute;
+  right: 0;
+
+  margin: 10px 10px 0 0 
+}
