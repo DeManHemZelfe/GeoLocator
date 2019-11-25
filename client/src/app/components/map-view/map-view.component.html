@@ -10,3 +10,47 @@
     <option value="Circle">Cirkel</option>
   </select>
 </div>
+
+<label>BUTTON &nbsp;</label>
+<div class="buttondiv" id="type">
+   <div>
+       <h3>Kaarten</h3>
+        <button kendoButton id="test" *ngFor="let layer of getLayerGroupKaart()"
+        (click)="layer.setVisible(!layer.getVisible())"
+        [primary]="layer.getVisible()">
+        {{layer.get('title')}}
+      </button>
+  </div>
+   <div>
+       <h3>Grenzen</h3>
+        <button kendoButton id="test" *ngFor="let layer of getLayerGroupGrenzen()"
+        (click)="layer.setVisible(!layer.getVisible())"
+        [primary]="layer.getVisible()">
+        {{layer.get('title')}}
+      </button>
+  </div>
+ <div>
+    <h3>Woonplaats</h3>
+     <button kendoButton id="test" *ngFor="let layer of getLayerGroupBag()"
+     (click)="layer.setVisible(!layer.getVisible())"
+     [primary]="layer.getVisible()">
+     {{layer.get('title')}}
+   </button>
+  </div>
+ <div>
+     <h3>Spoorwegen</h3>
+      <button kendoButton id="test" *ngFor="let layer of getLayerGroupSpoorwegen()"
+      (click)="layer.setVisible(!layer.getVisible())"
+      [primary]="layer.getVisible()">
+      {{layer.get('title')}}
+     </button>
+   </div>
+   <div>
+       <h3>OverigeDiensten</h3>
+        <button kendoButton id="test" *ngFor="let layer of getLayerGroupOverigeDiensten()"
+        (click)="layer.setVisible(!layer.getVisible())"
+        [primary]="layer.getVisible()">
+        {{layer.get('title')}}
+      </button>
+  </div>
+</div><br><br>
