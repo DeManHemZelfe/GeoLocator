@@ -1,0 +1,43 @@
+﻿<Properties StartupConfiguration="{B0EEA907-84DD-4742-8CF9-4481BFDE59D2}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Infrastructure/Repositories/UserRepository.cs">
+    <Files>
+      <File FileName="Core/Repositories/IUserRepository.cs" Line="10" Column="76" />
+      <File FileName="Infrastructure/Repositories/UserRepository.cs" Line="42" Column="29" />
+      <File FileName="API/Controllers/UserController.cs" Line="170" Column="78" />
+      <File FileName="Infrastructure/Repositories/UserGroupRepository.cs" Line="1" Column="1" />
+      <File FileName="API/Startup.cs" Line="61" Column="47" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Option id="ShowAllFiles" value="True" />
+          <Node name="Server" expanded="True">
+            <Node name="API" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="DataModels" expanded="True" />
+              </Node>
+              <Node name="Migrations" expanded="True" />
+              <Node name="Properties" expanded="True" />
+            </Node>
+            <Node name="Core" expanded="True">
+              <Node name="Domain" expanded="True" />
+              <Node name="Repositories" expanded="True" />
+            </Node>
+            <Node name="Infrastructure" expanded="True">
+              <Node name="Repositories" expanded="True">
+                <Node name="UserRepository.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.API PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

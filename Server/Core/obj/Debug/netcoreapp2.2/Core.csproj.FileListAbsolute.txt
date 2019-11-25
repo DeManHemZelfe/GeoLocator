@@ -1,0 +1,13 @@
+/home/lucas/Documents/GeoLocator/Server/Core/bin/Debug/netcoreapp2.2/Core.deps.json
+/home/lucas/Documents/GeoLocator/Server/Core/bin/Debug/netcoreapp2.2/Core.dll
+/home/lucas/Documents/GeoLocator/Server/Core/bin/Debug/netcoreapp2.2/Core.pdb
+/home/lucas/Documents/GeoLocator/Server/Core/obj/Debug/netcoreapp2.2/Core.csprojAssemblyReference.cache
+/home/lucas/Documents/GeoLocator/Server/Core/obj/Debug/netcoreapp2.2/Core.AssemblyInfoInputs.cache
+/home/lucas/Documents/GeoLocator/Server/Core/obj/Debug/netcoreapp2.2/Core.AssemblyInfo.cs
+/home/lucas/Documents/GeoLocator/Server/Core/obj/Debug/netcoreapp2.2/Core.dll
+/home/lucas/Documents/GeoLocator/Server/Core/obj/Debug/netcoreapp2.2/Core.pdb
+/home/lucas/Documents/GeoLocator/Server/Core/bin/Debug/netcoreapp2.2/Microsoft.IdentityModel.Tokens.dll
+/home/lucas/Documents/GeoLocator/Server/Core/bin/Debug/netcoreapp2.2/Microsoft.IdentityModel.Tokens.pdb
+/home/lucas/Documents/GeoLocator/Server/Core/bin/Debug/netcoreapp2.2/Microsoft.IdentityModel.Tokens.xml
+/home/lucas/Documents/GeoLocator/Server/Core/obj/Debug/netcoreapp2.2/Core.csproj.CopyComplete
+/home/lucas/Documents/GeoLocator/Server/Core/obj/Debug/netcoreapp2.2/Core.csproj.CoreCompileInputs.cache

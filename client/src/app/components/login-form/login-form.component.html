@@ -1,0 +1,32 @@
+<app-header></app-header>
+
+<div><p>DIT IS DE login-form</p></div>
+
+<form [formGroup]="form" class="k-form login-form">
+  <fieldset class="login-fieldset">
+    <legend>Inloggen</legend>
+    <label class="k-form-field">
+      <span>Email <span class="k-required">*</span></span>
+      <input class="k-textbox" type="email" placeholder="email@domein.nl" formControlName="email">
+      <div *ngIf="email.invalid && (email.dirty || email.touched)">
+
+      </div>
+    </label>
+    <label class="k-form-field">
+      <span>Wachtwoord <span class="k-required">*</span></span>
+      <input class="k-textbox" type="password" formControlName="password">
+    </label>
+    <label class="k-form-field">
+        <span>Groep <span class="k-required">*</span></span>
+        <kendo-dropdownlist
+          formControlName="group"
+          [data]="groups"
+          [textField]="'name'"
+          [valueField]="'value'"
+          [valuePrimitive]="true"
+        >
+        </kendo-dropdownlist>
+    </label>
+  </fieldset>
+  <button class="k-button k-primary" (click)="authenticate()">Log in</button>
+</form>

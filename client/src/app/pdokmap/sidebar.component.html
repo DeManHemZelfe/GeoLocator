@@ -9,7 +9,8 @@
     <div class="box_from_container_container_cc1">
       <div class="container_menu">
         <h3>Kies je dingetjes</h3>
-        <mat-accordion >
+        <button kendobutton (click)="foo()">test</button>
+        <mat-accordion>
             <mat-expansion-panel class="mat-expansion-panel">
               <mat-expansion-panel-header class="mat-expansion-header">
                 <mat-panel-title class="mat-panel-title">Draw
@@ -18,7 +19,7 @@
               </mat-expansion-panel-header>
               <form class="form-inline">
                   <label>Tekenen &nbsp;</label>
-                  <select id="type" [formControl]="typeSelect" (change)="switchMode()">
+                  <select id="type" [formControl]="typeSelectTekenen" (change)="switchMode()">
                     <option value="Point">Point</option>
                     <option value="LineString">LineString</option>
                     <option value="Polygon">Polygon</option>
@@ -146,7 +147,7 @@
                   </mat-expansion-panel-header>
                   <form class="form-inline">
                       <label> Accessoires &nbsp;</label>
-                      <select id="type" [formControl]="typeSelect" (change)="switchLocationMode()">
+                      <select id="type" [formControl]="typeSelectTekenen" (change)="switchLocationMode()">
                         <option value="your_desteny">Your desteny</option>
                         <option value="your_location">Your location</option>
                         <option value="">None</option>
@@ -167,7 +168,7 @@
                     </mat-expansion-panel-header>
                     <form class="form-inline">
                         <label>Routes &nbsp;</label>
-                        <select id="type" [formControl]="typeSelect" (change)="switchRoutesMode()">
+                        <select id="type" [formControl]="typeSelectTekenen" (change)="switchRoutesMode()">
                           <option value="wandelroute">WandelRoute</option>
                           <option value="fietsroute">FietsRoute</option>
                           <option value="snelweg">Snelwegen</option>

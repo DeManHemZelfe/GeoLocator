@@ -27,7 +27,11 @@ import { OverigeDienstenService } from '../layers/overigediensten.service';
 
 import _ from 'underscore';
 import LayerGroup from 'ol/layer/Group';
-import {defaults as defaultControls, Control, ZoomToExtent, Rotate} from 'ol/control';
+import {defaults as defaultControls, Control, ZoomToExtent, Rotate, ScaleLine, ZoomSlider} from 'ol/control';
+import { zoom } from 'ol/interaction/Interaction';
+import Zoom from 'ol/control/Zoom';
+import { Button } from '@progress/kendo-angular-buttons';
+
 
 @Component({
   selector: 'app-sidebar',
@@ -36,7 +40,8 @@ import {defaults as defaultControls, Control, ZoomToExtent, Rotate} from 'ol/con
 })
 export class SidebarComponent implements OnInit {
   titles = 'Suggestie';
-  typeSelect = new FormControl('');
+
+  typeSelectTekenen = new FormControl('');
   typeSelectdikzak = new FormControl('');
   typeSelectborder = new FormControl('');
   typeSelectbrt = new FormControl('');
@@ -170,7 +175,6 @@ export class SidebarComponent implements OnInit {
     title: 'BrtGrijsLayer'
   } as ITileOptions);
 
-
   layergroupkaart = new LayerGroup ({
     layers: [
       this.baseLayer,
@@ -233,37 +237,23 @@ export class SidebarComponent implements OnInit {
     for (let i = 0; i < this.matrixIds.length; i++) {
       this.matrixIds[i] = 'EPSG:28992:' + i;
     }
-
     this.map = new Map({
-      controls: defaultControls().extend([
-        new ZoomToExtent({
-          extent: [
-            -285401.92, 22598.08,
-             595401.92, 903401.92,
-          ]
-        }),
-      ]),
       target: 'map',
       layers: [
        this.baseLayer,
-
        this.brtWaterLayer,
        this.brtGrijsLayer,
-
        this.bestuurlijkegrenzenservice.landsgrensLayer,
        this.bestuurlijkegrenzenservice.gemeentenLayer,
        this.bestuurlijkegrenzenservice.provinciesLayer,
-
        this.bagService.BagLigplaatsLayer,
        this.bagService.BagPandLayer,
        this.bagService.BagVerblijfsobjectLayer,
        this.bagService.BagWoonplaatsLayer,
        this.bagService.BagStandplaatsLayer,
-
        this.overigedienstenSerivce.OverheidsdienstenLayer,
        this.overigedienstenSerivce.AgrarischAreaalNederlandLayer,
        this.overigedienstenSerivce.GeografischenamenLayer,
-
        this.spoorwegService.KruisingLayer,
        this.spoorwegService.OverwegLayer,
        this.spoorwegService.SpoorasLayer,
@@ -274,20 +264,36 @@ export class SidebarComponent implements OnInit {
 
        this.tekenfunctie
       ],
-      overlays: [],
       view: new View({
         center: [150000, 450000],
         projection: this.projection,
         zoom: 3,
         minZoom: 0,
         maxZoom: 15,
-      })
-    });
-    this.map.getLayers().extend([
-    ]);
+      }),
+      overlays: [],
+      controls: defaultControls().extend([
+        new ScaleLine({}),
+        new Rotate({
+          className: 'ol-rotate',
+          label: 'F',
+          tipLabel: 'test',
+          duration: 250,
+          autoHide: false
+        }),
+        new ZoomToExtent({extent: [-285401.92, 22598.08, 595401.92, 903401.92, ]}
+      ),
+        ])
+    }),
+    this.map.getLayers().extend([]);
+    // this.map.getControls().extend([new ZoomToExtent({extent: [-285401.92, 22598.08, 595401.92, 903401.92]}) ]);
   }
 
-
+  foo() {
+    console.log('test');
+    const alsjeblieft = document.createElement('div') as HTMLDivElement;
+    return alsjeblieft;
+  }
   getLayerGroupKaart() {
     return this.layergroupkaart.getLayers().getArray();
   }
@@ -306,33 +312,29 @@ export class SidebarComponent implements OnInit {
   getLayers() {
     return this.map.getLayers().getArray();
   }
-
   bLayervisible() {
     this.invisible = !this.invisible;
     const value = this.typeSelectdikzak.value;
     console.log('buttonworks2');
   }
-
   toggleDisplay() {
     this.Hide = !this.Hide;
     console.log('you click on hide');
   }
-
   isHidden() {
     this.isNotVisible = !this.isNotVisible;
     // this.isVisible = this.brtWaterLayer;
     console.log('you click on hide on visible');
   }
-
   tooltip() {}
   helptooltip() {}
 
   addInteraction() {
-    const value = this.typeSelect.value;
+    const value = this.typeSelectTekenen.value;
     if (value !== '') {
       this.draw = new OlDraw({
         source: this.source,
-        type: this.typeSelect.value
+        type: this.typeSelectTekenen.value
       });
       this.map.addInteraction(this.draw);
       console.log('addInteraction()');

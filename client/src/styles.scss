@@ -1,0 +1,12 @@
+@import "~@progress/kendo-theme-bootstrap/scss/all.scss";
+
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.app-validation-error {
+  color: red;
+  font-size: 0.75em;
+}

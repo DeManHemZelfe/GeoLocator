@@ -5,13 +5,10 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
 export class AppComponent {
   title = 'client';
-  lat = 52.370216;
-  lng = 4.895168;
-
   onButtonClick() {
     console.log('click');
   }
 }
+
