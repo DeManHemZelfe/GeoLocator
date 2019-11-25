@@ -1,20 +1,23 @@
 <app-header></app-header>
 
-<div><p>DIT IS DE login-form</p></div>
-
 <form [formGroup]="form" class="k-form login-form">
   <fieldset class="login-fieldset">
     <legend>Inloggen</legend>
+    <div *ngIf="loginError" class="app-validation-error">{{ loginError }}</div>
     <label class="k-form-field">
       <span>Email <span class="k-required">*</span></span>
       <input class="k-textbox" type="email" placeholder="email@domein.nl" formControlName="email">
-      <div *ngIf="email.invalid && (email.dirty || email.touched)">
-
+      <div *ngIf="email.invalid && email.touched" class="app-validation-error">
+        <div *ngIf="email.errors['required']">Email is vereist</div>
+        <div *ngIf="email.errors['email']">Ongeldige email</div>
       </div>
     </label>
     <label class="k-form-field">
       <span>Wachtwoord <span class="k-required">*</span></span>
       <input class="k-textbox" type="password" formControlName="password">
+      <div *ngIf="password.invalid && password.touched" class="app-validation-error">
+        <div *ngIf="password.errors['required']">Wachtwoord is vereist</div>
+      </div>
     </label>
     <label class="k-form-field">
         <span>Groep <span class="k-required">*</span></span>
@@ -26,7 +29,10 @@
           [valuePrimitive]="true"
         >
         </kendo-dropdownlist>
+        <div *ngIf="group.invalid && group.touched" class="app-validation-error">
+          <div *ngIf="group.errors['required']">Groep is vereist</div>
+        </div>
     </label>
   </fieldset>
-  <button class="k-button k-primary" (click)="authenticate()">Log in</button>
+  <button [disabled]="form.invalid" class="k-button k-primary" (click)="authenticate()">Log in</button>
 </form>

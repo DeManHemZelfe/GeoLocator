@@ -5,3 +5,8 @@
 .login-fieldset {
   margin-bottom: 16px;
 }
+
+.app-validation-error {
+  font-size: 1rem;
+  color: red;
+}
