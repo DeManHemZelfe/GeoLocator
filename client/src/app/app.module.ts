@@ -1,6 +1,8 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgbModule, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
+
 import {MatMenuModule} from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -38,7 +40,6 @@ import {MatRadioModule} from '@angular/material/radio';
 import { SpoorwegenService } from './layers/spoorwegen.service';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-
 import { HeaderComponent } from './header/header.component';
 
 export function tokenGetter() {
@@ -73,6 +74,7 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     ReactiveFormsModule,
     ButtonsModule,
+    NgbModule,
     JwtModule.forRoot({
       config: {
         tokenGetter,
@@ -89,6 +91,6 @@ export function tokenGetter() {
     BestuurlijkegrenzenService,
     SpoorwegenService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

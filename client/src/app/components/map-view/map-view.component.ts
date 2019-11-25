@@ -2,14 +2,20 @@ import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 
 import { Map, View } from 'ol';
 import { Zoom, Control } from 'ol/control';
-import Draw from 'ol/interaction/Draw';
-import VectorSource from 'ol/source/Vector';
-import { FormControl } from '@angular/forms';
-import VectorLayer from 'ol/layer/Vector';
-import DefaultLayers from './map-layers/default.layers';
-import MapConfig from './config/map.config';
 
 import { Icon, Stroke, Style, Fill } from 'ol/style';
+
+import VectorSource from 'ol/source/Vector';
+
+import VectorLayer from 'ol/layer/Vector';
+import LayerGroup from 'ol/layer/Group';
+
+import Draw from 'ol/interaction/Draw';
+
+import { FormControl } from '@angular/forms';
+
+import DefaultLayers from './map-layers/default.layers';
+import MapConfig from './config/map.config';
 
 import { SpoorwegenService } from '../../layers/spoorwegen.service';
 import { SuggestService } from '../../components/service/suggest.service';
@@ -30,8 +36,8 @@ export class MapViewComponent implements AfterViewInit {
   // Fields required for the draw function to work
   private draw: Draw; // The draw object that implements the draw functionality
   drawType = new FormControl(''); // The select input field
-  private drawSource = new VectorSource({ wrapX: false }); // The source for every drawing style.
-  private drawVector = new VectorLayer({
+  drawSource = new VectorSource({ wrapX: false }); // The source for every drawing style.
+  drawVector = new VectorLayer({
     source: this.drawSource,
     style: new Style({
       fill: new Fill({
@@ -47,7 +53,50 @@ export class MapViewComponent implements AfterViewInit {
   private mapConfig = new MapConfig(); // Config class for the map
   private defaultLayers: DefaultLayers; // All default layers for the map
 
+
   @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
+
+  // layergroupkaart = new LayerGroup ({
+  //   layers: [
+  //     this.baseLayer,
+  //     this.brtWaterLayer,
+  //     this.brtGrijsLayer,
+  //   ]
+  // });
+  layergroupgrenzen = new LayerGroup ({
+    layers: [
+      this.bestuurlijkegrenzenservice.landsgrensLayer,
+      this.bestuurlijkegrenzenservice.gemeentenLayer,
+      this.bestuurlijkegrenzenservice.provinciesLayer,
+    ]
+  });
+  layergroupspoorwegen = new LayerGroup ({
+    layers: [
+      this.spoorwegService.KruisingLayer,
+      this.spoorwegService.OverwegLayer,
+      this.spoorwegService.SpoorasLayer,
+      this.spoorwegService.StationLayer,
+      this.spoorwegService.TraceLayer,
+      this.spoorwegService.WisselLayer,
+      this.spoorwegService.KilometreringLayer,
+    ]
+  });
+  layergroupBag = new LayerGroup ({
+    layers: [
+     this.bagService.BagLigplaatsLayer,
+     this.bagService.BagPandLayer,
+     this.bagService.BagStandplaatsLayer,
+     this.bagService.BagVerblijfsobjectLayer,
+     this.bagService.BagWoonplaatsLayer
+    ]
+  });
+  layergroupOverigeDiensten = new LayerGroup ({
+    layers: [
+      this.overigedienstenSerivce.OverheidsdienstenLayer,
+      this.overigedienstenSerivce.AgrarischAreaalNederlandLayer,
+      this.overigedienstenSerivce.GeografischenamenLayer
+    ]
+  });
 
   constructor(
     private suggestService: SuggestService,
@@ -61,7 +110,7 @@ export class MapViewComponent implements AfterViewInit {
     this.initializeMap();
   }
 
-  private initializeMap() {
+  initializeMap() {
     this.defaultLayers = new DefaultLayers(
       0,
       this.mapConfig.projection,
@@ -74,7 +123,27 @@ export class MapViewComponent implements AfterViewInit {
       layers: [
         this.drawVector,
         this.defaultLayers.bgLayer,
+        // this.baseLayer,
+        // this.brtWaterLayer,
+        // this.brtGrijsLayer,
         this.bestuurlijkegrenzenservice.landsgrensLayer,
+        this.bestuurlijkegrenzenservice.gemeentenLayer,
+        this.bestuurlijkegrenzenservice.provinciesLayer,
+        this.bagService.BagLigplaatsLayer,
+        this.bagService.BagPandLayer,
+        this.bagService.BagVerblijfsobjectLayer,
+        this.bagService.BagWoonplaatsLayer,
+        this.bagService.BagStandplaatsLayer,
+        this.overigedienstenSerivce.OverheidsdienstenLayer,
+        this.overigedienstenSerivce.AgrarischAreaalNederlandLayer,
+        this.overigedienstenSerivce.GeografischenamenLayer,
+        this.spoorwegService.KruisingLayer,
+        this.spoorwegService.OverwegLayer,
+        this.spoorwegService.SpoorasLayer,
+        this.spoorwegService.StationLayer,
+        this.spoorwegService.TraceLayer,
+        this.spoorwegService.WisselLayer,
+        this.spoorwegService.KilometreringLayer,
       ],
       view: new View({
         center: [150000, 450000],
@@ -91,11 +160,11 @@ export class MapViewComponent implements AfterViewInit {
   }
 
   addInteraction() {
-    const value = this.drawType.value;
-    if (value) {
+    const drawTypevalue = this.drawType.value;
+    if (drawTypevalue !== '') {
       this.draw = new Draw({
         source: this.drawSource,
-        type: value
+        type: drawTypevalue
       });
     }
     this.map.addInteraction(this.draw);
@@ -106,9 +175,6 @@ export class MapViewComponent implements AfterViewInit {
     this.addInteraction();
   }
 
-  getLayerGroupKaart() {
-    return this.layergroupkaart.getLayers().getArray();
-  }
   getLayerGroupBag() {
     return this.layergroupBag.getLayers().getArray();
   }

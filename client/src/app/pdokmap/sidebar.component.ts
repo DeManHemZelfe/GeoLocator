@@ -31,6 +31,8 @@ import { zoom } from 'ol/interaction/Interaction';
 import Zoom from 'ol/control/Zoom';
 import { Button } from '@progress/kendo-angular-buttons';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-sidebar',
