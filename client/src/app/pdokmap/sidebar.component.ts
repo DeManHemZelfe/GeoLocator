@@ -216,7 +216,6 @@ export class SidebarComponent implements OnInit {
       this.overigedienstenSerivce.GeografischenamenLayer
     ]
   });
-
   constructor(
     private suggestService: SuggestService,
     private spoorwegService: SpoorwegenService,
@@ -225,6 +224,7 @@ export class SidebarComponent implements OnInit {
     private kaartService: KaartService,
     private overigedienstenSerivce: OverigeDienstenService
   ) {}
+
   ngOnInit() {
     this.initializeMap();
     this.addInteraction();

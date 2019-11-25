@@ -18,10 +18,7 @@ import { GroupService } from './services/group.service';
 import { JwtModule } from '@auth0/angular-jwt';
 
 import { RouterModule,  Routes } from '@angular/router';
-
 import { AgmCoreModule } from '@agm/core';
-
-
 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule, MatOptionModule, MatSelectModule } from '@angular/material';
@@ -43,7 +40,6 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 
 import { HeaderComponent } from './header/header.component';
-
 
 export function tokenGetter() {
   return localStorage.getItem('JWT');

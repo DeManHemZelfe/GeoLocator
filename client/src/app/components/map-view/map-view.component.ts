@@ -22,9 +22,7 @@ export class MapViewComponent implements AfterViewInit {
   private draw: Draw; // The draw object that implements the draw functionality
   drawType = new FormControl(''); // The select input field
   private drawSource = new VectorSource({ wrapX: false }); // The source for every drawing style.
-  private drawVector = new VectorLayer({ // The actual layer that will get drawn on the map
-    source: this.drawSource
-  });
+  private drawVector = new VectorLayer({ source: this.drawSource }); // The actual layer that will get drawn on the map
 
   private mapConfig = new MapConfig(); // Config class for the map
   private defaultLayers: DefaultLayers; // All default layers for the map
