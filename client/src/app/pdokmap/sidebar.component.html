@@ -9,11 +9,52 @@
     <div class="box_from_container_container_cc1">
       <div class="container_menu">
 
-        <mat-accordion>
-
+        <mat-accordion><!-- DIT IS HET BEGIN VAN DE DROPDOWNMENU VOOR DE LAGEN -->
+            <mat-expansion-panel class="mat-expansion-panel">
+                <mat-expansion-panel-header class="mat-expansion-header">
+                  <mat-panel-title class="mat-panel-title">Kaarten
+                    <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;"></i>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <form class="form-inline">
+                    <label>Tekenen &nbsp;</label>
+                    <select id="type" [formControl]="typeSelectTekenen" (change)="switchMode()">
+                      <option value="Point">Point</option>
+                      <option value="LineString">LineString</option>
+                      <option value="Polygon">Polygon</option>
+                      <option value="Circle">Circle</option>
+                      <option value="">None</option>
+                    </select>
+                  </form>
+                  <h2>ToolTips</h2>
+                  <mat-checkbox>Kilometers</mat-checkbox><br>
+                <mat-checkbox>Miles</mat-checkbox><br>
+              </mat-expansion-panel>
         </mat-accordion>
+        <mat-accordion>
+            <mat-expansion-panel class="mat-expansion-panel">
+                <mat-expansion-panel-header class="mat-expansion-header">
+                  <mat-panel-title class="mat-panel-title">Kaarten
+                    <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;"></i>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <form class="form-inline">
+                    <label>Tekenen &nbsp;</label>
+                    <select id="type" [formControl]="typeSelectTekenen" (change)="switchMode()">
+                      <option value="Point">Point</option>
+                      <option value="LineString">LineString</option>
+                      <option value="Polygon">Polygon</option>
+                      <option value="Circle">Circle</option>
+                      <option value="">None</option>
+                    </select>
+                  </form>
+                  <h2>ToolTips</h2>
+                  <mat-checkbox>Kilometers</mat-checkbox><br>
+                <mat-checkbox>Miles</mat-checkbox><br>
+              </mat-expansion-panel>
+        </mat-accordion><!-- DIT IS HET EINDE VAN DE DROPDOWNMENU VOOR DE LAGEN -->
 
-        <h3>Kies je dingetjes</h3>
+        <h3>Kies je dingetjes</h3><!-- DIT IS HET BEGIN VAN DE MENU UI VOOR DE LAGEN -->
         <button kendobutton (click)="foo()">test</button>
         <mat-accordion>
             <mat-expansion-panel class="mat-expansion-panel">
