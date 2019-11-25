@@ -62,7 +62,8 @@ export class MapViewComponent implements AfterViewInit {
   }
 
   private initializeMap() {
-    this.defaultLayers = new DefaultLayers(0,
+    this.defaultLayers = new DefaultLayers(
+      0,
       this.mapConfig.projection,
       this.mapConfig.projectionExtent,
       this.mapConfig.resolutions,

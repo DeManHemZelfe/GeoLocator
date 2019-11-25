@@ -1,6 +1,6 @@
 import { UserService } from 'src/app/services/user.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidationErrors} from '@angular/forms';
 import { GroupService } from 'src/app/services/group.service';
 import Group from 'src/app/interfaces/group.interface';
 import { Router } from '@angular/router';
@@ -17,32 +17,27 @@ export class LoginFormComponent implements OnInit {
   form = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, Validators.required),
-    group: new FormControl(null)
+    group: new FormControl(null, Validators.required)
   });
+
+  loginError: string;
 
   // select values for the dropdown
   groups: Array<{ name: string, value: number }> = new Array<{ name: string, value: number }>();
-  // defaultGroup: { name: string, value: number };
 
   constructor(private groupService: GroupService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    // Check if the user is already logged in
-    // If they are: redirect to index. If they are not: load the form component and make requests to server
-    const JWT = localStorage.getItem('JWT');
-    if (JWT) {
-      this.router.navigateByUrl('');
-    } else {
-      this.groupService.getAllGroups()
-        .subscribe((data: Array<Group>) => {
-          for (let i = 0, n = data.length; i < n; i++) {
-            this.groups.push({ name: data[i].name, value: data[i].id });
-          }
-        });
-    }
+    this.groupService.getAllGroups()
+      .subscribe((data: Array<Group>) => {
+        for (let i = 0, n = data.length; i < n; i++) {
+          this.groups.push({ name: data[i].name, value: data[i].id });
+        }
+      });
   }
 
   authenticate() {
+    console.log(this.form.get('email'));
     if (this.form.invalid) {
       return;
     }
@@ -50,6 +45,12 @@ export class LoginFormComponent implements OnInit {
     this.userService.login(this.form.value)
       .pipe(first())
       .subscribe(data => {
+        if (data.error) {
+          this.loginError = data.error;
+        } else {
+          this.loginError = null;
+          localStorage.setItem('JWT', data.response);
+        }
         this.router.navigateByUrl('');
       }, err => this.form.setErrors({ error: 'could not authenticate' }));
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import TileWMS, {Options as TileWMSOptions} from 'ol/source/TileWMS';
-import TileLayer, {Options as TileOptions} from 'ol/layer/tile';
+import TileLayer, {Options as TileOptions} from 'ol/layer/Tile';
 import { Vector as VectorLayer } from 'ol/layer';
 
 
