@@ -5,6 +5,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { verify } from 'jsonwebtoken';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { ValidationErrors } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +21,14 @@ export class UserService {
     return (localStorage.getItem('JWT') !== null);
   }
 
-  login(signInCredentials: { email: string, password: string, group: number }): Observable<boolean> {
+  login(signInCredentials: { email: string, password: string, group: number }): Observable<{ error: string, response: string }> {
     return this.http.post(`${this.url}user/authenticate`, signInCredentials)
-      .pipe(map((jwt: any) => {
-        localStorage.setItem('JWT', jwt.rawData);
-        return true;
+      .pipe(map((data: any) => {
+        if (data.error) {
+          return  { error: data.error, response: null };
+        } else {
+          return { error: null, response: data.rawData };
+        }
       }));
   }
 

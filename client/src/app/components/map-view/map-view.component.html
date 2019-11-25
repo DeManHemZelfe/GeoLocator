@@ -3,10 +3,51 @@
 <div id="map" class="map"></div>
 <!-- The custom control for selecting layers -->
 <div #layerControlElement class="options-menu">
-  <select id="type" [formControl]="drawType" (change)="changeType()">
+  <h3>Tekenen</h3>
+  <select id="type" [formControl]="drawType" (change)="changeType()" class="selectmenutekenen">
     <option value="Point">Punt</option>
     <option value="LineString">Lijn</option>
     <option value="Polygon">Polygoon</option>
     <option value="Circle">Cirkel</option>
-  </select>
+  </select><br><br>
+
+  <div class="buttondiv" id="type">
+    <div class="knopjes">
+        <h3>Grenzen</h3>
+         <button kendoButton id="test" *ngFor="let layer of getLayerGroupGrenzen()"
+         (click)="layer.setVisible(!layer.getVisible())"
+         [primary]="layer.getVisible()">
+         {{layer.get('title')}}
+       </button>
+   </div>
+   <div class="knopjes">
+     <h3>Woonplaats</h3>
+      <button kendoButton id="test" *ngFor="let layer of getLayerGroupBag()"
+      (click)="layer.setVisible(!layer.getVisible())"
+      [primary]="layer.getVisible()">
+      {{layer.get('title')}}
+    </button>
+   </div>
+   <div class="knopjes">
+      <h3>Spoorwegen</h3>
+       <button kendoButton id="test" *ngFor="let layer of getLayerGroupSpoorwegen()"
+       (click)="layer.setVisible(!layer.getVisible())"
+       [primary]="layer.getVisible()">
+       {{layer.get('title')}}
+      </button>
+    </div>
+    <div class="knopjes">
+        <h3>OverigeDiensten</h3>
+         <button kendoButton id="test" *ngFor="let layer of getLayerGroupOverigeDiensten()"
+         (click)="layer.setVisible(!layer.getVisible())"
+         [primary]="layer.getVisible()">
+         {{layer.get('title')}}
+       </button>
+   </div>
+ </div><br><br>
+
+
 </div>
+
+
+

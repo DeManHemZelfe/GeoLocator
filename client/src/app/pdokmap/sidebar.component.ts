@@ -4,7 +4,7 @@ import { Map, View, Collection } from 'ol';
 
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import TileWMS, { Options as TileWMSOptions } from 'ol/source/TileWMS';
-import { Options as TileOptions } from 'ol/layer/tile';
+import { Options as TileOptions } from 'ol/layer/Tile';
 
 import { OSM, Vector as VectorSource, TileJSON } from 'ol/source';
 import OlDraw from 'ol/interaction/Draw';
@@ -25,12 +25,13 @@ import { SpoorwegenService } from '../layers/spoorwegen.service';
 import { HttpResponse } from '@angular/common/http';
 import { OverigeDienstenService } from '../layers/overigediensten.service';
 
-import _ from 'underscore';
 import LayerGroup from 'ol/layer/Group';
 import {defaults as defaultControls, Control, ZoomToExtent, Rotate, ScaleLine, ZoomSlider} from 'ol/control';
 import { zoom } from 'ol/interaction/Interaction';
 import Zoom from 'ol/control/Zoom';
 import { Button } from '@progress/kendo-angular-buttons';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
