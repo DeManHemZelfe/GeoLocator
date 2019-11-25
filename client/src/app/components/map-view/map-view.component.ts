@@ -38,7 +38,11 @@ export class MapViewComponent implements AfterViewInit {
   }
 
   private initializeMap() {
-    this.defaultLayers = new DefaultLayers(0, this.mapConfig.projection, this.mapConfig.projectionExtent, this.mapConfig.resolutions, this.mapConfig.matrixIds);
+    this.defaultLayers = new DefaultLayers(0,
+      this.mapConfig.projection,
+      this.mapConfig.projectionExtent,
+      this.mapConfig.resolutions,
+      this.mapConfig.matrixIds);
 
     this.map = new Map({
       target: 'map',
@@ -63,7 +67,6 @@ export class MapViewComponent implements AfterViewInit {
 
   addInteraction() {
     const value = this.drawType.value;
-
     if (value) {
       this.draw = new Draw({
         source: this.drawSource,
@@ -77,5 +80,4 @@ export class MapViewComponent implements AfterViewInit {
     this.map.removeInteraction(this.draw);
     this.addInteraction();
   }
-
 }

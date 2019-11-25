@@ -1,0 +1,212 @@
+<app-header></app-header>
+
+<div class="container_container_cc1">
+
+    <div class="style_for_map">
+      <div id="map" class="map"></div>
+    </div>
+
+    <div class="box_from_container_container_cc1">
+      <div class="container_menu">
+        <h3>Kies je dingetjes</h3>
+        <button kendobutton (click)="foo()">test</button>
+        <mat-accordion>
+            <mat-expansion-panel class="mat-expansion-panel">
+              <mat-expansion-panel-header class="mat-expansion-header">
+                <mat-panel-title class="mat-panel-title">Draw
+                  <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;"></i>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <form class="form-inline">
+                  <label>Tekenen &nbsp;</label>
+                  <select id="type" [formControl]="typeSelectTekenen" (change)="switchMode()">
+                    <option value="Point">Point</option>
+                    <option value="LineString">LineString</option>
+                    <option value="Polygon">Polygon</option>
+                    <option value="Circle">Circle</option>
+                    <option value="">None</option>
+                  </select>
+                </form>
+                <h2>ToolTips</h2>
+                <mat-checkbox>Kilometers</mat-checkbox><br>
+              <mat-checkbox>Miles</mat-checkbox><br>
+            </mat-expansion-panel>
+            <!-- EINDE EINDE EINDE EINDE EINDE EINDE EINDE EINDE EINDE EINDE EINDE EINDE -->
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+              <mat-expansion-panel-header class="mat-expansion-header {">
+                <mat-panel-title>Colors
+                  <i class="k-icon k-i-palette" style="font-size: 10px;" style="color: black;"></i>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <form>
+                  <h2>Color Line</h2>
+                  <select>
+                    <option value="">Dark Colors</option>
+                    <option value="Dark-Red">Dark Red</option>
+                    <option value="Dark-Blue">Dark Blue</option>
+                  </select>
+                  <select>
+                      <option value="lightcolor">Light Color</option>
+                      <option value="Dark-Red">Light Red</option>
+                      <option value="Dark-Blue">Light Blue</option>
+                    </select>
+                   <h2>Color fill</h2>
+                   <select>
+                      <option value="">Dark Colors</option>
+                      <option value="Dark-Red">Dark Red</option>
+                      <option value="Dark-Blue">Dark Blue</option>
+                    </select>
+                    <select>
+                        <option value="lightcolor">Light Color</option>
+                        <option value="Dark-Red">Light Red</option>
+                        <option value="Dark-Blue">Light Blue</option>
+                      </select>
+              </form>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel class="mat-expansion-panel">
+                <mat-expansion-panel-header class="mat-expansion-header">
+                  <mat-panel-title class="mat-panel-title">Layers
+                    <i class="k-icon k-i-globe-outline" style="font-size: 10px;" style="color: black;"></i>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <form class="form-inline">
+                    <label>Kaart &nbsp;</label>
+                     <select id="type" [formControl]="typeSelectbrt">
+                      <option value="brtachtergrondkaart">achtergrondkaart</option>
+                      <option value="brtachtergrondkaartGrijs">brtGrijs</option>
+                      <option value="brtachtergrondkaartPasteel">brtPasteel</option>
+                      <option value="brtachtergrondkaartWater">brtWater</option>
+                     </select><br><br>
+
+                     <div>selectvalue: {{ typeSelectbrt.value }}</div><br><br>
+
+                     <label>BUTTON &nbsp;</label>
+                     <div class="buttondiv" id="type">
+                        <div>
+                            <h3>Kaarten</h3>
+                             <button kendoButton id="test" *ngFor="let layer of getLayerGroupKaart()"
+                             (click)="layer.setVisible(!layer.getVisible())"
+                             [primary]="layer.getVisible()">
+                             {{layer.get('title')}}
+                           </button>
+                       </div>
+                        <div>
+                            <h3>Grenzen</h3>
+                             <button kendoButton id="test" *ngFor="let layer of getLayerGroupGrenzen()"
+                             (click)="layer.setVisible(!layer.getVisible())"
+                             [primary]="layer.getVisible()">
+                             {{layer.get('title')}}
+                           </button>
+                       </div>
+                      <div>
+                         <h3>Woonplaats</h3>
+                          <button kendoButton id="test" *ngFor="let layer of getLayerGroupBag()"
+                          (click)="layer.setVisible(!layer.getVisible())"
+                          [primary]="layer.getVisible()">
+                          {{layer.get('title')}}
+                        </button>
+                       </div>
+                      <div>
+                          <h3>Spoorwegen</h3>
+                           <button kendoButton id="test" *ngFor="let layer of getLayerGroupSpoorwegen()"
+                           (click)="layer.setVisible(!layer.getVisible())"
+                           [primary]="layer.getVisible()">
+                           {{layer.get('title')}}
+                          </button>
+                        </div>
+                        <div>
+                            <h3>OverigeDiensten</h3>
+                             <button kendoButton id="test" *ngFor="let layer of getLayerGroupOverigeDiensten()"
+                             (click)="layer.setVisible(!layer.getVisible())"
+                             [primary]="layer.getVisible()">
+                             {{layer.get('title')}}
+                           </button>
+                       </div>
+                     </div><br><br>
+
+                    <label>Border &nbsp;</label>
+                     <select id="type" [formControl]="typeSelectborder" (change)="switchBorderMode()">
+                      <option value="landsgrenzen">Landsgrens</option>
+                      <option value="gemeenten">Gemeentegrens</option>
+                      <option value="provincies">Provinciegrens</option>
+                      <option value="">(dft) none</option>
+                     </select>
+                  </form>
+                  <h2>ToolTips</h2>
+                  <mat-checkbox>Borders</mat-checkbox><br>
+                  <mat-checkbox>Airports</mat-checkbox><br>
+                  <mat-checkbox>Boat docks</mat-checkbox><br>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel class="mat-expansion-panel">
+                  <mat-expansion-panel-header class="mat-expansion-header">
+                    <mat-panel-title class="mat-panel-title">Locations
+                      <i class="k-icon k-i-marker-pin" style="font-size: 10px;" style="color: black;"></i>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <form class="form-inline">
+                      <label> Accessoires &nbsp;</label>
+                      <select id="type" [formControl]="typeSelectTekenen" (change)="switchLocationMode()">
+                        <option value="your_desteny">Your desteny</option>
+                        <option value="your_location">Your location</option>
+                        <option value="">None</option>
+                      </select>
+                    </form>
+                    <h2>ToolTips</h2>
+                    <mat-checkbox value="monuments">Monuments</mat-checkbox><br>
+                    <mat-checkbox>Food & Drinks</mat-checkbox><br>
+                    <mat-checkbox>Car</mat-checkbox><br>
+                    <mat-checkbox>Walking</mat-checkbox><br>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel class="mat-expansion-panel">
+                    <mat-expansion-panel-header class="mat-expansion-header">
+                      <mat-panel-title class="mat-panel-title">Routes
+                        <i class="k-icon k-i-marker-pin" style="font-size: 10px;" style="color: black;"></i>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <form class="form-inline">
+                        <label>Routes &nbsp;</label>
+                        <select id="type" [formControl]="typeSelectTekenen" (change)="switchRoutesMode()">
+                          <option value="wandelroute">WandelRoute</option>
+                          <option value="fietsroute">FietsRoute</option>
+                          <option value="snelweg">Snelwegen</option>
+                          <option value="spooras">Spoorwegen</option>
+                          <option value="busbaan">Busbaan</option>
+                          <option value="">deafault</option>
+                        </select>
+                      </form>
+                      <h2>ToolTips</h2>
+                      <mat-checkbox>Kilometers</mat-checkbox><br>
+                      <mat-checkbox>Miles</mat-checkbox><br>
+                      </mat-expansion-panel>
+          </mat-accordion><br>
+  <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+    <div class="searchbox">
+      <form class="form-inline waves-light" mdbWavesEffect>
+        <div class="md-form mt-0">
+          <input class="form-control mr-sm-2" type="search" MatInput placeholder="searchSuggest"
+                 style="width: 320%; height: 30px; background-color: whitesmoke; color: black;"
+                 [formControl]="searchInput" (change)="searchEntity()">
+          <div *ngIf="searchSuggestions" class="searchBoxresults">
+            <p *ngFor="let suggestion of searchSuggestions" class="suggestion_weergave">{{suggestion.weergavenaam}}</p>
+        </div>
+       </div>
+     </form>
+   </div>
+   <!-- etetetetetetetetetetyetetyeteteteteteteteteetettetete -->
+   <div class="searchbox">
+      <form class="form-inline waves-light" mdbWavesEffect>
+        <div class="md-form mt-0">
+          <input class="form-control mr-sm-2" type="search" MatInput placeholder="searchSpecificSuggestions"
+                 style="width: 320%; height: 30px; background-color: whitesmoke; color: black;"
+                 [formControl]="searchInput" (change)="searchEntity()">
+          <div *ngIf="searchSuggestions" class="searchBoxresults">
+            <p *ngFor="let specificsuggestion of searchSpecificSuggestions" class="suggestion_weergave">{{specificsuggestion }</p>
+        </div>
+       </div>
+     </form>
+   </div>
+  </div>
+</div>

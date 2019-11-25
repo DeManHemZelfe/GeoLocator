@@ -40,7 +40,7 @@ export default class MapConfig {
     return this._resolutions;
   }
 
-  get matrixIds() {    
+  get matrixIds() {
     return this._matrixIds;
   }
 }
