@@ -1,5 +1,6 @@
-<div id="map" class="map"></div>
+<app-header></app-header>
 
+<div id="map" class="map"></div>
 <!-- The custom control for selecting layers -->
 <div #layerControlElement class="options-menu">
   <select id="type" [formControl]="drawType" (change)="changeType()">

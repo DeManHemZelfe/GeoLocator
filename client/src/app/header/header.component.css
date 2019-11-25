@@ -1,0 +1,30 @@
+.header_header {
+  background-color: black;
+}
+.nav {
+  display: flex;
+}
+a.a {
+  float: left;
+  color: white;
+  text-align: center;
+  padding: 4px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  width: 100%;
+}
+a:hover {
+  background-color: white;
+  color: black;
+}
+.a.active {
+  background-color: white;
+  color: black;
+  width: 93%;
+}
+.kendobutton {
+  background: black;
+  padding: 0px 0px;
+  margin: 0px;
+}

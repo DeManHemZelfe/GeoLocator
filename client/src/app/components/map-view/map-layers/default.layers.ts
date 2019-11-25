@@ -40,7 +40,6 @@ export default class DefaultLayers {
         wrapX: false
       })
     });
-    
     return bgLayer;
   }
 
@@ -50,13 +49,11 @@ export default class DefaultLayers {
       params: { LAYERS: 'landsgrens' },
       crossOrigin: 'anonymous'
     });
-
     const landgrensLayer = new TileLayer({
       source: landgrensTile,
       title: 'Landsgrens',
       visible: true
     } as Options);
-    
     return landgrensLayer;
   }
 }

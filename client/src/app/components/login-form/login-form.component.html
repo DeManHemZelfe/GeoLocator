@@ -1,3 +1,7 @@
+<app-header></app-header>
+
+<div><p>DIT IS DE login-form</p></div>
+
 <form [formGroup]="form" class="k-form login-form">
   <fieldset class="login-fieldset">
     <legend>Inloggen</legend>
@@ -5,7 +9,7 @@
       <span>Email <span class="k-required">*</span></span>
       <input class="k-textbox" type="email" placeholder="email@domein.nl" formControlName="email">
       <div *ngIf="email.invalid && (email.dirty || email.touched)">
-        <!-- <div class="app-validation-error" *ngFor="let error in email.errors">{{ error }}</div> -->
+
       </div>
     </label>
     <label class="k-form-field">
@@ -14,7 +18,7 @@
     </label>
     <label class="k-form-field">
         <span>Groep <span class="k-required">*</span></span>
-        <kendo-dropdownlist 
+        <kendo-dropdownlist
           formControlName="group"
           [data]="groups"
           [textField]="'name'"

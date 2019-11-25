@@ -1,0 +1,98 @@
+
+.container_container_cc1 {
+  display: flex;
+  width: 100vw;
+}
+
+.map {
+  width: 80vw;
+  height: 90vh;
+}
+.brtWater {
+  width: 80vw;
+  height: 90vh;
+}
+
+#test {
+  width: 100%;
+}
+.rotate-north {
+  top: 65px;
+  left: .5em;
+}
+.ol-touch .rotate-north {
+  top: 80px;
+}
+
+.box_from_container_container_cc1 {
+  width: 20vw;
+  margin-left: 1px;
+  border: 1px solid black;
+  background-color: royalblue;
+}
+.suggestion_weergave {
+  color: black;
+  justify-content: center;
+  background-color: white;
+  border-bottom: solid black 2px;
+  padding: 0px;
+}
+
+.searchBoxresults {
+  width: 90%;
+  background-color: white;
+  justify-items: center;
+  justify-content: center;
+}
+.radio {
+  display: flex;
+  background-color: lightblue;
+}
+.radiobutton {
+  width: 10%;
+}
+
+.buttondiv {
+  background-color: gray;
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  color: black;
+  margin: 0%;
+  padding: 0%;
+}
+/* .k-primary {
+  width: 100%;
+  background-color: whitesmoke;
+  margin: 0%;
+  padding: 2%;
+  border: black;
+} */
+
+.displaydingetje {
+  background-color:white;
+}
+.ol-rotate {
+  background-color: red;
+}
+.ol-control {
+  position: initial;
+  background-color: rgba(255,255,255,0.4);
+  border-radius: 4px;
+  padding: 2px;
+}
+.ol-control button {
+  display: block;
+  margin: 1px;
+  padding: 0;
+  color: red;
+  font-size: 1.14em;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  height: 1.375em;
+  width: 1.375em;
+  line-height: .4em;
+  background-color: rgba(0,60,136,0.5);
+  border: none;
+  border-radius: 2px;
+}
