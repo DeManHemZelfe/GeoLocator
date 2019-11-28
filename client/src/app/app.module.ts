@@ -33,6 +33,8 @@ import {MatSidenav} from '@angular/material/sidenav';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatExpansionModule} from '@angular/material/expansion';
 
+import { MenusModule } from '@progress/kendo-angular-menu';
+
 import { SuggestService } from './components/service/suggest.service';
 import { BagService } from './layers/bag.service';
 import { BestuurlijkegrenzenService } from './layers/bestuurlijkegrenzen.service';
@@ -41,6 +43,8 @@ import { SpoorwegenService } from './layers/spoorwegen.service';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { HeaderComponent } from './header/header.component';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import { LossekaartComponent } from './lossekaart/lossekaart.component';
 
 export function tokenGetter() {
   return localStorage.getItem('JWT');
@@ -55,9 +59,12 @@ export function tokenGetter() {
     SidebarComponent,
     LoginFormComponent,
     HeaderComponent,
+    LossekaartComponent,
+
   ],
   imports: [
     RouterModule,
+    ScrollingModule,
     BrowserModule,
     MatInputModule, MatOptionModule, MatSelectModule, MatIconModule,
     MatSliderModule,
@@ -74,6 +81,7 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     ReactiveFormsModule,
     ButtonsModule,
+    MenusModule,
     NgbModule,
     JwtModule.forRoot({
       config: {

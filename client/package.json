@@ -30,6 +30,7 @@
     "@progress/kendo-angular-intl": "^2.0.0",
     "@progress/kendo-angular-l10n": "^2.0.0",
     "@progress/kendo-angular-label": "^2.0.2",
+    "@progress/kendo-angular-menu": "^2.0.0",
     "@progress/kendo-angular-popup": "^3.0.0",
     "@progress/kendo-drawing": "^1.5.12",
     "@progress/kendo-theme-bootstrap": "^4.4.0",

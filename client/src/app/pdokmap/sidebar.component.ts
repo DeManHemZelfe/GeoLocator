@@ -1,6 +1,6 @@
-import 'ol/ol.css';
-import { Component, OnInit } from '@angular/core';
-import { Map, View, Collection } from 'ol';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnInit} from '@angular/core';
+import { Map, View, Collection, Feature, } from 'ol';
+import Overlay from 'ol/Overlay';
 
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import TileWMS, { Options as TileWMSOptions } from 'ol/source/TileWMS';
@@ -26,10 +26,14 @@ import { HttpResponse } from '@angular/common/http';
 import { OverigeDienstenService } from '../layers/overigediensten.service';
 
 import LayerGroup from 'ol/layer/Group';
-import {defaults as defaultControls, Control, ZoomToExtent, Rotate, ScaleLine, ZoomSlider} from 'ol/control';
-import { zoom } from 'ol/interaction/Interaction';
+import {defaults as defaultControls, Control, ZoomToExtent, Rotate, ScaleLine, ZoomSlider, OverviewMap} from 'ol/control';
+import Interaction, { zoom } from 'ol/interaction/Interaction';
 import Zoom from 'ol/control/Zoom';
 import { Button } from '@progress/kendo-angular-buttons';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {unByKey} from 'ol/Observable';
+import {getArea, getLength} from 'ol/sphere';
+import CircleStyle from 'ol/style/Circle';
 
 
 
@@ -38,8 +42,9 @@ import { Button } from '@progress/kendo-angular-buttons';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements AfterViewInit {
   titles = 'Suggestie';
+
 
   typeSelectTekenen = new FormControl('');
   typeSelectdikzak = new FormControl('');
@@ -49,6 +54,7 @@ export class SidebarComponent implements OnInit {
   searchId = new FormControl('');
   searchSuggestions = new Array<object>();
   searchSpecificSuggestions = new Array<object>();
+  kendomenu = new FormControl('');
 
   invisible = false;
   Hide = false;
@@ -57,6 +63,8 @@ export class SidebarComponent implements OnInit {
 
   private map: Map;
   private draw: OlDraw;
+  test = new Control({});
+  popup = new Overlay({});
 
   private projectionExtent = [-285401.92, 22598.08, 595401.92, 903401.92];
   private projection = new Projection({
@@ -105,6 +113,36 @@ export class SidebarComponent implements OnInit {
       })
     })
   });
+
+  // DIT IS DE TOOLTIP TEKEN FUNCTIE
+  toolsource = new VectorSource();
+  toolteken = new VectorLayer({
+    source: this.toolsource,
+    style: new Style({
+      fill: new Fill({
+        color: 'rgba(255, 255, 255, 0.2)'
+      }),
+      stroke: new Stroke({
+        color: '#ffcc33',
+        width: 2
+      }),
+      image: new CircleStyle({
+        radius: 7,
+        fill: new Fill({
+          color: '#ffcc33'
+        })
+      })
+    })
+  });
+   // DIT IS DE TOOLTIP TEKEN FUNCTIE
+   output;
+   sketch;
+   helpTooltipElement;
+   helpTooltip;
+   measureTooltipElement;
+   measueTooltip;
+   continuePolygonMsg = 'Click to continue drawing the polygon';
+   continueLineMsg = 'Click to continue drawing the line';
 
   baseTile = new WMTS({
     attributions:
@@ -220,8 +258,26 @@ export class SidebarComponent implements OnInit {
     {text: '1'},           {text: '2'},
     {text: '3'},           {text: '4'},
     {text: '5'},           {text: '6'},
-    {text: '7'},           {text: '8'},
-  ];
+    {text: '7'},           {text: '8'},  ];
+
+  public data: Array<any> = [{
+      text: 'My Profile'
+  }, {
+      text: 'Friend Requests'
+  }, {
+      text: 'Account Settings'
+  }, {
+      text: 'Support'
+  }, {
+      text: 'Log Out'
+  }];
+
+
+  // @ViewChild('mycontroldivje', { static: false }) mycontroldivje: ElementRef;
+  // @ViewChild('hetontzichtbaredivje', { static: false }) myControlonzichtbaar: ElementRef;
+
+  @ViewChild('mytestje', { static: false }) myControl: ElementRef;
+  @ViewChild('menu', { static: false }) mymenuControl: ElementRef;
 
   constructor(
     private suggestService: SuggestService,
@@ -232,7 +288,7 @@ export class SidebarComponent implements OnInit {
     private overigedienstenSerivce: OverigeDienstenService
   ) {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.initializeMap();
     this.addInteraction();
     console.log(this.layers);
@@ -269,7 +325,7 @@ export class SidebarComponent implements OnInit {
        this.spoorwegService.WisselLayer,
        this.spoorwegService.KilometreringLayer,
 
-       this.tekenfunctie
+       this.tekenfunctie,
       ],
       view: new View({
         center: [150000, 450000],
@@ -279,27 +335,53 @@ export class SidebarComponent implements OnInit {
         maxZoom: 15,
       }),
       overlays: [],
-      controls: defaultControls().extend([
-        new ScaleLine({}),
-        new Rotate({
-          className: 'ol-rotate',
-          label: 'F',
-          tipLabel: 'test',
-          duration: 250,
-          autoHide: false
-        }),
-        new ZoomToExtent({extent: [-285401.92, 22598.08, 595401.92, 903401.92, ]}
-      ),
-        ])
+      controls: defaultControls({
+        attributionOptions: ({
+          collapsible: false,
+          target: 'mytestje',
+        })
+      }).extend([
+        new OverviewMap(),
+      ]).extend([
+        new ZoomSlider(),
+      ]).extend([
+        new ZoomToExtent(),
+      ]).extend([
+        new ScaleLine(),
+      ]).extend([
+        // new Control({ element: this.myControl.nativeElement }),
+        new Control({ element: this.mymenuControl.nativeElement})
+
+      ]),
     }),
     this.map.getLayers().extend([]);
     // this.map.getControls().extend([new ZoomToExtent({extent: [-285401.92, 22598.08, 595401.92, 903401.92]}) ]);
   }
 
+  formatLength(LineString) {
+    const length = getLength(LineString);
+    if (length > 100) {
+      this.output = (Math.round(length / 1000 * 100) / 100) + '' + 'km';
+    } else {
+      this.output = (Math.round(length * 100) / 100) + '' + 'm';
+    }
+    return this.output;
+  }
+
+  // addTooltipInteraction() {
+  //   const hetType = this.typeSelectTekenen.value;
+  //   if (hetType !== '') {
+  //     this.draw = new OlDraw({
+  //       source: this.toolsource,
+  //       type: hetType,
+  //     });
+  //     this.map.addTooltipInteraction(this.draw);
+  //     console.log('addInteraction()');
+  //    }
+  // }
+
   foo() {
-    console.log('test');
-    const alsjeblieft = document.createElement('div') as HTMLDivElement;
-    return alsjeblieft;
+    console.log('je hebt de knop ingedrukt');
   }
   getLayerGroupKaart() {
     return this.layergroupkaart.getLayers().getArray();
@@ -333,7 +415,7 @@ export class SidebarComponent implements OnInit {
     // this.isVisible = this.brtWaterLayer;
     console.log('you click on hide on visible');
   }
-  tooltip() {}
+  // tooltip() {}
   helptooltip() {}
 
   addInteraction() {
@@ -341,7 +423,7 @@ export class SidebarComponent implements OnInit {
     if (value !== '') {
       this.draw = new OlDraw({
         source: this.source,
-        type: this.typeSelectTekenen.value
+        type: value
       });
       this.map.addInteraction(this.draw);
       console.log('addInteraction()');
