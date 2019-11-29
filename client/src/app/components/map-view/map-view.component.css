@@ -1,6 +1,6 @@
 .map {
-  width: 80vw;
-  height: 80vh;
+  width: 100vw;
+  height: 98vh;
 }
 
 .options-menu {
@@ -9,7 +9,7 @@
 }
 .menu {
   background-color: pink;
-  width: 10%;
+  width: 0%;
 }
 .test {
   background-color: red;
@@ -30,6 +30,9 @@
 }
 .header {
   color: black;
+}
+.searchmenu {
+  background-color: brown;
 }
 
 

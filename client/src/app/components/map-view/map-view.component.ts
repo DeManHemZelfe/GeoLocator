@@ -214,6 +214,8 @@ export class MapViewComponent implements AfterViewInit {
 
   @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
   @ViewChild('menu', { static: false }) menu: ElementRef;
+  @ViewChild('searchmenu', { static: false }) searchmenu: ElementRef;
+
 
   constructor(
     private suggestService: SuggestService,
@@ -273,7 +275,9 @@ export class MapViewComponent implements AfterViewInit {
         })
       }).extend([
         new Control({ element: this.layerControlElement.nativeElement }),
-      ]).extend([])
+      ]).extend([
+        new Control({ element: this.searchmenu.nativeElement }),
+      ])
     }),
     this.map.getLayers().extend([]);
   } // EINDE VAN DE MAP MAKEN
@@ -289,6 +293,12 @@ export class MapViewComponent implements AfterViewInit {
   }
   toggle4() {
     this.show4 = !this.show4;
+  }
+  toggle5() {
+    this.show5 = !this.show5;
+  }
+  toggle6() {
+    this.show6 = !this.show6;
   }
   addInteraction() {
     const value = this.typeSelectTekenen.value;
