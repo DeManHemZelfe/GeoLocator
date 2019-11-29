@@ -274,9 +274,9 @@ export class MapViewComponent implements AfterViewInit {
           target: 'mytestje',
         })
       }).extend([
-        new Control({ element: this.layerControlElement.nativeElement }),
-      ]).extend([
         new Control({ element: this.searchmenu.nativeElement }),
+      ]).extend([
+        new Control({ element: this.layerControlElement.nativeElement }),
       ])
     }),
     this.map.getLayers().extend([]);

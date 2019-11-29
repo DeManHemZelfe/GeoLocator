@@ -6,10 +6,13 @@
 .options-menu {
  background-color: red;
  width: 0%;
+ background-color: aqua;
+ display: contents;
 }
 .menu {
   background-color: pink;
   width: 0%;
+  display: inline-block;
 }
 .test {
   background-color: red;
@@ -32,7 +35,11 @@
   color: black;
 }
 .searchmenu {
-  background-color: brown;
+  margin-left: 500px;
+  width: 25%;
+}
+.container-geocoder {
+  background-color: blue;
 }
 
 
