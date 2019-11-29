@@ -18,8 +18,8 @@ export class SuggestService {
   searchSuggest(input: string): Observable<HttpResponse<object>> {
     return this.http.get(`https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?q=${input}`, { observe: 'response' });
   }
-  searchSpecific(id: string) {
-     return this.http.get(`https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=${id}`);
+  searchSpecific(id: string): Observable<HttpResponse<object>> {
+     return this.http.get(`https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=${id}`, { observe: 'response'});
   }
   searchLocation(location: string) {
     this.http.get(`https://geodata.nationaalgeoregister.nl/locatieserver/v3/free?q=${location}`);

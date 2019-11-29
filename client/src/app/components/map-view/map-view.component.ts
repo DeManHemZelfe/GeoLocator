@@ -1,28 +1,29 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-
-import { Map, View } from 'ol';
-import { Zoom, Control } from 'ol/control';
-
+import { Component, ViewChild, ElementRef, AfterViewInit, OnInit} from '@angular/core';
+import { Map, View, Collection, Feature, } from 'ol';
+import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
+import WMTS, { optionsFromCapabilities } from 'ol/source/WMTS';
+import Projection from 'ol/proj/Projection';
+import { getTopLeft } from 'ol/extent';
+import WMTSTileGrid from 'ol/tilegrid/WMTS';
+import { FormControl } from '@angular/forms';
+import OlDraw from 'ol/interaction/Draw';
+import TileWMS, { Options as TileWMSOptions } from 'ol/source/TileWMS';
+import { Options as TileOptions } from 'ol/layer/Tile';
+import { OSM, Vector as VectorSource, TileJSON } from 'ol/source';
 import { Icon, Stroke, Style, Fill } from 'ol/style';
+import LocationSuggestData from '../../interface/location-suggest-data.interface';
+import { SuggestService } from '../../components/service/suggest.service';
+import { BestuurlijkegrenzenService } from '../../layers/bestuurlijkegrenzen.service';
+import { BagService } from '../../layers/bag.service';
+import { KaartService } from '../../layers/kaart.service';
+import { SpoorwegenService, ITileOptions } from '../../layers/spoorwegen.service';
+import {defaults as defaultControls, Control, ZoomToExtent, Rotate, ScaleLine, ZoomSlider, OverviewMap} from 'ol/control';
 
-import VectorSource from 'ol/source/Vector';
+import { HttpResponse } from '@angular/common/http';
+import { OverigeDienstenService } from '../../layers/overigediensten.service';
 
-import VectorLayer from 'ol/layer/Vector';
 import LayerGroup from 'ol/layer/Group';
 
-import Draw from 'ol/interaction/Draw';
-
-import { FormControl } from '@angular/forms';
-
-import DefaultLayers from './map-layers/default.layers';
-import MapConfig from './config/map.config';
-
-import { SpoorwegenService } from '../../layers/spoorwegen.service';
-import { SuggestService } from '../../components/service/suggest.service';
-import { BagService } from '../../layers/bag.service';
-import { BestuurlijkegrenzenService } from '../../layers/bestuurlijkegrenzen.service';
-import { KaartService } from '../../layers/kaart.service';
-import { OverigeDienstenService } from '../../layers/overigediensten.service';
 
 @Component({
   selector: 'app-map-view',
@@ -30,15 +31,28 @@ import { OverigeDienstenService } from '../../layers/overigediensten.service';
   styleUrls: ['./map-view.component.css']
 })
 export class MapViewComponent implements AfterViewInit {
+  show1  = false;
+  show2  = false;
+  show3  = false;
+  show4  = false;
+  show5  = false;
+  show6  = false;
+  show7  = true;
+  show8  = false;
+  show9  = false;
+  show10 = false;
+  isShow = false;
 
-  private map: Map; // The actual map object that renders the map
+  private map: Map;
+  private draw: OlDraw;
+  typeSelectTekenen = new FormControl('');
 
-  // Fields required for the draw function to work
-  private draw: Draw; // The draw object that implements the draw functionality
-  drawType = new FormControl(''); // The select input field
-  drawSource = new VectorSource({ wrapX: false }); // The source for every drawing style.
-  drawVector = new VectorLayer({
-    source: this.drawSource,
+
+  source = new VectorSource({
+    wrapX: false
+  });
+  tekenfunctie = new VectorLayer({
+    source: this.source,
     style: new Style({
       fill: new Fill({
         color: 'red'
@@ -48,21 +62,120 @@ export class MapViewComponent implements AfterViewInit {
         width: 3
       })
     })
-  });  // The actual layer that will get drawn on the map
+  });
 
-  private mapConfig = new MapConfig(); // Config class for the map
-  private defaultLayers: DefaultLayers; // All default layers for the map
+  private projectionExtent = [-285401.92, 22598.08, 595401.92, 903401.92];
+  private projection = new Projection({
+    code: 'EPSG:28992',
+    units: 'm',
+    extent: this.projectionExtent
+  });
 
+  private matrixIds = new Array(15);
+  private resolutions = [
+    3440.64,
+    1720.32,
+    860.16,
+    430.08,
+    215.04,
+    107.52,
+    53.75,
+    26.88,
+    13.44,
+    6.72,
+    3.36,
+    1.68,
+    0.84,
+    0.42,
+    0.21
+  ];
 
-  @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
+  private layers = { // DE LAYERS AANROEPEN
+    brt: 'brtachtergrondkaart',
+    brtGrijs: 'brtachtergrondkaartgrijs',
+    brtPastel: 'brtachtergrondkaartpastel',
+    brtWater: 'brtachtergrondkaartwater'
+  };
 
-  // layergroupkaart = new LayerGroup ({
-  //   layers: [
-  //     this.baseLayer,
-  //     this.brtWaterLayer,
-  //     this.brtGrijsLayer,
-  //   ]
-  // });
+  baseTile = new WMTS({ // BEGIN VAN DE KAARTTEGEL MAKEN
+    attributions:
+      'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
+    layer: this.layers.brt,
+    matrixSet: 'EPSG:28992',
+    format: 'image/png',
+    projection: this.projection,
+    tileGrid: new WMTSTileGrid({
+      origin: getTopLeft(this.projectionExtent),
+      resolutions: this.resolutions,
+      matrixIds: this.matrixIds
+    }),
+    style: 'default',
+    wrapX: false
+  }); // EINDE VAN DE KAARTTEGEL
+
+  baseLayer = new TileLayer({ // BEGIN VAN DE KAARTLAAG MAKEN EN TEGELS TOEVOEGEN
+    source: this.baseTile,
+    opacity: 0.7,
+    visible: true,
+    title: 'BaseLayer'
+  } as ITileOptions); // EINDE VAN DE KAARTLAAG
+
+  brtWaterTile = new WMTS({ // BEGIN VAN DE KAARTTEGEL MAKEN
+    attributions:
+      'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
+    layer: this.layers.brtWater,
+    matrixSet: 'EPSG:28992',
+    format: 'image/png',
+    projection: this.projection,
+    tileGrid: new WMTSTileGrid({
+      origin: getTopLeft(this.projectionExtent),
+      resolutions: this.resolutions,
+      matrixIds: this.matrixIds
+    }),
+    style: 'default',
+    wrapX: false
+  }); // EINDE VAN DE KAARTTEGEL
+
+  brtWaterLayer = new TileLayer({ // BEGIN VAN DE KAARTLAAG MAKEN EN TEGELS TOEVOEGEN
+    source: this.brtWaterTile,
+    opacity: 0.7,
+    visible: false,
+    title: 'BrtWaterLayer'
+  } as ITileOptions); // EINDE VAN DE KAARTLAAG
+
+  brtGrijsTile = new WMTS({ // BEGIN VAN DE KAARTTEGEL MAKEN
+    attributions:
+      'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
+    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
+    layer: this.layers.brtGrijs,
+    matrixSet: 'EPSG:28992',
+    format: 'image/png',
+    projection: this.projection,
+    tileGrid: new WMTSTileGrid({
+      origin: getTopLeft(this.projectionExtent),
+      resolutions: this.resolutions,
+      matrixIds: this.matrixIds
+    }),
+    style: 'default',
+    wrapX: false
+  }); // EINDE VAN DE KAARTTEGEL
+
+  brtGrijsLayer = new TileLayer({ // BEGIN VAN DE KAARTLAAG MAKEN EN TEGELS TOEVOEGEN
+    source: this.brtGrijsTile,
+    opacity: 0.7,
+    visible: false,
+    title: 'BrtGrijsLayer'
+  } as ITileOptions); // EINDE VAN DE KAARTLAAG
+
+  layergroupkaart = new LayerGroup ({
+    layers: [
+      this.baseLayer,
+      this.brtWaterLayer,
+      this.brtGrijsLayer,
+    ]
+  });
   layergroupgrenzen = new LayerGroup ({
     layers: [
       this.bestuurlijkegrenzenservice.landsgrensLayer,
@@ -98,6 +211,10 @@ export class MapViewComponent implements AfterViewInit {
     ]
   });
 
+
+  @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
+  @ViewChild('menu', { static: false }) menu: ElementRef;
+
   constructor(
     private suggestService: SuggestService,
     private spoorwegService: SpoorwegenService,
@@ -106,26 +223,21 @@ export class MapViewComponent implements AfterViewInit {
     private kaartService: KaartService,
     private overigedienstenSerivce: OverigeDienstenService
   ) {}
+
   ngAfterViewInit() {
     this.initializeMap();
+    this.addInteraction();
   }
-
-  initializeMap() {
-    this.defaultLayers = new DefaultLayers(
-      0,
-      this.mapConfig.projection,
-      this.mapConfig.projectionExtent,
-      this.mapConfig.resolutions,
-      this.mapConfig.matrixIds);
-
-    this.map = new Map({
+  initializeMap() { // BEGIN VAN DE MAP MAKEN
+    for (let i = 0; i < this.matrixIds.length; i++) {
+      this.matrixIds[i] = 'EPSG:28992:' + i;
+    }
+    this.map = new Map({ // MAAK DE MAP
       target: 'map',
       layers: [
-        this.drawVector,
-        this.defaultLayers.bgLayer,
-        // this.baseLayer,
-        // this.brtWaterLayer,
-        // this.brtGrijsLayer,
+        this.baseLayer,
+        this.brtWaterLayer,
+        this.brtGrijsLayer,
         this.bestuurlijkegrenzenservice.landsgrensLayer,
         this.bestuurlijkegrenzenservice.gemeentenLayer,
         this.bestuurlijkegrenzenservice.provinciesLayer,
@@ -144,37 +256,59 @@ export class MapViewComponent implements AfterViewInit {
         this.spoorwegService.TraceLayer,
         this.spoorwegService.WisselLayer,
         this.spoorwegService.KilometreringLayer,
+
+        this.tekenfunctie,
       ],
       view: new View({
         center: [150000, 450000],
-        projection: this.mapConfig.projection,
+        projection: this.projection,
         zoom: 3,
         minZoom: 0,
-        maxZoom: 15
+        maxZoom: 15,
       }),
-      controls: [
-        new Zoom(),
-        new Control({ element: this.layerControlElement.nativeElement })
-      ]
-    });
-  }
+      controls: defaultControls({
+        attributionOptions: ({
+          collapsible: false,
+          target: 'mytestje',
+        })
+      }).extend([
+        new Control({ element: this.layerControlElement.nativeElement }),
+      ]).extend([])
+    }),
+    this.map.getLayers().extend([]);
+  } // EINDE VAN DE MAP MAKEN
 
+  toggle1() {
+    this.show1 = !this.show1;
+  }
+  toggle2() {
+    this.show2 = !this.show2;
+  }
+  toggle3() {
+    this.show3 = !this.show3;
+  }
+  toggle4() {
+    this.show4 = !this.show4;
+  }
   addInteraction() {
-    const drawTypevalue = this.drawType.value;
-    if (drawTypevalue !== '') {
-      this.draw = new Draw({
-        source: this.drawSource,
-        type: drawTypevalue
+    const value = this.typeSelectTekenen.value;
+    if (value !== '') {
+      this.draw = new OlDraw({
+        source: this.source,
+        type: value
       });
+      this.map.addInteraction(this.draw);
+      console.log('addInteraction()');
     }
-    this.map.addInteraction(this.draw);
   }
-
-  changeType() {
+  switchMode() {
     this.map.removeInteraction(this.draw);
     this.addInteraction();
+    console.log('switchMode()');
   }
-
+  getLayerGroupKaart() {
+    return this.layergroupkaart.getLayers().getArray();
+  }
   getLayerGroupBag() {
     return this.layergroupBag.getLayers().getArray();
   }
@@ -191,5 +325,4 @@ export class MapViewComponent implements AfterViewInit {
     return this.map.getLayers().getArray();
   }
 
-
-}
+} // EINDE VAN DE COMPONENT NG ONINIT

@@ -2,134 +2,172 @@
 
 <div id="map" class="map"></div>
 
-<!-- The custom control for selecting layers -->
-<div #layerControlElement class="options-menu">
-  <h3>Tekenen</h3>
-  <select id="type" [formControl]="drawType" (change)="changeType()" class="selectmenutekenen">
-    <option value="Point">Punt</option>
-    <option value="LineString">Lijn</option>
-    <option value="Polygon">Polygoon</option>
-    <option value="Circle">Cirkel</option>
-  </select><br><br>
+<div #layerControlElement class="option-menu">
+    <div #menu class="menu">
 
-  <div class="buttondiv" id="type"><!--DIT IS HET BEGIN VAN DE DIV-->
-      <mat-accordion><!-- DIT IS HET BEGIN VAN DE DROPDOWNMENU VOOR DE LAGEN -->
-        <mat-expansion-panel class="panelclass">
-            <mat-expansion-panel-header class="panelheaderclass">
-              <mat-panel-title class="paneltitleclass">BANANEN</mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-panel-description><!--BEGIN VAN DE DESCRIPTION-->
-                <mat-accordion><!-- DIT IS HET BEGIN VAN DE DROPDOWNMENU VOOR DE LAGEN -->
-                  <mat-expansion-panel class="panelclass">
-                      <mat-expansion-panel-header class="panelheaderclass">
-                        <mat-panel-title class="paneltitleclass">Kaarten
-                          <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;"></i>
-                        </mat-panel-title>
-                      </mat-expansion-panel-header>
-                      <div class="paneldiv">
-                        <button kendoButton id="test" *ngFor="let layer of getLayerGroupOverigeDiensten()"
-                          (click)="layer.setVisible(!layer.getVisible())"
-                          [primary]="layer.getVisible()"
-                          style="border-bottom: black 2px solid;">
-                          {{layer.get('title')}}
-                         </button>
+        <div class="test">
+
+            <button (click)="toggle3()"><i class="k-icon k-i-globe-outline" style="font-size: 10px;" style="color: black;"></i></button>
+
+            <mat-accordion *ngIf="show3">  <!-- DIT IS HET BEGIN VAN DE ACCORDION VOOR ALLE LAGEN -->
+              <mat-expansion-panel class="menumenu">
+                 <mat-expansion-panel-header class="">
+                <mat-panel-title>Lagen</mat-panel-title>
+               </mat-expansion-panel-header>
+              <mat-panel-description>
+
+                <!-- DIT IS HET BEGIN VAN DE DROPDOWNMENU VOOR DE LAGEN -->
+               <mat-accordion>
+                <mat-expansion-panel class="panel1">
+                 <mat-expansion-panel-header class="header">
+                  <mat-panel-title class="paneltitleclass">Kaarten
+                   <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;"></i>
+                  </mat-panel-title>
+                 </mat-expansion-panel-header>
+                  <div class="paneldiv">
+                   <button kendoButton id="test" *ngFor="let layer of getLayerGroupKaart()"
+                    (click)="layer.setVisible(!layer.getVisible())"
+                    [primary]="layer.getVisible()">
+                    {{layer.get('title')}}
+                   </button>
+                  </div>
+                </mat-expansion-panel>
+               </mat-accordion><!-- DIT IS HET EINDE VAN DE DROPDOWNMENU VOOR DE LAGEN -->
+              </mat-panel-description>
+
+              <mat-panel-description><!-- DIT IS HET BEGIN VAN DE DROPDOWNMENU VOOR DE LAGEN -->
+                <mat-accordion>
+                 <mat-expansion-panel class="panel1">
+                  <mat-expansion-panel-header class="header">
+                   <mat-panel-title class="paneltitleclass">Grenzen
+                    <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;"></i>
+                   </mat-panel-title>
+                  </mat-expansion-panel-header>
+                   <div class="paneldiv">
+                    <button kendoButton id="test" *ngFor="let layer of getLayerGroupGrenzen()"
+                     (click)="layer.setVisible(!layer.getVisible())"
+                     [primary]="layer.getVisible()">
+                     {{layer.get('title')}}
+                    </button>
+                   </div>
+                 </mat-expansion-panel>
+                </mat-accordion>
+                <!-- DIT IS HET EINDE VAN DE DROPDOWNMENU VOOR DE LAGEN -->
+               </mat-panel-description>
+               <mat-panel-description>
+                   <!-- DIT IS HET BEGIN VAN DE DROPDOWNMENU VOOR DE LAGEN -->
+                  <mat-accordion>
+                   <mat-expansion-panel class="panel1">
+                    <mat-expansion-panel-header class="header">
+                     <mat-panel-title class="paneltitleclass">Spoorwegen
+                      <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;"></i>
+                     </mat-panel-title>
+                    </mat-expansion-panel-header>
+                     <div class="paneldiv">
+                      <button kendoButton id="test" *ngFor="let layer of getLayerGroupSpoorwegen()"
+                       (click)="layer.setVisible(!layer.getVisible())"
+                       [primary]="layer.getVisible()">
+                       {{layer.get('title')}}
+                      </button>
                      </div>
-                    </mat-expansion-panel>
-              </mat-accordion><!-- DIT IS HET EINDE VAN DE DROPDOWNMENU VOOR DE LAGEN -->
-            </mat-panel-description><!--BEGIN VAN DE DESCRIPTION-->
-            <mat-panel-description><!--BEGIN VAN DE DESCRIPTION-->
-              <mat-accordion><!-- DIT IS HET BEGIN VAN DE DROPDOWNMENU VOOR DE LAGEN -->
-                <mat-expansion-panel class="panelclass">
-                    <mat-expansion-panel-header class="panelheaderclass">
-                      <mat-panel-title class="paneltitleclass">Kaarten
+                   </mat-expansion-panel>
+                  </mat-accordion>
+                  <!-- DIT IS HET EINDE VAN DE DROPDOWNMENU VOOR DE LAGEN -->
+                 </mat-panel-description>
+
+                 <mat-panel-description>
+                     <!-- DIT IS HET BEGIN VAN DE DROPDOWNMENU VOOR DE LAGEN -->
+                    <mat-accordion>
+                     <mat-expansion-panel class="panel1">
+                      <mat-expansion-panel-header class="header">
+                       <mat-panel-title class="paneltitleclass">Grenzen
                         <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;"></i>
+                       </mat-panel-title>
+                      </mat-expansion-panel-header>
+                       <div class="paneldiv">
+                        <button kendoButton id="test" *ngFor="let layer of getLayerGroupGrenzen()"
+                         (click)="layer.setVisible(!layer.getVisible())"
+                         [primary]="layer.getVisible()">
+                         {{layer.get('title')}}
+                        </button>
+                       </div>
+                     </mat-expansion-panel>
+                    </mat-accordion>
+                    <!-- DIT IS HET EINDE VAN DE DROPDOWNMENU VOOR DE LAGEN -->
+                   </mat-panel-description>
+              </mat-expansion-panel>
+             </mat-accordion>  <!-- DIT IS HET BEGIN VAN DE ACCORDION VOOR ALLE LAGEN -->
+        </div>
+        <div class="test">
+                <button (click)="toggle1()"><i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;"></i></button>
+                <mat-accordion *ngIf="show1"><!-- BEGIN ACCORDION -->
+                  <mat-expansion-panel class="menumenu">
+                       <mat-expansion-panel-header class="">
+                      <mat-panel-title>Tekenen
+                      <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;" style="margin-left: 5px;"></i>
                       </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <div class="paneldiv">
-                      <button kendoButton id="test" *ngFor="let layer of getLayerGroupOverigeDiensten()"
-                        (click)="layer.setVisible(!layer.getVisible())"
-                        [primary]="layer.getVisible()"
-                        style="border-bottom: black 2px solid;">
-                        {{layer.get('title')}}
-                       </button>
-                   </div>
+                    <mat-panel-description><!-- BEGIN DESCRIPTION -->
+                        <form class="form-inline">
+                            <label>Tekenen &nbsp;</label>
+                            <select id="type" [formControl]="typeSelectTekenen" (change)="switchMode()">
+                              <option value="Point">Point</option>
+                              <option value="LineString">LineString</option>
+                              <option value="Polygon">Polygon</option>
+                              <option value="Circle">Circle</option>
+                              <option value="">None</option>
+                            </select>
+                          </form>
+                    </mat-panel-description><!-- EINDE DESCRIPTION -->
                   </mat-expansion-panel>
-            </mat-accordion><!-- DIT IS HET EINDE VAN DE DROPDOWNMENU VOOR DE LAGEN -->
-          </mat-panel-description><!--BEGIN VAN DE DESCRIPTION-->
-          </mat-expansion-panel>
-    </mat-accordion>
-
-    <mat-accordion><!-- DIT IS HET BEGIN VAN DE DROPDOWNMENU VOOR DE LAGEN -->
-      <mat-expansion-panel class="panelclass">
-          <mat-expansion-panel-header class="panelheaderclass">
-            <mat-panel-title class="paneltitleclass">Kaarten
-              <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;"></i>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="paneldiv">
-            <button kendoButton id="test" *ngFor="let layer of getLayerGroupOverigeDiensten()"
-              (click)="layer.setVisible(!layer.getVisible())"
-              [primary]="layer.getVisible()"
-              style="border-bottom: black 2px solid;">
-              {{layer.get('title')}}
-             </button>
-         </div>
-        </mat-expansion-panel>
-  </mat-accordion>
-  <mat-accordion>
-      <mat-expansion-panel class="mat-expansion-panel">
-          <mat-expansion-panel-header class="mat-expansion-header">
-            <mat-panel-title class="mat-panel-title">Grenzen
-              <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;"></i>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div>
-            <button kendoButton id="test" *ngFor="let layer of getLayerGroupGrenzen()"
-              (click)="layer.setVisible(!layer.getVisible())"
-              [primary]="layer.getVisible()"
-              style="border-bottom: black 2px solid;"
-              style="width: 100%;">
-              {{layer.get('title')}}
-             </button>
-         </div>
-        </mat-expansion-panel>
-  </mat-accordion><!-- DIT IS HET EINDE VAN DE DROPDOWNMENU VOOR DE LAGEN -->
-  <mat-accordion><!-- DIT IS HET BEGIN VAN DE DROPDOWNMENU VOOR DE LAGEN -->
-    <mat-expansion-panel class="panelclass">
-        <mat-expansion-panel-header class="panelheaderclass">
-          <mat-panel-title class="paneltitleclass">Spoor
-            <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;"></i>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div class="paneldiv">
-          <button kendoButton id="test" *ngFor="let layer of getLayerGroupSpoorwegen()"
-            (click)="layer.setVisible(!layer.getVisible())"
-            [primary]="layer.getVisible()">
-            {{layer.get('title')}}
-           </button>
-       </div>
-      </mat-expansion-panel>
-</mat-accordion>
-<mat-accordion>
-    <mat-expansion-panel class="mat-expansion-panel">
-        <mat-expansion-panel-header class="mat-expansion-header">
-          <mat-panel-title class="mat-panel-title">Grenzen
-            <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;"></i>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div>
-          <button kendoButton id="test" *ngFor="let layer of getLayerGroupGrenzen()"
-            (click)="layer.setVisible(!layer.getVisible())"
-            [primary]="layer.getVisible()">
-            {{layer.get('title')}}
-           </button>
-       </div>
-      </mat-expansion-panel>
-</mat-accordion><!-- DIT IS HET EINDE VAN DE DROPDOWNMENU VOOR DE LAGEN -->
- </div><br><br>
+                </mat-accordion><!-- EINDE ACCORDION -->
+            </div>
+            <div class="test">
+                <button (click)="toggle2()"><i class="k-icon k-i-filter" style="font-size: 10px;" style="color: black;"></i></button>
+               <div *ngIf="show2"></div>
+            </div>
+            <div class="test">
+                <button kendobutton value="reset" (click)="toggle4()"  class="buttonbutton"><i class="k-icon k-i-reset" style="font-size: 10px;" style="color: black;"></i></button>
+                 <div *ngIf="show4"></div>
+            </div>
 
 
-</div>
+
+            <div class="test">
+
+                <button kendobutton value="reset"    class="buttonbutton"><i class="k-icon k-i-reset" style="font-size: 10px;" style="color: black;"></i></button>
+                <button kendobutton value="preview"  class="buttonbutton"><i class="k-icon k-i-preview" style="font-size: 10px;" style="color: black;"></i></button>
+                <button kendobutton value="marker"   class="buttonbutton"><i class="k-icon k-i-marker-pin" style="font-size: 10px;" style="color: black;"></i></button>
+            </div>
+
+
+
+
+              <mat-accordion *ngIf="show2"><!-- BEGIN ACCORDION -->
+                <mat-expansion-panel class="menumenu">
+                     <mat-expansion-panel-header class="">
+                    <mat-panel-title>Tekenen
+                    <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;" style="margin-left: 5px;"></i>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <mat-panel-description><!-- BEGIN DESCRIPTION -->
+                      <form class="form-inline">
+                          <label>Tekenen &nbsp;</label>
+                          <select id="type" [formControl]="typeSelectTekenen" (change)="switchMode()">
+                            <option value="Point">Point</option>
+                            <option value="LineString">LineString</option>
+                            <option value="Polygon">Polygon</option>
+                            <option value="Circle">Circle</option>
+                            <option value="">None</option>
+                          </select>
+                        </form>
+                  </mat-panel-description><!-- EINDE DESCRIPTION -->
+                </mat-expansion-panel>
+              </mat-accordion><!-- EINDE ACCORDION -->
+
+
+           </div>
+    </div>
 
 
 

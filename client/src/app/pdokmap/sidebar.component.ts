@@ -34,7 +34,7 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import {unByKey} from 'ol/Observable';
 import {getArea, getLength} from 'ol/sphere';
 import CircleStyle from 'ol/style/Circle';
-
+import { GeocoderService } from 'angular-geocoder';
 
 
 @Component({
@@ -44,7 +44,17 @@ import CircleStyle from 'ol/style/Circle';
 })
 export class SidebarComponent implements AfterViewInit {
   titles = 'Suggestie';
-
+  show1  = false;
+  show2  = false;
+  show3  = false;
+  show4  = false;
+  show5  = false;
+  show6  = false;
+  show7  = true;
+  show8  = false;
+  show9  = false;
+  show10 = false;
+  isShow = false;
 
   typeSelectTekenen = new FormControl('');
   typeSelectdikzak = new FormControl('');
@@ -53,6 +63,7 @@ export class SidebarComponent implements AfterViewInit {
   searchInput = new FormControl('');
   searchId = new FormControl('');
   searchSuggestions = new Array<object>();
+  searchSuggestions2 = new Array<object>();
   searchSpecificSuggestions = new Array<object>();
   kendomenu = new FormControl('');
 
@@ -113,7 +124,6 @@ export class SidebarComponent implements AfterViewInit {
       })
     })
   });
-
   // DIT IS DE TOOLTIP TEKEN FUNCTIE
   toolsource = new VectorSource();
   toolteken = new VectorLayer({
@@ -260,32 +270,21 @@ export class SidebarComponent implements AfterViewInit {
     {text: '5'},           {text: '6'},
     {text: '7'},           {text: '8'},  ];
 
-  public data: Array<any> = [{
-      text: 'My Profile'
-  }, {
-      text: 'Friend Requests'
-  }, {
-      text: 'Account Settings'
-  }, {
-      text: 'Support'
-  }, {
-      text: 'Log Out'
-  }];
-
-
   // @ViewChild('mycontroldivje', { static: false }) mycontroldivje: ElementRef;
   // @ViewChild('hetontzichtbaredivje', { static: false }) myControlonzichtbaar: ElementRef;
 
   @ViewChild('mytestje', { static: false }) myControl: ElementRef;
   @ViewChild('menu', { static: false }) mymenuControl: ElementRef;
-
   constructor(
     private suggestService: SuggestService,
     private spoorwegService: SpoorwegenService,
     private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
     private bagService: BagService,
     private kaartService: KaartService,
-    private overigedienstenSerivce: OverigeDienstenService
+    private overigedienstenSerivce: OverigeDienstenService,
+    private geocoderService: GeocoderService,
+
+
   ) {}
 
   ngAfterViewInit() {
@@ -365,23 +364,23 @@ export class SidebarComponent implements AfterViewInit {
     } else {
       this.output = (Math.round(length * 100) / 100) + '' + 'm';
     }
-    return this.output;
   }
 
-  // addTooltipInteraction() {
-  //   const hetType = this.typeSelectTekenen.value;
-  //   if (hetType !== '') {
-  //     this.draw = new OlDraw({
-  //       source: this.toolsource,
-  //       type: hetType,
-  //     });
-  //     this.map.addTooltipInteraction(this.draw);
-  //     console.log('addInteraction()');
-  //    }
-  // }
 
   foo() {
-    console.log('je hebt de knop ingedrukt');
+    console.log('foo knop foo');
+  }
+  toggle1() {
+    this.show1 = !this.show1;
+  }
+  toggle2() {
+    this.show2 = !this.show2;
+  }
+  toggle3() {
+    this.show3 = !this.show3;
+  }
+  toggle4() {
+    this.show4 = !this.show4;
   }
   getLayerGroupKaart() {
     return this.layergroupkaart.getLayers().getArray();
@@ -429,7 +428,6 @@ export class SidebarComponent implements AfterViewInit {
       console.log('addInteraction()');
     }
   }
-
   switchMode() {
     this.map.removeInteraction(this.draw);
     this.addInteraction();
@@ -446,6 +444,8 @@ export class SidebarComponent implements AfterViewInit {
     console.log(this.switchBorderMode);
   }
 
+  // onPlaceFound(place) {}
+
   switchLocationMode() {}
   switchRoutesMode() {}
 
@@ -460,6 +460,19 @@ export class SidebarComponent implements AfterViewInit {
       err => console.error(err)
     );
   }
+  zoekdeid() {
+    console.log('je klikt op de zoek_de_id knop');
+    const input = this.searchInput.value;  console.log(input + '' + 'dit is de id');
+    this.suggestService.searchSpecific(input).subscribe(
+      response => {
+        console.log(response + 'response van de searchEntity');
+        const data = response.body as LocationSuggestData;
+        this.searchSpecificSuggestions = data.response.docs;
+      },
+      err => console.error(err)
+    );
+  }
+
 }
 
 export interface ITileOptions extends TileOptions {

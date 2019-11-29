@@ -45,6 +45,10 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { HeaderComponent } from './header/header.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { LossekaartComponent } from './lossekaart/lossekaart.component';
+import { PrivateComponent } from './private/private.component';
+
+import { GeocoderModule } from 'angular-geocoder';
+
 
 export function tokenGetter() {
   return localStorage.getItem('JWT');
@@ -60,10 +64,12 @@ export function tokenGetter() {
     LoginFormComponent,
     HeaderComponent,
     LossekaartComponent,
+    PrivateComponent,
 
   ],
   imports: [
     RouterModule,
+    GeocoderModule,
     ScrollingModule,
     BrowserModule,
     MatInputModule, MatOptionModule, MatSelectModule, MatIconModule,

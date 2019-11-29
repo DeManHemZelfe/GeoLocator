@@ -1,33 +1,35 @@
 .map {
-  width: 100vw;
-  height: 100vh;
+  width: 80vw;
+  height: 80vh;
 }
 
 .options-menu {
-  background-color: rgba(0, 60, 136, 0.5);
-  border-radius: 5px;
-  width: 300px;
-  height: calc(100vh - 20px);
-  position: absolute;
-  right: 0;
-  margin: 10px 10px 0 0
+ background-color: red;
+ width: 0%;
 }
-
-.buttondiv {
-  /* display: table-caption; */
-  background-color: gray;
-  border-left: 2px solid black;
-  border-top: 2px solid black;
+.menu {
+  background-color: pink;
+  width: 10%;
+}
+.test {
+  background-color: red;
+  display: flex;
+}
+.test2{
+  background-color: powderblue;
+  display: flex;
+}
+.menumenu{
+  background: powderblue;
+  width: 100%;
+}
+.panel {
+  border-bottom: black 2px solid;
+  box-shadow: tomato 4px ;
+  width: 100%;
+}
+.header {
   color: black;
-  margin: 0%;
-  padding: 0%;
 }
 
-.knopjes {
-  display: inline-grid;
-  width: 100%;
-}
 
-.selectmenutekenen {
-  width: 100%;
-}
