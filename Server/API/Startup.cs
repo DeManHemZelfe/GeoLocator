@@ -27,7 +27,7 @@ namespace Server.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<GeoLocatorContext>(options => options.UseNpgsql("Host=localhost;Port=5432;Database=geo-locator;Username=lucas;Password=12345", b => b.MigrationsAssembly("API")));
+            services.AddDbContext<GeoLocatorContext>(options => options.UseNpgsql("Host=localhost;Port=5432;Database=geo-locator;Username=postgres;Password=1234", b => b.MigrationsAssembly("API")));
 
             // TODO: implement a better secret
             var key = Encoding.ASCII.GetBytes("secret");

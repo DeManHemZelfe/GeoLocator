@@ -22,3 +22,17 @@
 /home/lucas/Documents/GeoLocator/Server/Infrastructure/bin/Debug/netcoreapp2.2/Microsoft.IdentityModel.Tokens.pdb
 /home/lucas/Documents/GeoLocator/Server/Infrastructure/bin/Debug/netcoreapp2.2/Microsoft.IdentityModel.Tokens.xml
 /home/lucas/Documents/GeoLocator/Server/Infrastructure/obj/Debug/netcoreapp2.2/Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\niels\angularprojecten\GeoLocator\server\Infrastructure\obj\Debug\netcoreapp2.2\Infrastructure.dll
+C:\Users\niels\angularprojecten\GeoLocator\server\Infrastructure\obj\Debug\netcoreapp2.2\Infrastructure.pdb
+C:\Users\niels\angularprojecten\GeoLocator\server\Infrastructure\obj\Debug\netcoreapp2.2\Infrastructure.csprojAssemblyReference.cache
+C:\Users\niels\angularprojecten\GeoLocator\server\Infrastructure\obj\Debug\netcoreapp2.2\Infrastructure.AssemblyInfoInputs.cache
+C:\Users\niels\angularprojecten\GeoLocator\server\Infrastructure\obj\Debug\netcoreapp2.2\Infrastructure.AssemblyInfo.cs
+C:\Users\niels\angularprojecten\GeoLocator\server\Infrastructure\bin\Debug\netcoreapp2.2\Infrastructure.deps.json
+C:\Users\niels\angularprojecten\GeoLocator\server\Infrastructure\bin\Debug\netcoreapp2.2\Infrastructure.runtimeconfig.json
+C:\Users\niels\angularprojecten\GeoLocator\server\Infrastructure\bin\Debug\netcoreapp2.2\Infrastructure.runtimeconfig.dev.json
+C:\Users\niels\angularprojecten\GeoLocator\server\Infrastructure\bin\Debug\netcoreapp2.2\Infrastructure.dll
+C:\Users\niels\angularprojecten\GeoLocator\server\Infrastructure\bin\Debug\netcoreapp2.2\Infrastructure.pdb
+C:\Users\niels\angularprojecten\GeoLocator\server\Infrastructure\bin\Debug\netcoreapp2.2\Core.dll
+C:\Users\niels\angularprojecten\GeoLocator\server\Infrastructure\bin\Debug\netcoreapp2.2\Core.pdb
+C:\Users\niels\angularprojecten\GeoLocator\server\Infrastructure\obj\Debug\netcoreapp2.2\Infrastructure.csproj.CopyComplete
+C:\Users\niels\angularprojecten\GeoLocator\server\Infrastructure\obj\Debug\netcoreapp2.2\Infrastructure.csproj.CoreCompileInputs.cache

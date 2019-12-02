@@ -47,7 +47,9 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import { LossekaartComponent } from './lossekaart/lossekaart.component';
 import { PrivateComponent } from './private/private.component';
 
-import { GeocoderModule } from 'angular-geocoder';
+import {GeocoderModule} from 'angular-geocoder';
+
+
 
 
 export function tokenGetter() {
@@ -65,6 +67,7 @@ export function tokenGetter() {
     HeaderComponent,
     LossekaartComponent,
     PrivateComponent,
+
 
   ],
   imports: [
@@ -104,6 +107,7 @@ export function tokenGetter() {
     BagService,
     BestuurlijkegrenzenService,
     SpoorwegenService,
+
   ],
   bootstrap: [AppComponent],
 })

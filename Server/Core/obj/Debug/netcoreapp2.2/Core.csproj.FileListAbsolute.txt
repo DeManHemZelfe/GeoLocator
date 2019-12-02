@@ -11,3 +11,12 @@
 /home/lucas/Documents/GeoLocator/Server/Core/bin/Debug/netcoreapp2.2/Microsoft.IdentityModel.Tokens.xml
 /home/lucas/Documents/GeoLocator/Server/Core/obj/Debug/netcoreapp2.2/Core.csproj.CopyComplete
 /home/lucas/Documents/GeoLocator/Server/Core/obj/Debug/netcoreapp2.2/Core.csproj.CoreCompileInputs.cache
+C:\Users\niels\angularprojecten\GeoLocator\server\Core\obj\Debug\netcoreapp2.2\Core.csprojAssemblyReference.cache
+C:\Users\niels\angularprojecten\GeoLocator\server\Core\obj\Debug\netcoreapp2.2\Core.AssemblyInfoInputs.cache
+C:\Users\niels\angularprojecten\GeoLocator\server\Core\obj\Debug\netcoreapp2.2\Core.AssemblyInfo.cs
+C:\Users\niels\angularprojecten\GeoLocator\server\Core\obj\Debug\netcoreapp2.2\Core.dll
+C:\Users\niels\angularprojecten\GeoLocator\server\Core\obj\Debug\netcoreapp2.2\Core.pdb
+C:\Users\niels\angularprojecten\GeoLocator\server\Core\bin\Debug\netcoreapp2.2\Core.deps.json
+C:\Users\niels\angularprojecten\GeoLocator\server\Core\bin\Debug\netcoreapp2.2\Core.dll
+C:\Users\niels\angularprojecten\GeoLocator\server\Core\bin\Debug\netcoreapp2.2\Core.pdb
+C:\Users\niels\angularprojecten\GeoLocator\server\Core\obj\Debug\netcoreapp2.2\Core.csproj.CoreCompileInputs.cache

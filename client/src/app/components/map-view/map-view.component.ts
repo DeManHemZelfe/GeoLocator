@@ -23,6 +23,8 @@ import { HttpResponse } from '@angular/common/http';
 import { OverigeDienstenService } from '../../layers/overigediensten.service';
 
 import LayerGroup from 'ol/layer/Group';
+import { GeocoderService } from 'angular-geocoder';
+
 
 
 @Component({
@@ -42,6 +44,14 @@ export class MapViewComponent implements AfterViewInit {
   show9  = false;
   show10 = false;
   isShow = false;
+
+  public searchInput = '';
+  public places = [];
+  public collations = [];
+  public searchThreshold = 2;
+  public foundPlace: any = null;
+  public selectedItem = [];
+  public selectedIndex = -1;
 
   private map: Map;
   private draw: OlDraw;
@@ -223,7 +233,8 @@ export class MapViewComponent implements AfterViewInit {
     private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
     private bagService: BagService,
     private kaartService: KaartService,
-    private overigedienstenSerivce: OverigeDienstenService
+    private overigedienstenSerivce: OverigeDienstenService,
+    public geocoderService: GeocoderService,
   ) {}
 
   ngAfterViewInit() {

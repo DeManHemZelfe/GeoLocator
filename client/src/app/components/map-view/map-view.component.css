@@ -1,5 +1,5 @@
 .map {
-  width: 100vw;
+  width: 99vw;
   height: 98vh;
 }
 
@@ -35,11 +35,16 @@
   color: black;
 }
 .searchmenu {
-  margin-left: 500px;
-  width: 25%;
+  margin-left: 1215px;
+  width: 20%;
 }
 .container-geocoder {
-  background-color: blue;
+  background-color: white;
+}
+.klasseh5 {
+  font-size: 20px;
+  padding: 0px;
+  margin: 0px;
 }
 
 
