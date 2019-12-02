@@ -13,6 +13,7 @@ export class SuggestService {
   fl = ['id', 'weergavenaam', 'type', 'score'];
 
 
+
   constructor(private http: HttpClient) {}
 
   searchSuggest(input: string): Observable<HttpResponse<object>> {
