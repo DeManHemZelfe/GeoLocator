@@ -365,7 +365,10 @@ export class SidebarComponent implements AfterViewInit {
       this.output = (Math.round(length * 100) / 100) + '' + 'm';
     }
   }
-
+  public onPlaceFound(place) {
+    console.log(place);
+    this.map.getView().animate({center: place.centroide_rd.coordinates, zoom: 12});
+  }
 
   foo() {
     console.log('foo knop foo');

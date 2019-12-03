@@ -4,7 +4,7 @@
 
 <div #searchmenu class="searchmenu">
     <div class="container-geocoder">
-      <div class="geocodergeocoder"><geocoder class="geocoder"></geocoder></div>
+      <div class="geocodergeocoder"><geocoder class="geocoder" (placeFound)="onPlaceFound($event)"></geocoder></div>
     </div>
   </div>
 
@@ -84,12 +84,12 @@
                     <mat-accordion>
                      <mat-expansion-panel class="panel1">
                       <mat-expansion-panel-header class="header">
-                       <mat-panel-title class="paneltitleclass">Grenzen
+                       <mat-panel-title class="paneltitleclass">Bag
                         <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;"></i>
                        </mat-panel-title>
                       </mat-expansion-panel-header>
                        <div class="paneldiv">
-                        <button kendoButton id="test" *ngFor="let layer of getLayerGroupGrenzen()"
+                        <button kendoButton id="test" *ngFor="let layer of getLayerGroupBag()"
                          (click)="layer.setVisible(!layer.getVisible())"
                          [primary]="layer.getVisible()">
                          {{layer.get('title')}}
@@ -119,17 +119,32 @@
                               <option value="LineString">LineString</option>
                               <option value="Polygon">Polygon</option>
                               <option value="Circle">Circle</option>
-                              <option value="">None</option>
+                              <option value="">Select</option>
                             </select>
                           </form>
                     </mat-panel-description><!-- EINDE DESCRIPTION -->
+                    <mat-panel-description><!-- BEGIN DESCRIPTION -->
+                      <form class="form-inline">
+                          <label>Shapes &nbsp;</label>
+                          <select id="type" [formControl]="typeSelectShapes" (change)="switchShapesMode()">
+                            <option value="Square">Square</option>
+                            <option value="Box">Box</option>
+                            <option value="Star">Star</option>
+                            <option value="Circle">Circle</option>
+                            <option value="">Select</option>
+                          </select>
+                        </form>
+                  </mat-panel-description><!-- EINDE DESCRIPTION -->
                   </mat-expansion-panel>
                 </mat-accordion><!-- EINDE ACCORDION -->
             </div>
 
             <div class="test">
                 <button (click)="toggle3()"><i class="k-icon k-i-filter" style="font-size: 10px;" style="color: black;"></i></button>
-               <div *ngIf="show3">3</div>
+               <div *ngIf="show3">
+                 <mat-radio-group aria-label="Select an option">
+                  <mat-radio-button value="1">Modify</mat-radio-button>
+                </mat-radio-group></div>
             </div>
 
             <div class="test">

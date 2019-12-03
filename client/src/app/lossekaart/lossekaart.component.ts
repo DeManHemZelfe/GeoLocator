@@ -7,10 +7,17 @@ import { getTopLeft } from 'ol/extent';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import { FormControl } from '@angular/forms';
 import OlDraw from 'ol/interaction/Draw';
+
+
+import {LineString, Polygon} from 'ol/geom';
+import {getArea, getLength} from 'ol/sphere';
+import { Circle as CircleStyle, Icon, Stroke, Style, Fill } from 'ol/style';
+
+
+
 import TileWMS, { Options as TileWMSOptions } from 'ol/source/TileWMS';
 import { Options as TileOptions } from 'ol/layer/Tile';
 import { OSM, Vector as VectorSource, TileJSON } from 'ol/source';
-import { Icon, Stroke, Style, Fill } from 'ol/style';
 import LocationSuggestData from '../interface/location-suggest-data.interface';
 import { SuggestService } from '../components/service/suggest.service';
 import { BestuurlijkegrenzenService } from '../layers/bestuurlijkegrenzen.service';
@@ -24,41 +31,48 @@ import { OverigeDienstenService } from '../layers/overigediensten.service';
 
 import LayerGroup from 'ol/layer/Group';
 
+
 @Component({
   selector: 'app-lossekaart',
   templateUrl: './lossekaart.component.html',
   styleUrls: ['./lossekaart.component.css']
 })
 export class LossekaartComponent implements OnInit {
-  show1  = false;
-  show2  = false;
-  show3  = false;
-  show4  = false;
-  show5  = false;
-  show6  = false;
-  show7  = true;
-  show8  = false;
-  show9  = false;
-  show10 = false;
-  isShow = false;
+
 
   private map: Map;
   private draw: OlDraw;
-  typeSelectTekenen = new FormControl('');
 
+  sketch;
+  helpTooltipElement;
+  helpTooltip;
+  measureTooltipElement;
+  measureTooltip;
+  output;
+  continuePolygonMsg = 'Click to continue drawing the polygon';
+  helpMsg = 'Click to start drawing';
+  continueLineMsg = 'Click to continue drawing the line';
+  typeSelectTekenen = new FormControl('');
 
   source = new VectorSource({
     wrapX: false
   });
+
   tekenfunctie = new VectorLayer({
     source: this.source,
     style: new Style({
       fill: new Fill({
-        color: 'red'
+        color: 'rgba(255, 255, 255, 0.2)'
       }),
       stroke: new Stroke({
-        color: 'black',
+        color: '#ffcc33',
         width: 3
+      }),
+      image: new CircleStyle({
+        radius: 7,
+        fill: new Fill({
+          color: '#ffcc33'
+        })
       })
     })
   });
@@ -120,96 +134,6 @@ export class LossekaartComponent implements OnInit {
     title: 'BaseLayer'
   } as ITileOptions); // EINDE VAN DE KAARTLAAG
 
-  brtWaterTile = new WMTS({ // BEGIN VAN DE KAARTTEGEL MAKEN
-    attributions:
-      'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
-    layer: this.layers.brtWater,
-    matrixSet: 'EPSG:28992',
-    format: 'image/png',
-    projection: this.projection,
-    tileGrid: new WMTSTileGrid({
-      origin: getTopLeft(this.projectionExtent),
-      resolutions: this.resolutions,
-      matrixIds: this.matrixIds
-    }),
-    style: 'default',
-    wrapX: false
-  }); // EINDE VAN DE KAARTTEGEL
-
-  brtWaterLayer = new TileLayer({ // BEGIN VAN DE KAARTLAAG MAKEN EN TEGELS TOEVOEGEN
-    source: this.brtWaterTile,
-    opacity: 0.7,
-    visible: false,
-    title: 'BrtWaterLayer'
-  } as ITileOptions); // EINDE VAN DE KAARTLAAG
-
-  brtGrijsTile = new WMTS({ // BEGIN VAN DE KAARTTEGEL MAKEN
-    attributions:
-      'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
-    layer: this.layers.brtGrijs,
-    matrixSet: 'EPSG:28992',
-    format: 'image/png',
-    projection: this.projection,
-    tileGrid: new WMTSTileGrid({
-      origin: getTopLeft(this.projectionExtent),
-      resolutions: this.resolutions,
-      matrixIds: this.matrixIds
-    }),
-    style: 'default',
-    wrapX: false
-  }); // EINDE VAN DE KAARTTEGEL
-
-  brtGrijsLayer = new TileLayer({ // BEGIN VAN DE KAARTLAAG MAKEN EN TEGELS TOEVOEGEN
-    source: this.brtGrijsTile,
-    opacity: 0.7,
-    visible: false,
-    title: 'BrtGrijsLayer'
-  } as ITileOptions); // EINDE VAN DE KAARTLAAG
-
-  layergroupkaart = new LayerGroup ({
-    layers: [
-      this.baseLayer,
-      this.brtWaterLayer,
-      this.brtGrijsLayer,
-    ]
-  });
-  layergroupgrenzen = new LayerGroup ({
-    layers: [
-      this.bestuurlijkegrenzenservice.landsgrensLayer,
-      this.bestuurlijkegrenzenservice.gemeentenLayer,
-      this.bestuurlijkegrenzenservice.provinciesLayer,
-    ]
-  });
-  layergroupspoorwegen = new LayerGroup ({
-    layers: [
-      this.spoorwegService.KruisingLayer,
-      this.spoorwegService.OverwegLayer,
-      this.spoorwegService.SpoorasLayer,
-      this.spoorwegService.StationLayer,
-      this.spoorwegService.TraceLayer,
-      this.spoorwegService.WisselLayer,
-      this.spoorwegService.KilometreringLayer,
-    ]
-  });
-  layergroupBag = new LayerGroup ({
-    layers: [
-     this.bagService.BagLigplaatsLayer,
-     this.bagService.BagPandLayer,
-     this.bagService.BagStandplaatsLayer,
-     this.bagService.BagVerblijfsobjectLayer,
-     this.bagService.BagWoonplaatsLayer
-    ]
-  });
-  layergroupOverigeDiensten = new LayerGroup ({
-    layers: [
-      this.overigedienstenSerivce.OverheidsdienstenLayer,
-      this.overigedienstenSerivce.AgrarischAreaalNederlandLayer,
-      this.overigedienstenSerivce.GeografischenamenLayer
-    ]
-  });
-
   @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
 
   constructor(
@@ -224,7 +148,17 @@ export class LossekaartComponent implements OnInit {
   ngOnInit() {
     this.initializeMap();
     this.addInteraction();
+    console.log(this.addInteraction());
+
+    this.map.on('pointermove', this.pointerMoveHandler);
+    console.log('2');
+
+    this.map.getViewport().addEventListener('mouseout', () => {
+    this.helpTooltipElement.classList.add('hidden');
+    console.log('3');
+    });
   }
+
   initializeMap() { // BEGIN VAN DE MAP MAKEN
     for (let i = 0; i < this.matrixIds.length; i++) {
       this.matrixIds[i] = 'EPSG:28992:' + i;
@@ -247,24 +181,29 @@ export class LossekaartComponent implements OnInit {
       ],
     });
   } // EINDE VAN DE MAP MAKEN
-  toggle1() {
-    this.show1 = !this.show1;
-  }
-  toggle2() {
-    this.show2 = !this.show2;
-  }
-  toggle3() {
-    this.show3 = !this.show3;
-  }
-  toggle4() {
-    this.show4 = !this.show4;
-  }
+
   addInteraction() {
     const value = this.typeSelectTekenen.value;
-    if (value !== '') {
+    if (value === 'area' ? 'Polygon' : 'LineString') {
       this.draw = new OlDraw({
         source: this.source,
-        type: value
+        type: value,
+        style: new Style({
+          fill: new Fill({
+            color: 'rgba(225, 225, 225, 0.2)',
+          }),
+          stroke: new Stroke({
+            color: 'rgba(0, 0, 0, 0.5)',
+            lineDash: [10, 10],
+            width: 2
+          }),
+          image: new CircleStyle({
+            radius: 5,
+            stroke: new Stroke({
+              color: 'rgba(255, 2555, 255, 0.2)'
+            })
+          })
+        })
       });
       this.map.addInteraction(this.draw);
       console.log('addInteraction()');
@@ -274,24 +213,50 @@ export class LossekaartComponent implements OnInit {
     this.map.removeInteraction(this.draw);
     this.addInteraction();
     console.log('switchMode()');
-  }
-  getLayerGroupKaart() {
-    return this.layergroupkaart.getLayers().getArray();
-  }
-  getLayerGroupBag() {
-    return this.layergroupBag.getLayers().getArray();
-  }
-  getLayerGroupGrenzen() {
-    return this.layergroupgrenzen.getLayers().getArray();
-  }
-  getLayerGroupOverigeDiensten() {
-    return this.layergroupOverigeDiensten.getLayers().getArray();
-  }
-  getLayerGroupSpoorwegen() {
-    return this.layergroupspoorwegen.getLayers().getArray();
-  }
-  getLayers() {
-    return this.map.getLayers().getArray();
-  }
+  } // EINDE SWITCHMODE EN ADDINTERACTION
+
+  pointerMoveHandler(evt) {
+    if (evt.dragging) {
+      return;
+    }
+
+    if (this.sketch) {
+      const geom = this.sketch.getGeometry();
+      if (geom instanceof Polygon) {
+        this.helpMsg = this.continuePolygonMsg;
+      } else if (geom instanceof LineString) {
+        this.helpMsg = this.continueLineMsg;
+      }
+    } // EINDE SKETCH
+
+    this.helpTooltipElement.innerHTML = this.helpMsg;
+    this.helpTooltip.setPosition(evt.coordinate);
+    this.helpTooltipElement.classList.remove('hidden');
+
+  } // EINDE POINTERMOVEHANDLER
+
+  formatLength(line) { // BEGIN FUNCTION FORMATLENGTH
+    const length = getLength(line);
+    if (length > 100) {
+      this.output = (Math.round(length / 1000 * 100) / 100) + '' + 'km';
+    } else {
+      this.output = (Math.round(length * 100) / 100) + '' + 'm';
+    }
+    return this.output;
+  } // EINDE FUNCTION FORMATLENGTH
+
+  formatArea(polygon) { // BEGIN FUNCTION FORMATLENGTH
+    const area = getArea(polygon);
+    if (area > 10000) {
+      this.output = (Math.round(area / 1000000 * 100) / 100) + '' + 'km<sup>2</sup>';
+    } else {
+      this.output = (Math.round(area * 100) / 100) + '' + 'm<sup>2</sup>';
+    }
+    return this.output;
+  } // EINDE FUNCTION FORMATLENGTH
+
+
+
+
 
 } // EINDE VAN DE COMPONENT NG ONINIT

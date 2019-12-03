@@ -17,10 +17,11 @@ import { BestuurlijkegrenzenService } from '../../layers/bestuurlijkegrenzen.ser
 import { BagService } from '../../layers/bag.service';
 import { KaartService } from '../../layers/kaart.service';
 import { SpoorwegenService, ITileOptions } from '../../layers/spoorwegen.service';
-import {defaults as defaultControls, Control, ZoomToExtent, Rotate, ScaleLine, ZoomSlider, OverviewMap} from 'ol/control';
+import {defaults as defaultControls, Control, ZoomToExtent, Rotate, ScaleLine, ZoomSlider, OverviewMap, Zoom} from 'ol/control';
 
 import { HttpResponse } from '@angular/common/http';
 import { OverigeDienstenService } from '../../layers/overigediensten.service';
+import {defaults as defaultInteractions, Modify, Select} from 'ol/interaction';
 
 import LayerGroup from 'ol/layer/Group';
 import { GeocoderService } from 'angular-geocoder';
@@ -56,11 +57,35 @@ export class MapViewComponent implements AfterViewInit {
   private map: Map;
   private draw: OlDraw;
   typeSelectTekenen = new FormControl('');
+  typeSelectShapes = new FormControl(''); // OPENLAYERS _title = DRAW SHAPES
 
+  select = new Select({
+    wrapX: false
+  });
+
+  modify = new Modify({
+    // OPENLAYERS _title = DRAW SHAPES
+    features: this.select.getFeatures()
+  });
 
   source = new VectorSource({
     wrapX: false
   });
+
+  shapesfunctie = new VectorLayer({
+    // OPENLAYERS _title = DRAW SHAPES
+    source: this.source,
+    style: new Style({
+      fill: new Fill({
+        color: 'red'
+      }),
+      stroke: new Stroke({
+        color: 'green',
+        width: 3
+      })
+    })
+  });
+
   tekenfunctie = new VectorLayer({
     source: this.source,
     style: new Style({
@@ -240,6 +265,7 @@ export class MapViewComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.initializeMap();
     this.addInteraction();
+    this.addShapesInteraction();
   }
   initializeMap() { // BEGIN VAN DE MAP MAKEN
     for (let i = 0; i < this.matrixIds.length; i++) {
@@ -247,6 +273,7 @@ export class MapViewComponent implements AfterViewInit {
     }
     this.map = new Map({ // MAAK DE MAP
       target: 'map',
+      interactions: defaultInteractions().extend([this.select, this.modify]),
       layers: [
         this.baseLayer,
         this.brtWaterLayer,
@@ -271,6 +298,7 @@ export class MapViewComponent implements AfterViewInit {
         this.spoorwegService.KilometreringLayer,
 
         this.tekenfunctie,
+        this.shapesfunctie,
       ],
       view: new View({
         center: [150000, 450000],
@@ -322,11 +350,37 @@ export class MapViewComponent implements AfterViewInit {
       console.log('addInteraction()');
     }
   }
+  addShapesInteraction() {
+    // OPENLAYERS _title = DRAW SHAPES
+    const value = this.typeSelectShapes.value;
+    if (value !== '') {
+      this.draw = new OlDraw({
+        source: this.source,
+        type: value
+      });
+      this.map.addInteraction(this.draw);
+      console.log('addShapesInteraction()');
+    }
+  }
+
+  switchShapesMode() {
+    // OPENLAYERS _title = DRAW SHAPES
+    this.map.removeInteraction(this.draw);
+    this.addShapesInteraction();
+    console.log('switchShapesMode()');
+  }
+
   switchMode() {
     this.map.removeInteraction(this.draw);
     this.addInteraction();
     console.log('switchMode()');
   }
+
+  public onPlaceFound(place) {
+    console.log(place);
+    this.map.getView().animate({center: place.centroide_rd.coordinates, zoom: 14});
+  }
+
   getLayerGroupKaart() {
     return this.layergroupkaart.getLayers().getArray();
   }
