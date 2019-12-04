@@ -9,6 +9,7 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { AppComponent } from './app.component';
 import { LossekaartComponent } from './lossekaart/lossekaart.component';
 import { AuthGuard } from './auth/auth.guard';
+import { TodoComponent } from './_Todo_/todo.component';
 
 
 // import { from } from 'rxjs';
@@ -21,6 +22,7 @@ const routes: Routes = [
   // { path: 'map-view',  component:   MapViewComponent },
   // { path: 'sidebar', component: SidebarComponent },
   { path: 'lossekaart', component: LossekaartComponent },
+  { path: 'todo', component: TodoComponent },
   // { path: 'app', component: AppComponent}
   // { path: '', component: IndexComponent },
   // { path: 'login', component: LoginComponent },

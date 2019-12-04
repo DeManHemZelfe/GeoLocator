@@ -46,6 +46,7 @@ import { HeaderComponent } from './pages/header/header.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { LossekaartComponent } from './lossekaart/lossekaart.component';
 import { PrivateComponent } from './private/private.component';
+import { TodoComponent} from './_Todo_/todo.component';
 
 import {GeocoderModule} from 'angular-geocoder';
 
@@ -67,8 +68,7 @@ export function tokenGetter() {
     HeaderComponent,
     LossekaartComponent,
     PrivateComponent,
-
-
+    TodoComponent,
   ],
   imports: [
     RouterModule,
