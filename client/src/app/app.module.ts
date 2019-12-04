@@ -42,7 +42,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { SpoorwegenService } from './layers/spoorwegen.service';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './pages/header/header.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { LossekaartComponent } from './lossekaart/lossekaart.component';
 import { PrivateComponent } from './private/private.component';

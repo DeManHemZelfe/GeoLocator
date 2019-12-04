@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import User from 'src/app/interfaces/user.interface';
+import User from 'src/app/_interfaces/user.interface';
 import { UserService } from 'src/app/services/user.service';
 import { FormControl } from '@angular/forms';
 import Draw from 'ol/interaction/Draw';

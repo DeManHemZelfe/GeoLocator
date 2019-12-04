@@ -9,7 +9,7 @@ export class BestuurlijkegrenzenService {
 
     landsgrensTile = new TileWMS({
       url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?',
-      params: {LAYERS: 'landsgrens', TILED: true},
+      params: {LAYERS: 'landsgrens', TILED: true, },
       crossOrigin: 'anonymous',
     });
     landsgrensLayer = new TileLayer({
@@ -31,15 +31,20 @@ export class BestuurlijkegrenzenService {
 
     provinciesTile = new TileWMS({
      url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?',
-     params: {LAYERS: 'provincies', TILED: true},
-     crossOrigin: 'anonymous',
+     params: {
+       LAYERS: 'provincies',
+       Type: '',
+       TILED: true,
+       crossOrigin: 'anonymous', },
     });
     provinciesLayer = new TileLayer({
      source: this.provinciesTile,
+     opacity: 2,
      title: 'ProvinciesGrens',
-     visible: false,
+     visible: true,
     } as ITileOptions);
   }
+console.log('this.provinciesTile');
 
 export interface ITileOptions extends TileOptions {
     title?: string;

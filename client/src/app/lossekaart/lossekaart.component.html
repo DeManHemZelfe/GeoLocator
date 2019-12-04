@@ -1,25 +1,13 @@
 
-<app-header></app-header>
 
 <div>
-    <mat-accordion>
-        <mat-expansion-panel class="panel">
-            <mat-expansion-panel-header class="header">
-          <mat-panel-title>Tekenen
-          <i class="k-icon k-i-pencil" style="font-size: 10px;" style="color: black;" style="margin-left: 5px;"></i>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-panel-description>
-            <form class="form-inline">
-                <label>Tekenen &nbsp;</label>
-                <select id="type" [formControl]="typeSelectTekenen" (change)="switchMode()">
-                    <option value="length">Length (LineString)</option>
-                    <option value="area">Area (Polygon)</option>
-                </select>
-              </form>
-        </mat-panel-description>
-      </mat-expansion-panel>
-    </mat-accordion>
+    <form>
+      <button (click)="onClickLink()">provincie</button>
+      <button (click)="onClickLink2()">provincie namespace</button>
+    </form>
+    <form>
+      <button (click)="onClickprovincie()">mhtgr</button>
+    </form>
 </div>
 
 <div id="map" class="map"></div>

@@ -2,7 +2,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidationErrors} from '@angular/forms';
 import { GroupService } from 'src/app/services/group.service';
-import Group from 'src/app/interfaces/group.interface';
+import Group from 'src/app/_interfaces/group.interface';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 

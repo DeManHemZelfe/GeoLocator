@@ -1,6 +1,6 @@
 .map {
-  width: 99vw;
-  height: 98vh;
+  width: 100vw;
+  height: 100vh;
 }
 
 .options-menu {
@@ -23,7 +23,7 @@
   display: flex;
 }
 .menumenu{
-  background: powderblue;
+  background: white;
   width: 100%;
 }
 .panel {
@@ -35,7 +35,7 @@
   color: black;
 }
 .searchmenu {
-  margin-left: 1215px;
+  margin-left: 1227px;
   width: 20%;
 }
 .container-geocoder {

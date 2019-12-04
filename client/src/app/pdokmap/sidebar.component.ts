@@ -15,7 +15,7 @@ import { getTopLeft } from 'ol/extent';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import { FormControl } from '@angular/forms';
 
-import LocationSuggestData from '../interface/location-suggest-data.interface';
+import LocationSuggestData from '../_interfaces/_datainterface/location-suggest-data-interface';
 import { SuggestService } from '../components/service/suggest.service';
 import { BestuurlijkegrenzenService } from '../layers/bestuurlijkegrenzen.service';
 import { BagService } from '../layers/bag.service';
