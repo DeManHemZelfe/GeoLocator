@@ -15,7 +15,7 @@ export class BestuurlijkegrenzenService {
     landsgrensLayer = new TileLayer({
      source: this.landsgrensTile,
      title: 'LandsGrens',
-     visible: false,
+     visible: true,
     } as ITileOptions);
 
     gemeentenTile = new TileWMS({

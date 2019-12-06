@@ -2,31 +2,25 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { IndexComponent } from './pages/index/index.component';
 import { LoginComponent } from './pages/login/login.component';
-import { MapViewComponent } from './components/map-view/map-view.component';
-import { SidebarComponent } from './pdokmap/sidebar.component';
-import {HeaderComponent } from './pages/header/header.component';
-import { LoginFormComponent } from './components/login-form/login-form.component';
-import { AppComponent } from './app.component';
 import { LossekaartComponent } from './lossekaart/lossekaart.component';
 import { AuthGuard } from './auth/auth.guard';
 import { TodoComponent } from './_Todo_/todo.component';
+import { KaartviewerComponent } from './kaartviewer/kaartviewer.component';
+import { ToolbarFunctionsComponent } from './functions/toolbar-functions/toolbar-functions.component';
+import { UndoRedoComponent } from './functions/undo.redo-functions/undo.redo';
+import { SidebarComponent } from './pdokmap/sidebar.component';
 
-
-// import { from } from 'rxjs';
-// import { MapViewGridComponent } from './components/map-view-open-street/map-view-open-street.component';
 
 const routes: Routes = [
-  // { path: 'index', component: IndexComponent },
-  { path: '', component:  IndexComponent, canActivate: [AuthGuard] },
-  { path: 'login', component:  LoginComponent },
-  // { path: 'map-view',  component:   MapViewComponent },
-  // { path: 'sidebar', component: SidebarComponent },
-  { path: 'lossekaart', component: LossekaartComponent },
-  { path: 'todo', component: TodoComponent },
-  // { path: 'app', component: AppComponent}
-  // { path: '', component: IndexComponent },
-  // { path: 'login', component: LoginComponent },
-  // { path: 'login-form', component: LoginFormComponent},
+  { path: 'login', component:  LoginComponent }, // DIT WORD DE LOGIN \\
+  { path: '', component:  IndexComponent, canActivate: [AuthGuard] }, // DIT WORD VERWIJDERD \\
+  { path: 'kaartviewer', component:  KaartviewerComponent }, // DIT WORD DE LOGIN \\
+  { path: 'toolbar', component:  ToolbarFunctionsComponent }, // DIT WORD DE LOGIN TOOLBAR\\
+  { path: 'lossekaart', component: LossekaartComponent }, // DEZE KAART GAAT VERWIJDERD WORDEN \\
+  { path: 'todo', component: TodoComponent }, // DIT IS DE TODO \\
+  { path: 'undo', component: UndoRedoComponent }, // DIT IS DE UNDO EN REDO \\
+
+  { path: 'pdok', component: SidebarComponent }, // DIT IS DE UNDO EN REDO \\
 ];
 
 @NgModule({

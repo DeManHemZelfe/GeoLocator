@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { VrijgeocoderService } from './vrijgeocoder.service';
+import { ServiceService } from './service.service';
 
-describe('VrijgeocoderService', () => {
+describe('ServiceService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: VrijgeocoderService = TestBed.get(VrijgeocoderService);
+    const service: ServiceService = TestBed.get(ServiceService);
     expect(service).toBeTruthy();
   });
 });

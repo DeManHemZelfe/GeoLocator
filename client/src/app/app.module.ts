@@ -2,9 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
-
 import {MatMenuModule} from '@angular/material/menu';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './pdokmap/sidebar.component';
@@ -18,24 +16,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { GroupService } from './services/group.service';
 import { JwtModule } from '@auth0/angular-jwt';
-
 import { RouterModule,  Routes } from '@angular/router';
-import { AgmCoreModule } from '@agm/core';
-
-import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule, MatOptionModule, MatSelectModule } from '@angular/material';
-
 import {MatIconModule} from '@angular/material/icon';
-
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
-import {MatSidenav} from '@angular/material/sidenav';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatExpansionModule} from '@angular/material/expansion';
-
 import { MenusModule } from '@progress/kendo-angular-menu';
-
-import { SuggestService } from './components/service/suggest.service';
 import { BagService } from './layers/bag.service';
 import { BestuurlijkegrenzenService } from './layers/bestuurlijkegrenzen.service';
 import {MatRadioModule} from '@angular/material/radio';
@@ -45,13 +33,13 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { HeaderComponent } from './pages/header/header.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { LossekaartComponent } from './lossekaart/lossekaart.component';
-import { PrivateComponent } from './private/private.component';
 import { TodoComponent} from './_Todo_/todo.component';
-
 import {GeocoderModule} from 'angular-geocoder';
-
-
-
+import { KaartviewerComponent } from './kaartviewer/kaartviewer.component';
+import { ToolbarFunctionsComponent } from './functions/toolbar-functions/toolbar-functions.component';
+import { UndoRedoComponent } from './functions/undo.redo-functions/undo.redo';
+import { ServiceService } from './pdokmap/pdokmapconfigmap/service.service';
+import { BgService } from './pdokmap/layer/bg.service';
 
 export function tokenGetter() {
   return localStorage.getItem('JWT');
@@ -67,8 +55,11 @@ export function tokenGetter() {
     LoginFormComponent,
     HeaderComponent,
     LossekaartComponent,
-    PrivateComponent,
     TodoComponent,
+    KaartviewerComponent,
+    ToolbarFunctionsComponent,
+    UndoRedoComponent,
+
   ],
   imports: [
     RouterModule,
@@ -103,11 +94,11 @@ export function tokenGetter() {
   providers: [
     UserService,
     GroupService,
-    SuggestService,
     BagService,
     BestuurlijkegrenzenService,
     SpoorwegenService,
-
+    ServiceService,
+    BgService,
   ],
   bootstrap: [AppComponent],
 })

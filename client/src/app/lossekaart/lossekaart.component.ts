@@ -16,10 +16,8 @@ import TileWMS, { Options as TileWMSOptions } from 'ol/source/TileWMS';
 import { Options as TileOptions } from 'ol/layer/Tile';
 import { OSM, Vector as VectorSource, TileJSON, Vector } from 'ol/source';
 import LocationSuggestData from '../_interfaces/_datainterface/location-suggest-data-interface';
-import { SuggestService } from '../components/service/suggest.service';
 import { BestuurlijkegrenzenService } from '../layers/bestuurlijkegrenzen.service';
 import { BagService } from '../layers/bag.service';
-import { KaartService } from '../layers/kaart.service';
 import { SpoorwegenService, ITileOptions } from '../layers/spoorwegen.service';
 import {defaults as defaultControls, Control, ZoomToExtent, Rotate, ScaleLine, ZoomSlider, OverviewMap} from 'ol/control';
 
@@ -125,11 +123,9 @@ export class LossekaartComponent implements OnInit {
   @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
 
   constructor(
-    private suggestService: SuggestService,
     private spoorwegService: SpoorwegenService,
     private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
     private bagService: BagService,
-    private kaartService: KaartService,
     private overigedienstenSerivce: OverigeDienstenService
   ) {}
 

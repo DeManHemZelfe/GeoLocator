@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PrivateComponent } from './private.component';
+import { KaartviewerComponent } from './kaartviewer.component';
 
-describe('PrivateComponent', () => {
-  let component: PrivateComponent;
-  let fixture: ComponentFixture<PrivateComponent>;
+describe('KaartviewerComponent', () => {
+  let component: KaartviewerComponent;
+  let fixture: ComponentFixture<KaartviewerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PrivateComponent ]
+      declarations: [ KaartviewerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PrivateComponent);
+    fixture = TestBed.createComponent(KaartviewerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

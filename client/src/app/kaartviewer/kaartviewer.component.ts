@@ -14,39 +14,44 @@ import TileWMS, { Options as TileWMSOptions } from 'ol/source/TileWMS';
 import { Options as TileOptions } from 'ol/layer/Tile';
 import { OSM, Vector as VectorSource, TileJSON } from 'ol/source';
 import { Icon, Stroke, Style, Fill, Circle} from 'ol/style';
-import LocationSuggestData from '../../_interfaces/_datainterface/location-suggest-data-interface';
-import { BestuurlijkegrenzenService } from '../../layers/bestuurlijkegrenzen.service';
-import { BagService } from '../../layers/bag.service';
+import LocationSuggestData from '../_interfaces/_datainterface/location-suggest-data-interface';
+import { BestuurlijkegrenzenService } from '../layers/bestuurlijkegrenzen.service';
+import { BagService } from '../layers/bag.service';
 
-import { SpoorwegenService, ITileOptions } from '../../layers/spoorwegen.service';
+import { SpoorwegenService, ITileOptions } from '../layers/spoorwegen.service';
 import {defaults as defaultControls, Control, ZoomToExtent, Rotate, ScaleLine, ZoomSlider, OverviewMap, Zoom} from 'ol/control';
-import { HttpResponse } from '@angular/common/http';
-import { OverigeDienstenService } from '../../layers/overigediensten.service';
-import {defaults as defaultInteractions, Modify, Select, Snap,  Translate } from 'ol/interaction';
+
+import { OverigeDienstenService } from '../layers/overigediensten.service';
+import {defaults as defaultInteractions, Modify, Select, Snap,  Translate, Draw } from 'ol/interaction';
 import LayerGroup from 'ol/layer/Group';
 import { GeocoderService } from 'angular-geocoder';
-import { LineString, Polygon } from 'ol/geom';
-
-
+import { ToolbarFunctionsComponent } from '../functions/toolbar-functions/toolbar-functions.component';
+import { getLocaleId } from '@angular/common';
 
 
 @Component({
-  selector: 'app-map-view',
-  templateUrl: './map-view.component.html',
-  styleUrls: ['./map-view.component.css']
+  selector: 'app-kaartviewer',
+  templateUrl: './kaartviewer.component.html',
+  styleUrls: ['./kaartviewer.component.css']
 })
-export class MapViewComponent implements AfterViewInit {
+export class KaartviewerComponent implements AfterViewInit {
   show1  = false;
   show2  = false;
   show3  = false;
   show4  = false;
   show5  = false;
   show6  = false;
-  show7  = true;
+  show7  = false;
   show8  = false;
   show9  = false;
   show10 = false;
+  show11 = false;
+  show12 = false;
+  show13 = false;
+  show14 = false;
+  show15 = false;
   isShow = false;
+
 
   public searchInput = '';
   public places = [];
@@ -56,17 +61,13 @@ export class MapViewComponent implements AfterViewInit {
   public selectedItem = [];
   public selectedIndex = -1;
 
+  grenzenvisi = false;
+  bagvisi = false;
+  spoorvisi = false;
+  dienstenvisi = false;
+
   private map: Map;
   private draw: OlDraw;
-
-  snap;
-  sketch: Feature;
-  helpTooltipElement: HTMLElement;
-  helpTooltip: Overlay;
-  measureTooltipElement: HTMLElement;
-  measureTooltip: Overlay;
-  continuePolygonMsg = 'Click to continue drawing the polygon';
-  continueLineMsg = 'Click to continue drawing the line';
 
   typeSelectTekenen = new FormControl('');
 
@@ -80,8 +81,9 @@ export class MapViewComponent implements AfterViewInit {
   });
 
   source = new VectorSource({
-    wrapX: false
+    wrapX: false,
   });
+
   tekenfunctie = new VectorLayer({
     source: this.source,
     style: new Style({
@@ -248,6 +250,12 @@ layergroupOverigeDiensten = new LayerGroup ({
 @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
 @ViewChild('menu', { static: false }) menu: ElementRef;
 @ViewChild('searchmenu', { static: false }) searchmenu: ElementRef;
+@ViewChild('toolbarmenu', { static: false }) toolbarmenu: ElementRef;
+
+    select_interaction;
+    id;
+    draw_interaction;
+    snap = new Snap({source: this.source});
 
 constructor(
     private spoorwegService: SpoorwegenService,
@@ -306,6 +314,7 @@ initializeMap() { // BEGIN VAN DE MAP MAKEN
       }),
       controls: [
         new Control({ element: this.searchmenu.nativeElement }),
+        new Control({ element: this.toolbarmenu.nativeElement }),
         new Control({ element: this.layerControlElement.nativeElement }),
       ]
     });
@@ -326,10 +335,45 @@ toggle4() {
 toggle5() {
     this.show5 = !this.show5;
   }
-toggle6() {
+  toggle6() {
     this.show6 = !this.show6;
   }
-
+  toggle7() {
+    this.show7 = !this.show7;
+  }
+  toggle8() {
+    this.show8 = !this.show8;
+  }
+  toggle9() {
+    this.show9 = !this.show9;
+  }
+  toggle10() {
+    this.show10 = !this.show10;
+  }
+  toggle11() {
+    this.show11 = !this.show11;
+  }
+  toggle12() {
+    this.show12 = !this.show12;
+  }
+  toggle13() {
+    this.show13 = !this.show13;
+  }
+  toggle14() {
+    this.show14 = !this.show14;
+  }
+  toggleGrenzen() {
+    this.grenzenvisi = !this.grenzenvisi;
+  }
+  toggleBag() {
+    this.bagvisi = !this.bagvisi;
+  }
+  toggleSpoor() {
+    this.spoorvisi = !this.spoorvisi;
+  }
+  toggleDiensten() {
+    this.dienstenvisi = !this.dienstenvisi;
+  }
   modifyfunctionselect() {
     console.log('er is op de functie geklikt');
   }
@@ -339,16 +383,40 @@ toggle6() {
     if (value !== '') {
       this.draw = new OlDraw({
         source: this.source,
-        type: value
+        type: value,
       });
       this.map.addInteraction(this.draw);
-      console.log('addInteraction()');
+      this.map.addInteraction(this.snap);
+      this.draw.getMap().getCoordinateFromPixel([]);
+      console.log(this.draw);
     }
+    console.log('f');
   }
   switchMode() {
     this.map.removeInteraction(this.draw);
+    this.map.removeInteraction(this.snap);
     this.addInteraction();
     console.log('switchMode()');
+  }
+  undo() {
+    const features = this.source.getFeatures();
+    const lastFeature = features[features.length - 1];
+    this.source.removeFeature(lastFeature);
+    console.log(this.tekenfunctie.getSource());
+    console.log(this.tekenfunctie.getSource());
+    console.log(this.tekenfunctie.getSource().getFeatures().values());
+    console.log('je hebt op de knop geklikt');
+    console.log('maak een unieke id aan of probeer met de value iets aan te geven, of zet alles in een array');
+  }
+  redo() {
+    const features = this.source.getFeatures();
+    const lastFeature = features[features.length + 1];
+    this.source.addFeature(lastFeature);
+    console.log(this.tekenfunctie.getSource());
+    console.log(this.tekenfunctie.getSource());
+    console.log(this.tekenfunctie.getSource().getFeatures().values());
+    console.log('je hebt op de knop geklikt');
+    console.log('maak een unieke id aan of probeer met de value iets aan te geven, of zet alles in een array');
   }
   public onPlaceFound(place) {
     console.log(place);

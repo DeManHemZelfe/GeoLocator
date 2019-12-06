@@ -1,0 +1,47 @@
+<!-- <div #test class="container">
+    <button (click)="toggle1()"><i class="material-icons" style="font-size: 10px;" style="color: black;">zoom_out_map</i></button>
+    <button (click)="toggle1()"><i class="material-icons" style="font-size: 10px;" style="color: black;">tab_unselected</i></button>
+    <button (click)="toggle1()"><i class="material-icons" style="font-size: 10px;" style="color: black;">map</i></button>
+    <button (click)="toggle1()"><i class="material-icons" style="font-size: 10px;" style="color: black;">layers</i></button>
+    <button (click)="toggle1()"><i class="material-icons" style="font-size: 10px;" style="color: black;">layers_clear</i></button>
+    <button (click)="toggle1()"><i class="material-icons" style="font-size: 10px;" style="color: black;">create</i></button>
+    <button (click)="toggle1()"><i class="material-icons" style="font-size: 10px;" style="color: black;">color_lens</i></button>
+    <button (click)="toggle1()"><i class="material-icons" style="font-size: 10px;" style="color: black;">undo</i></button>
+    <button (click)="toggle1()"><i class="material-icons" style="font-size: 10px;" style="color: black;">redo</i></button>
+    <button (click)="toggle1()"><i class="material-icons" style="font-size: 10px;" style="color: black;">save</i></button>
+    <button (click)="toggle1()"><i class="material-icons" style="font-size: 10px;" style="color: black;">zoom_in</i></button>
+    <button (click)="toggle1()"><i class="material-icons" style="font-size: 10px;" style="color: black;">zoom_out</i></button>
+    <button (click)="toggle1()"><i class="material-icons" style="font-size: 10px;" style="color: black;">square_foot</i></button>
+</div>
+
+ -->
+
+
+    <!-- let listener;
+    draw.on('drawstart', (evt) => {
+        // set sketch
+        sketch = evt.feature;
+
+        let tooltipCoord = evt.coordinate;
+
+        listener = sketch.getGeometry().on('change', (evt) => {
+            let geom = evt.target;
+            let output;
+            if (geom instanceof Polygon) {
+                output = formatArea(geom);
+                tooltipCoord = geom.getInteriorPoint().getCoordinates();
+            } else if (geom instanceof LineString) {
+                output = formatLength(geom);
+                tooltipCoord = geom.getLastCoordinate();
+            }
+            measureTooltipElement.innerHTML = output;
+            measureTooltip.setPosition(tooltipCoord);
+        });
+
+        // Remove last vector with right click
+        this.map.getViewport().addEventListener('contextmenu', (evt) => {
+            console.log("right clicked");
+            evt.preventDefault();
+            draw.removeLastPoint()
+        });
+    }); -->
