@@ -38,7 +38,7 @@
       <div class="test">
        <button (click)="toggle3()"><i class="material-icons" style="font-size: 10px;" style="color: black;">map</i></button>
        <mat-accordion *ngIf="show3" class="driebuttons">
-        <button kendoButton id="test" *ngFor="let layer of getLayerGroupKaart()" (click)="layer.setVisible(!layer.getVisible())" [primary]="layer.getVisible()">
+        <button kendoButton id="test" *ngFor="let layer of getKaartButton()" (click)="layer.setVisible(!layer.getVisible())" [primary]="layer.getVisible()">
         {{layer.get('title')}}
         </button>
        </mat-accordion>
@@ -49,7 +49,7 @@
        <mat-accordion *ngIf="show4" class="driebuttons">
        <button kendoButton (click)="toggleGrenzen()" style="background-color: white; border-bottom: black 2px solid;">Grenzen</button>
        <div *ngIf="grenzenvisi">
-        <button kendoButton style="width: 100%;" id="test" *ngFor="let layer of getLayerGroupGrenzen()"
+        <button kendoButton style="width: 100%;" id="test" *ngFor="let layer of getGrenzenButton()"
         (click)="layer.setVisible(!layer.getVisible())"
         [primary]="layer.getVisible()">
         {{layer.get('title')}}
@@ -58,7 +58,7 @@
 
        <button kendoButton (click)="toggleBag()" style="background-color: white; border-bottom: black 2px solid;">Bag</button>
        <div *ngIf="bagvisi">
-        <button kendoButton style="width: 100%;" id="test" *ngFor="let layer of getLayerGroupBag()"
+        <button kendoButton style="width: 100%;" id="test" *ngFor="let layer of getBagButton()"
         (click)="layer.setVisible(!layer.getVisible())"
         [primary]="layer.getVisible()">
         {{layer.get('title')}}
@@ -67,7 +67,7 @@
 
        <button kendoButton (click)="toggleDiensten()" style="background-color: white; border-bottom: black 2px solid;">Diensten</button>
        <div *ngIf="dienstenvisi">
-        <button kendoButton style="width: 100%;" id="test" *ngFor="let layer of getLayerGroupOverigeDiensten()"
+        <button kendoButton style="width: 100%;" id="test" *ngFor="let layer of getDienstenButton()"
         (click)="layer.setVisible(!layer.getVisible())"
         [primary]="layer.getVisible()">
         {{layer.get('title')}}
@@ -76,7 +76,7 @@
 
        <button kendoButton (click)="toggleSpoor()" style="background-color: white; border-bottom: black 2px solid;">Spoor</button>
        <div *ngIf="spoorvisi">
-        <button kendoButton style="width: 100%;" id="test" *ngFor="let layer of getLayerGroupSpoorwegen()"
+        <button kendoButton style="width: 100%;" id="test" *ngFor="let layer of getSpoorButton()"
         (click)="layer.setVisible(!layer.getVisible())"
         [primary]="layer.getVisible()">
         {{layer.get('title')}}

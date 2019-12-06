@@ -41,7 +41,6 @@ export class BgService {
    title: 'BaseLayer'
   } as ITileOptions);
 
-
   brtWaterTile = new WMTS({ // BEGIN VAN DE KAARTTEGEL MAKEN
     attributions:
       'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',

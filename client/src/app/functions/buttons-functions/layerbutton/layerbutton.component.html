@@ -1,0 +1,31 @@
+<div class="body-body">
+<h4>DIT DE HTML VAN DE LAYERBUTTONS</h4>
+
+<div class="container">
+
+ <div class="kaart">
+  <button kendoButton style="width: 100%;" id="test" *ngFor="let layer of getLayerGroupKaart()"
+   (click)="layer.setVisible(!layer.getVisible())"
+   [primary]="layer.getVisible()">
+   {{layer.get('title')}}
+  </button>
+ </div>
+
+ <div class="grenzen">
+  <button kendoButton style="width: 100%;" id="test" *ngFor="let layer of getLayerGroupGrenzen()"
+   (click)="layer.setVisible(!layer.getVisible())"
+   [primary]="layer.getVisible()">
+   {{layer.get('title')}}
+  </button>
+ </div>
+
+ <div class="overigediensten">
+  <button kendoButton style="width: 100%;" id="test" *ngFor="let layer of getLayerGroupOverigeDiensten()"
+   (click)="layer.setVisible(!layer.getVisible())"
+   [primary]="layer.getVisible()">
+   {{layer.get('title')}}
+  </button>
+ </div>
+
+</div>
+</div>

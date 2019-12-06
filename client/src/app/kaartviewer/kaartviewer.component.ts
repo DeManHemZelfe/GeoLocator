@@ -27,6 +27,10 @@ import LayerGroup from 'ol/layer/Group';
 import { GeocoderService } from 'angular-geocoder';
 import { ToolbarFunctionsComponent } from '../functions/toolbar-functions/toolbar-functions.component';
 import { getLocaleId } from '@angular/common';
+import { LayerbuttonComponent } from '../functions/buttons-functions/layerbutton/layerbutton.component';
+import { LayerButton } from '../functions/buttons-functions/layerbutton/layerbutton.service';
+import { ServiceService } from '../pdokmap/pdokmapconfigmap/service.service';
+import { BgService } from '../pdokmap/layer/bg.service';
 
 
 @Component({
@@ -204,47 +208,7 @@ export class KaartviewerComponent implements AfterViewInit {
     title: 'BrtGrijsLayer'
   } as ITileOptions); // EINDE VAN DE KAARTLAAG
 
-layergroupkaart = new LayerGroup ({
-    layers: [
-      this.baseLayer,
-      this.brtWaterLayer,
-      this.brtGrijsLayer,
-    ]
-  });
-layergroupgrenzen = new LayerGroup ({
-    layers: [
-      this.bestuurlijkegrenzenservice.landsgrensLayer,
-      this.bestuurlijkegrenzenservice.gemeentenLayer,
-      this.bestuurlijkegrenzenservice.provinciesLayer,
-    ]
-  });
-layergroupspoorwegen = new LayerGroup ({
-    layers: [
-      this.spoorwegService.KruisingLayer,
-      this.spoorwegService.OverwegLayer,
-      this.spoorwegService.SpoorasLayer,
-      this.spoorwegService.StationLayer,
-      this.spoorwegService.TraceLayer,
-      this.spoorwegService.WisselLayer,
-      this.spoorwegService.KilometreringLayer,
-    ]
-  });
-layergroupBag = new LayerGroup ({
-    layers: [
-     this.bagService.BagLigplaatsLayer,
-     this.bagService.BagPandLayer,
-     this.bagService.BagStandplaatsLayer,
-     this.bagService.BagVerblijfsobjectLayer,
-     this.bagService.BagWoonplaatsLayer
-    ]
-  });
-layergroupOverigeDiensten = new LayerGroup ({
-    layers: [
-      this.overigedienstenSerivce.OverheidsdienstenLayer,
-      this.overigedienstenSerivce.AgrarischAreaalNederlandLayer,
-      this.overigedienstenSerivce.GeografischenamenLayer
-    ]
-  });
+
 
 
 @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
@@ -262,6 +226,9 @@ constructor(
     private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
     private bagService: BagService,
     private overigedienstenSerivce: OverigeDienstenService,
+    private buttonforlayers: LayerButton,
+    private mapconfig: ServiceService,
+    private achterkaart: BgService,
     public geocoderService: GeocoderService,
   ) {}
 
@@ -281,9 +248,9 @@ initializeMap() { // BEGIN VAN DE MAP MAKEN
       ]),
       target: 'map',
       layers: [
-        this.baseLayer,
-        this.brtWaterLayer,
-        this.brtGrijsLayer,
+        this.achterkaart.baseLayer,
+        this.achterkaart.brtWaterLayer,
+        this.achterkaart.brtGrijsLayer,
         this.bestuurlijkegrenzenservice.landsgrensLayer,
         this.bestuurlijkegrenzenservice.gemeentenLayer,
         this.bestuurlijkegrenzenservice.provinciesLayer,
@@ -423,27 +390,22 @@ toggle5() {
     this.map.getView().animate({center: place.centroide_rd.coordinates, zoom: 12});
   }
 
-  pakdegegevens() {
-    const url = 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?';
+  getKaartButton() {
+    return this.buttonforlayers.getLayerGroupKaart();
+  }
+  getGrenzenButton() {
+    return this.buttonforlayers.getLayerGroupGrenzen();
+  }
+  getBagButton() {
+    return this.buttonforlayers.getLayerGroupBag();
+  }
+  getDienstenButton() {
+    return this.buttonforlayers.getLayerGroupOverigeDiensten();
+  }
+  getSpoorButton() {
+    return this.buttonforlayers.getLayerGroupSpoorwegen();
   }
 
-getLayerGroupKaart() {
-    return this.layergroupkaart.getLayers().getArray();
-  }
-getLayerGroupBag() {
-    return this.layergroupBag.getLayers().getArray();
-  }
-getLayerGroupGrenzen() {
-    return this.layergroupgrenzen.getLayers().getArray();
-  }
-getLayerGroupOverigeDiensten() {
-    return this.layergroupOverigeDiensten.getLayers().getArray();
-  }
-getLayerGroupSpoorwegen() {
-    return this.layergroupspoorwegen.getLayers().getArray();
-  }
-getLayers() {
-    return this.map.getLayers().getArray();
-  }
+
 
 } // EINDE VAN DE COMPONENT NG ONINIT

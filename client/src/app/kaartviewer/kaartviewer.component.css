@@ -23,9 +23,7 @@
   box-shadow: tomato 4px ;
   width: 100%;
 }
-.header {
-  color: black;
-}
+
 .searchmenu {
   margin-left: 1227px;
   position: absolute;
@@ -34,45 +32,9 @@
 .container-geocoder {
   background-color: white;
 }
-.klasseh5 {
-  font-size: 20px;
-  padding: 0px;
-  margin: 0px;
-}
 
-.ol-tooltip {
-  position: relative;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 4px;
-  color: white;
-  padding: 4px 8px;
-  opacity: 0.7;
-  white-space: nowrap;
-  font-size: 12px;
-}
-.ol-tooltip-measure {
-  opacity: 1;
-  font-weight: bold;
-}
-.ol-tooltip-static {
-  background-color: #ffcc33;
-  color: black;
-  border: 1px solid white;
-}
-.ol-tooltip-measure:before,
-.ol-tooltip-static:before {
-  border-top: 6px solid rgba(0, 0, 0, 0.5);
-  border-right: 6px solid transparent;
-  border-left: 6px solid transparent;
-  content: "";
-  position: absolute;
-  bottom: -6px;
-  margin-left: -7px;
-  left: 50%;
-}
-.ol-tooltip-static:before {
-  border-top-color: #ffcc33;
-}
+
+
 
 .menu{
   display: inline-block;
@@ -134,9 +96,9 @@
   position: relative;
 }
 .k-scheduler-footer li, .k-scheduler-views li, .k-scheduler-navigation .k-nav-today, .k-scheduler-navigation .k-nav-prev, .k-scheduler-navigation .k-nav-next, .k-task-single, .k-gantt-views li, .k-map .k-navigator, .k-handle, .k-numerictextbox .k-select, .k-editor-toolbar a.k-tool, .k-dropdowntree .k-dropdown-wrap, .k-pivot-toolbar .k-button, .k-fieldselector .k-list li.k-item, .k-spreadsheet-filter, .k-grouping-header .k-group-indicator, .k-list-container .k-nodata .k-button, .k-button-group.k-state-disabled .k-button:not(.k-state-active), .k-button-group .k-button.k-state-disabled:not(.k-state-active), .k-button {
-  border-color: #e4e7eb;
+  /* border-color: #e4e7eb; */
   color: #212529;
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
 }
 
 

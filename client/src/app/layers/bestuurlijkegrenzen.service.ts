@@ -15,7 +15,7 @@ export class BestuurlijkegrenzenService {
     landsgrensLayer = new TileLayer({
      source: this.landsgrensTile,
      title: 'LandsGrens',
-     visible: true,
+     visible: false,
     } as ITileOptions);
 
     gemeentenTile = new TileWMS({
@@ -41,7 +41,7 @@ export class BestuurlijkegrenzenService {
      source: this.provinciesTile,
      opacity: 2,
      title: 'ProvinciesGrens',
-     visible: true,
+     visible: false,
     } as ITileOptions);
   }
 console.log('this.provinciesTile');

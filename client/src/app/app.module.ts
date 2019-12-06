@@ -37,9 +37,9 @@ import { TodoComponent} from './_Todo_/todo.component';
 import {GeocoderModule} from 'angular-geocoder';
 import { KaartviewerComponent } from './kaartviewer/kaartviewer.component';
 import { ToolbarFunctionsComponent } from './functions/toolbar-functions/toolbar-functions.component';
-import { UndoRedoComponent } from './functions/undo.redo-functions/undo.redo';
 import { ServiceService } from './pdokmap/pdokmapconfigmap/service.service';
 import { BgService } from './pdokmap/layer/bg.service';
+import { LayerbuttonComponent } from './functions/buttons-functions/layerbutton/layerbutton.component';
 
 export function tokenGetter() {
   return localStorage.getItem('JWT');
@@ -58,7 +58,7 @@ export function tokenGetter() {
     TodoComponent,
     KaartviewerComponent,
     ToolbarFunctionsComponent,
-    UndoRedoComponent,
+    LayerbuttonComponent,
 
   ],
   imports: [
