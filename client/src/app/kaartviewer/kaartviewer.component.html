@@ -14,11 +14,8 @@
  <div #menu class="menu">
   <div class="deeerste2buttons" style="margin-bottom: 5px;">
    <div class="test">
-    <button (click)="toggle1()"><i class="material-icons" style="font-size: 10px;" style="color: black;">zoom_out_map</i></button>
-    <mat-accordion *ngIf="show1" class="tweebuttons">
-    <button>1</button>
-    <button>2</button>
-    </mat-accordion>
+    <button (click)="clickonselect()"><i class="material-icons" style="font-size: 10px;" style="color: black;">zoom_out_map</i></button>
+
    </div>
 
    <div class="test">
@@ -124,10 +121,7 @@
         </div>
 
         <div class="test">
-          <button (click)="toggle9()"><i class="material-icons" style="font-size: 10px;" style="color: black;">redo</i></button>
-          <mat-accordion *ngIf="show9" class="driebuttons">
-          <button>REDO</button>
-          </mat-accordion>
+          <button (click)="redo()"><i class="material-icons" style="font-size: 10px;" style="color: black;">redo</i></button>
         </div>
 
         <div class="test">

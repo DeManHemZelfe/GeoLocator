@@ -39,23 +39,13 @@ import { BgService } from '../pdokmap/layer/bg.service';
   styleUrls: ['./kaartviewer.component.css']
 })
 export class KaartviewerComponent implements AfterViewInit {
-  show1  = false;
-  show2  = false;
-  show3  = false;
-  show4  = false;
-  show5  = false;
-  show6  = false;
-  show7  = false;
-  show8  = false;
-  show9  = false;
-  show10 = false;
-  show11 = false;
-  show12 = false;
-  show13 = false;
-  show14 = false;
-  show15 = false;
-  isShow = false;
-
+  show1  = false;  show2  = false;  show3  = false;
+  show4  = false;  show5  = false;  show6  = false;
+  show7  = false;  show8  = false;  show9  = false;
+  show10 = false;  show11 = false;  show12 = false;
+  show13 = false;  show14 = false;  show15 = false;
+  grenzenvisi = false;             bagvisi = false;
+  spoorvisi = false;          dienstenvisi = false;
 
   public searchInput = '';
   public places = [];
@@ -64,11 +54,6 @@ export class KaartviewerComponent implements AfterViewInit {
   public foundPlace: any = null;
   public selectedItem = [];
   public selectedIndex = -1;
-
-  grenzenvisi = false;
-  bagvisi = false;
-  spoorvisi = false;
-  dienstenvisi = false;
 
   private map: Map;
   private draw: OlDraw;
@@ -113,112 +98,13 @@ export class KaartviewerComponent implements AfterViewInit {
     units: 'm',
     extent: this.projectionExtent
   });
-  private matrixIds = new Array(15);
-  private resolutions = [
-    3440.64,
-    1720.32,
-    860.16,
-    430.08,
-    215.04,
-    107.52,
-    53.75,
-    26.88,
-    13.44,
-    6.72,
-    3.36,
-    1.68,
-    0.84,
-    0.42,
-    0.21
-  ];
-
-  private layers = { // DE LAYERS AANROEPEN
-    brt: 'brtachtergrondkaart',
-    brtGrijs: 'brtachtergrondkaartgrijs',
-    brtPastel: 'brtachtergrondkaartpastel',
-    brtWater: 'brtachtergrondkaartwater'
-  };
-
-  baseTile = new WMTS({ // BEGIN VAN DE KAARTTEGEL MAKEN
-    attributions:
-      'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
-    layer: this.layers.brt,
-    matrixSet: 'EPSG:28992',
-    format: 'image/png',
-    projection: this.projection,
-    tileGrid: new WMTSTileGrid({
-      origin: getTopLeft(this.projectionExtent),
-      resolutions: this.resolutions,
-      matrixIds: this.matrixIds
-    }),
-    style: 'default',
-    wrapX: false
-   }); // EINDE VAN DE KAARTTEGEL
-  baseLayer = new TileLayer({ // BEGIN VAN DE KAARTLAAG MAKEN EN TEGELS TOEVOEGEN
-    source: this.baseTile,
-    opacity: 0.7,
-    visible: true,
-    title: 'BaseLayer'
-   } as ITileOptions); // EINDE VAN DE KAARTLAAG
-
-  brtWaterTile = new WMTS({ // BEGIN VAN DE KAARTTEGEL MAKEN
-    attributions:
-      'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
-    layer: this.layers.brtWater,
-    matrixSet: 'EPSG:28992',
-    format: 'image/png',
-    projection: this.projection,
-    tileGrid: new WMTSTileGrid({
-      origin: getTopLeft(this.projectionExtent),
-      resolutions: this.resolutions,
-      matrixIds: this.matrixIds
-    }),
-    style: 'default',
-    wrapX: false
-   }); // EINDE VAN DE KAARTTEGEL
-  brtWaterLayer = new TileLayer({ // BEGIN VAN DE KAARTLAAG MAKEN EN TEGELS TOEVOEGEN
-    source: this.brtWaterTile,
-    opacity: 0.7,
-    visible: false,
-    title: 'BrtWaterLayer'
-   } as ITileOptions); // EINDE VAN DE KAARTLAAG
-
-  brtGrijsTile = new WMTS({ // BEGIN VAN DE KAARTTEGEL MAKEN
-    attributions:
-      'Kaartgegevens: $copy <a href="http://www.kadaster.nl>Kadaster</a>',
-    url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
-    layer: this.layers.brtGrijs,
-    matrixSet: 'EPSG:28992',
-    format: 'image/png',
-    projection: this.projection,
-    tileGrid: new WMTSTileGrid({
-      origin: getTopLeft(this.projectionExtent),
-      resolutions: this.resolutions,
-      matrixIds: this.matrixIds
-    }),
-    style: 'default',
-    wrapX: false
-    }); // EINDE VAN DE KAARTTEGEL
-  brtGrijsLayer = new TileLayer({ // BEGIN VAN DE KAARTLAAG MAKEN EN TEGELS TOEVOEGEN
-    source: this.brtGrijsTile,
-    opacity: 0.7,
-    visible: false,
-    title: 'BrtGrijsLayer'
-  } as ITileOptions); // EINDE VAN DE KAARTLAAG
-
-
-
 
 @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
 @ViewChild('menu', { static: false }) menu: ElementRef;
 @ViewChild('searchmenu', { static: false }) searchmenu: ElementRef;
 @ViewChild('toolbarmenu', { static: false }) toolbarmenu: ElementRef;
 
-    select_interaction;
-    id;
-    draw_interaction;
+
     snap = new Snap({source: this.source});
 
 constructor(
@@ -239,9 +125,7 @@ ngAfterViewInit() {
     console.log(this.bestuurlijkegrenzenservice.provinciesTile.getUrls());
   }
 initializeMap() { // BEGIN VAN DE MAP MAKEN
-    for (let i = 0; i < this.matrixIds.length; i++) {
-      this.matrixIds[i] = 'EPSG:28992:' + i;
-    }
+
     this.map = new Map({ // MAAK DE MAP
       interactions: defaultInteractions().extend([
         this.modifyselect, this.modifytranslate,
@@ -341,11 +225,16 @@ toggle5() {
   toggleDiensten() {
     this.dienstenvisi = !this.dienstenvisi;
   }
+  clickonselect() {
+    console.log('klik op de select');
+  }
   modifyfunctionselect() {
+    this.map.addInteraction(this.snap);
     console.log('er is op de functie geklikt');
   }
 
   addInteraction() {
+    this.map.removeInteraction(this.snap);
     const value = this.typeSelectTekenen.value;
     if (value !== '') {
       this.draw = new OlDraw({
@@ -353,35 +242,24 @@ toggle5() {
         type: value,
       });
       this.map.addInteraction(this.draw);
-      this.map.addInteraction(this.snap);
-      this.draw.getMap().getCoordinateFromPixel([]);
+      this.map.removeInteraction(this.snap);
       console.log(this.draw);
     }
-    console.log('f');
   }
   switchMode() {
     this.map.removeInteraction(this.draw);
     this.map.removeInteraction(this.snap);
     this.addInteraction();
-    console.log('switchMode()');
   }
   undo() {
     const features = this.source.getFeatures();
     const lastFeature = features[features.length - 1];
     this.source.removeFeature(lastFeature);
-    console.log(this.tekenfunctie.getSource());
-    console.log(this.tekenfunctie.getSource());
-    console.log(this.tekenfunctie.getSource().getFeatures().values());
-    console.log('je hebt op de knop geklikt');
-    console.log('maak een unieke id aan of probeer met de value iets aan te geven, of zet alles in een array');
   }
   redo() {
     const features = this.source.getFeatures();
-    const lastFeature = features[features.length + 1];
-    this.source.addFeature(lastFeature);
-    console.log(this.tekenfunctie.getSource());
-    console.log(this.tekenfunctie.getSource());
-    console.log(this.tekenfunctie.getSource().getFeatures().values());
+    const lastFeature = features[features.length - 1];
+    this.source.removeFeature(lastFeature);
     console.log('je hebt op de knop geklikt');
     console.log('maak een unieke id aan of probeer met de value iets aan te geven, of zet alles in een array');
   }

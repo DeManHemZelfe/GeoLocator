@@ -88,9 +88,6 @@ export class SidebarComponent implements AfterViewInit {
       this.overigedienstenSerivce.GeografischenamenLayer
     ]
   });
-
-
-
   constructor(
     private spoorwegService: SpoorwegenService,
     private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
