@@ -9,7 +9,10 @@ export class BestuurlijkegrenzenService {
 
     landsgrensTile = new TileWMS({
       url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?',
-      params: {LAYERS: 'landsgrens', TILED: true, },
+      params: {
+        LAYERS: 'landsgrens',
+         TILED: true,
+        },
       crossOrigin: 'anonymous',
     });
     landsgrensLayer = new TileLayer({

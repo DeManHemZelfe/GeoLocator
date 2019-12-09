@@ -9,6 +9,7 @@ import { KaartviewerComponent } from './kaartviewer/kaartviewer.component';
 import { ToolbarFunctionsComponent } from './functions/toolbar-functions/toolbar-functions.component';
 import { SidebarComponent } from './pdokmap/sidebar.component';
 import { LayerbuttonComponent } from './functions/buttons-functions/layerbutton/layerbutton.component';
+import { TpComponent } from './testmap/testpage/tp/tp.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'toolbar', component:  ToolbarFunctionsComponent }, // DIT WORD DE LOGIN TOOLBAR\\
   { path: 'lossekaart', component: LossekaartComponent }, // DEZE KAART GAAT VERWIJDERD WORDEN \\
   { path: 'todo', component: TodoComponent }, // DIT IS DE TODO \\
+  { path: 'tp', component: TpComponent }, // DIT IS DE TODO \\
 
   // DEZE WORDEN VERWIJDERD MAAR ZIJN NU HANDIG OM TE TESTEN OF ALLES HET WEL DOET
   { path: 'pdok', component: SidebarComponent }, // DIT IS DE UNDO EN REDO \\

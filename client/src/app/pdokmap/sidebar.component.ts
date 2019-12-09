@@ -8,7 +8,7 @@ import { Options as TileOptions } from 'ol/layer/Tile';
 
 import { OSM, Vector as VectorSource, TileJSON } from 'ol/source';
 import OlDraw from 'ol/interaction/Draw';
-import { Icon, Stroke, Style, Fill } from 'ol/style';
+import { Icon, Stroke, Style, Fill, Circle} from 'ol/style';
 import WMTS, { optionsFromCapabilities } from 'ol/source/WMTS';
 import Projection from 'ol/proj/Projection';
 import { getTopLeft } from 'ol/extent';
@@ -36,7 +36,8 @@ import CircleStyle from 'ol/style/Circle';
 import { GeocoderService } from 'angular-geocoder';
 import { BgService } from './layer/bg.service';
 import { ServiceService } from './pdokmapconfigmap/service.service';
-
+import { LayerButton } from '../functions/buttons-functions/layerbutton/layerbutton.service';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -44,58 +45,19 @@ import { ServiceService } from './pdokmapconfigmap/service.service';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements AfterViewInit {
-  private map: Map;
+  public map: Map;
 
+  @ViewChild('toolbarmenu', { static: false }) toolbarmenu: ElementRef;
 
-  layergroupkaart = new LayerGroup ({
-    // layers: [
-    //   this.baseLayer,
-    //   this.brtWaterLayer,
-    //   this.brtGrijsLayer,
-    // ]
-  });
-  layergroupgrenzen = new LayerGroup ({
-    layers: [
-      this.bestuurlijkegrenzenservice.landsgrensLayer,
-      this.bestuurlijkegrenzenservice.gemeentenLayer,
-      this.bestuurlijkegrenzenservice.provinciesLayer,
-    ]
-  });
-  layergroupspoorwegen = new LayerGroup ({
-    layers: [
-      this.spoorwegService.KruisingLayer,
-      this.spoorwegService.OverwegLayer,
-      this.spoorwegService.SpoorasLayer,
-      this.spoorwegService.StationLayer,
-      this.spoorwegService.TraceLayer,
-      this.spoorwegService.WisselLayer,
-      this.spoorwegService.KilometreringLayer,
-    ]
-  });
-  layergroupBag = new LayerGroup ({
-    layers: [
-     this.bagService.BagLigplaatsLayer,
-     this.bagService.BagPandLayer,
-     this.bagService.BagStandplaatsLayer,
-     this.bagService.BagVerblijfsobjectLayer,
-     this.bagService.BagWoonplaatsLayer
-    ]
-  });
-  layergroupOverigeDiensten = new LayerGroup ({
-    layers: [
-      this.overigedienstenSerivce.OverheidsdienstenLayer,
-      this.overigedienstenSerivce.AgrarischAreaalNederlandLayer,
-      this.overigedienstenSerivce.GeografischenamenLayer
-    ]
-  });
   constructor(
     private spoorwegService: SpoorwegenService,
     private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
     private bagService: BagService,
+    private overigedienstenSerivce: OverigeDienstenService,
+    private buttonforlayers: LayerButton,
     private mapconfig: ServiceService,
     private achterkaart: BgService,
-    private overigedienstenSerivce: OverigeDienstenService,
-    private geocoderService: GeocoderService,
+    public geocoderService: GeocoderService,
   ) {}
 
   ngAfterViewInit() {
@@ -103,36 +65,40 @@ export class SidebarComponent implements AfterViewInit {
   }
 
   initializeMap() {
-
     this.map = new Map({
-      target: 'map',
-      layers: [
+     target: 'map',
+     layers: [
        this.achterkaart.baseLayer,
+       this.achterkaart.brtWaterLayer,
+       this.achterkaart.brtGrijsLayer,
        this.bestuurlijkegrenzenservice.landsgrensLayer,
+       this.bestuurlijkegrenzenservice.gemeentenLayer,
        this.bestuurlijkegrenzenservice.provinciesLayer,
-      ],
-      view: this.mapconfig._view
-    });
-  }
+       this.bagService.BagLigplaatsLayer,
+       this.bagService.BagPandLayer,
+       this.bagService.BagVerblijfsobjectLayer,
+       this.bagService.BagWoonplaatsLayer,
+       this.bagService.BagStandplaatsLayer,
+       this.overigedienstenSerivce.OverheidsdienstenLayer,
+       this.overigedienstenSerivce.AgrarischAreaalNederlandLayer,
+       this.overigedienstenSerivce.GeografischenamenLayer,
+       this.spoorwegService.KruisingLayer,
+       this.spoorwegService.OverwegLayer,
+       this.spoorwegService.SpoorasLayer,
+       this.spoorwegService.StationLayer,
+       this.spoorwegService.TraceLayer,
+       this.spoorwegService.WisselLayer,
+       this.spoorwegService.KilometreringLayer,
 
-  getLayerGroupKaart() {
-    return this.layergroupkaart.getLayers().getArray();
-  }
-  getLayerGroupBag() {
-    return this.layergroupBag.getLayers().getArray();
-  }
-  getLayerGroupGrenzen() {
-    return this.layergroupgrenzen.getLayers().getArray();
-  }
-  getLayerGroupOverigeDiensten() {
-    return this.layergroupOverigeDiensten.getLayers().getArray();
-  }
-  getLayerGroupSpoorwegen() {
-    return this.layergroupspoorwegen.getLayers().getArray();
-  }
-  getLayers() {
-    return this.map.getLayers().getArray();
-  }
+      ],
+      view: this.mapconfig._view,
+      controls: [
+        new Control({ element: this.toolbarmenu.nativeElement }),
+      ]
+    });
+ }
+
+
 }
 export interface ITileOptions extends TileOptions {
   title?: string;

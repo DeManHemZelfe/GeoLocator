@@ -40,6 +40,14 @@ import { ToolbarFunctionsComponent } from './functions/toolbar-functions/toolbar
 import { ServiceService } from './pdokmap/pdokmapconfigmap/service.service';
 import { BgService } from './pdokmap/layer/bg.service';
 import { LayerbuttonComponent } from './functions/buttons-functions/layerbutton/layerbutton.component';
+import { TooltipModule } from '@progress/kendo-angular-tooltip';
+import { TooltipDirective } from '@progress/kendo-angular-tooltip';
+import { ToolbarComponent} from './pdokmap/toolbar/toolbar.component';
+import { TpComponent } from './testmap/testpage/tp/tp.component';
+import { MapconfigService } from './testmap/testpage/config/mapconfig/mapconfig.service';
+import { LayerconfigService } from './testmap/testpage/config/layerconfig/layerconfig.service';
+import {ToolbarTweeComponent} from './testmap/testpage/toolbar/toolbar.component';
+
 
 export function tokenGetter() {
   return localStorage.getItem('JWT');
@@ -59,6 +67,9 @@ export function tokenGetter() {
     KaartviewerComponent,
     ToolbarFunctionsComponent,
     LayerbuttonComponent,
+    ToolbarComponent,
+    ToolbarTweeComponent,
+    TpComponent,
 
   ],
   imports: [
@@ -90,6 +101,7 @@ export function tokenGetter() {
         blacklistedRoutes: ['localhost:5000/api/user/authenticate']
       }
     }),
+    TooltipModule,
   ],
   providers: [
     UserService,
@@ -99,6 +111,8 @@ export function tokenGetter() {
     SpoorwegenService,
     ServiceService,
     BgService,
+    MapconfigService,
+    LayerconfigService,
   ],
   bootstrap: [AppComponent],
 })

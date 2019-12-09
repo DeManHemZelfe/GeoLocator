@@ -1,4 +1,14 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, OnInit} from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { SpoorwegenService } from 'src/app/layers/spoorwegen.service';
+import { BestuurlijkegrenzenService } from 'src/app/layers/bestuurlijkegrenzen.service';
+import { BagService } from 'src/app/layers/bag.service';
+import { OverigeDienstenService } from 'src/app/layers/overigediensten.service';
+import { LayerButton } from 'src/app/functions/buttons-functions/layerbutton/layerbutton.service';
+import { ServiceService } from '../pdokmapconfigmap/service.service';
+import { BgService } from '../layer/bg.service';
+import { GeocoderService } from 'angular-geocoder';
+
+
 import { Map, View, Collection,  MapBrowserEvent  } from 'ol';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import Feature from 'ol/Feature';
@@ -14,31 +24,22 @@ import TileWMS, { Options as TileWMSOptions } from 'ol/source/TileWMS';
 import { Options as TileOptions } from 'ol/layer/Tile';
 import { OSM, Vector as VectorSource, TileJSON } from 'ol/source';
 import { Icon, Stroke, Style, Fill, Circle} from 'ol/style';
-import LocationSuggestData from '../_interfaces/_datainterface/location-suggest-data-interface';
-import { BestuurlijkegrenzenService } from '../layers/bestuurlijkegrenzen.service';
-import { BagService } from '../layers/bag.service';
-
-import { SpoorwegenService, ITileOptions } from '../layers/spoorwegen.service';
 import {defaults as defaultControls, Control, ZoomToExtent, Rotate, ScaleLine, ZoomSlider, OverviewMap, Zoom} from 'ol/control';
-
-import { OverigeDienstenService } from '../layers/overigediensten.service';
 import {defaults as defaultInteractions, Modify, Select, Snap,  Translate, Draw } from 'ol/interaction';
 import LayerGroup from 'ol/layer/Group';
-import { GeocoderService } from 'angular-geocoder';
-import { ToolbarFunctionsComponent } from '../functions/toolbar-functions/toolbar-functions.component';
+import { ToolbarFunctionsComponent } from '../../functions/toolbar-functions/toolbar-functions.component';
 import { getLocaleId } from '@angular/common';
-import { LayerbuttonComponent } from '../functions/buttons-functions/layerbutton/layerbutton.component';
-import { LayerButton } from '../functions/buttons-functions/layerbutton/layerbutton.service';
-import { ServiceService } from '../pdokmap/pdokmapconfigmap/service.service';
-import { BgService } from '../pdokmap/layer/bg.service';
+import { LayerbuttonComponent } from '../../functions/buttons-functions/layerbutton/layerbutton.component';
 import { TooltipDirective } from '@progress/kendo-angular-tooltip';
+import { SidebarComponent } from '../sidebar.component';
+
 
 @Component({
-  selector: 'app-kaartviewer',
-  templateUrl: './kaartviewer.component.html',
-  styleUrls: ['./kaartviewer.component.css']
+  selector: 'app-toolbar',
+  templateUrl: './toolbar.component.html',
+  styleUrls: ['./toolbar.component.css']
 })
-export class KaartviewerComponent implements AfterViewInit {
+export class ToolbarComponent implements AfterViewInit {
   show1  = false;  show2  = false;  show3  = false;
   show4  = false;  show5  = false;  show6  = false;
   show7  = false;  show8  = false;  show9  = false;
@@ -55,8 +56,7 @@ export class KaartviewerComponent implements AfterViewInit {
   public selectedItem = [];
   public selectedIndex = -1;
 
-  private map: Map;
-  private draw: OlDraw;
+  public draw: OlDraw;
 
   typeSelectTekenen = new FormControl('');
 
@@ -66,6 +66,7 @@ export class KaartviewerComponent implements AfterViewInit {
   });
 
   select = new Select({});
+
   source = new VectorSource({
     wrapX: false,
   });
@@ -96,14 +97,7 @@ export class KaartviewerComponent implements AfterViewInit {
     extent: this.projectionExtent
   });
 
-@ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
-@ViewChild('menu', { static: false }) menu: ElementRef;
-@ViewChild('searchmenu', { static: false }) searchmenu: ElementRef;
-@ViewChild('toolbarmenu', { static: false }) toolbarmenu: ElementRef;
-
-snap = new Snap({source: this.source});
-
-constructor(
+  constructor(
     private spoorwegService: SpoorwegenService,
     private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
     private bagService: BagService,
@@ -112,62 +106,27 @@ constructor(
     private mapconfig: ServiceService,
     private achterkaart: BgService,
     public geocoderService: GeocoderService,
-  ) {}
+  ) { }
 
-ngAfterViewInit() {
-    this.initializeMap();
-    this.addInteraction();
-    console.log(this.bestuurlijkegrenzenservice.gemeentenTile.getUrls());
-    console.log(this.bestuurlijkegrenzenservice.provinciesTile.getUrls());
+ ngAfterViewInit() {
   }
-initializeMap() { // BEGIN VAN DE MAP MAKEN
 
-    this.map = new Map({ // MAAK DE MAP
-      interactions: defaultInteractions().extend([
-        this.modifyselect, this.modifytranslate,
-      ]),
-      target: 'map',
-      layers: [
-        this.achterkaart.baseLayer,
-        this.achterkaart.brtWaterLayer,
-        this.achterkaart.brtGrijsLayer,
-        this.bestuurlijkegrenzenservice.landsgrensLayer,
-        this.bestuurlijkegrenzenservice.gemeentenLayer,
-        this.bestuurlijkegrenzenservice.provinciesLayer,
-        this.bagService.BagLigplaatsLayer,
-        this.bagService.BagPandLayer,
-        this.bagService.BagVerblijfsobjectLayer,
-        this.bagService.BagWoonplaatsLayer,
-        this.bagService.BagStandplaatsLayer,
-        this.overigedienstenSerivce.OverheidsdienstenLayer,
-        this.overigedienstenSerivce.AgrarischAreaalNederlandLayer,
-        this.overigedienstenSerivce.GeografischenamenLayer,
-        this.spoorwegService.KruisingLayer,
-        this.spoorwegService.OverwegLayer,
-        this.spoorwegService.SpoorasLayer,
-        this.spoorwegService.StationLayer,
-        this.spoorwegService.TraceLayer,
-        this.spoorwegService.WisselLayer,
-        this.spoorwegService.KilometreringLayer,
-
-        this.tekenfunctie,
-      ],
-      view: new View({
-        center: [150000, 450000],
-        projection: this.projection,
-        zoom: 3,
-        minZoom: 0,
-        maxZoom: 15,
-      }),
-      controls: [
-        new Control({ element: this.searchmenu.nativeElement }),
-        new Control({ element: this.toolbarmenu.nativeElement }),
-        new Control({ element: this.layerControlElement.nativeElement }),
-      ]
-    });
-  } // EINDE VAN DE MAP MAKEN
-
-toggle1() {
+  // addInteraction() {
+  //   const value = this.typeSelectTekenen.value;
+  //   if (value !== '') {
+  //     this.draw = new OlDraw({
+  //       source: this.source,
+  //       type: value,
+  //     });
+  //     this.map.addInteraction(this.draw);
+  //     console.log(this.draw);
+  //   }
+  // }
+  // switchMode() {
+  //   this.map.removeInteraction(this.draw);
+  //   this.addInteraction();
+  // }
+  toggle1() {
     this.show1 = !this.show1;
   }
 toggle2() {
@@ -224,29 +183,6 @@ toggle5() {
   clickonselect() {
     console.log('klik op de select');
   }
-  modifyfunctionselect() {
-    this.map.addInteraction(this.snap);
-    console.log('er is op de functie geklikt');
-  }
-
-  addInteraction() {
-    this.map.removeInteraction(this.snap);
-    const value = this.typeSelectTekenen.value;
-    if (value !== '') {
-      this.draw = new OlDraw({
-        source: this.source,
-        type: value,
-      });
-      this.map.addInteraction(this.draw);
-      this.map.removeInteraction(this.snap);
-      console.log(this.draw);
-    }
-  }
-  switchMode() {
-    this.map.removeInteraction(this.draw);
-    this.map.removeInteraction(this.snap);
-    this.addInteraction();
-  }
   undo() {
     const features = this.source.getFeatures();
     const lastFeature = features[features.length - 1];
@@ -259,10 +195,10 @@ toggle5() {
     console.log('je hebt op de knop geklikt');
     console.log('maak een unieke id aan of probeer met de value iets aan te geven, of zet alles in een array');
   }
-  public onPlaceFound(place) {
-    console.log(place);
-    this.map.getView().animate({center: place.centroide_rd.coordinates, zoom: 12});
-  }
+  // public onPlaceFound(place) {
+  //   console.log(place);
+  //   this.map.getView().animate({center: place.centroide_rd.coordinates, zoom: 12});
+  // }
 
   getKaartButton() {
     return this.buttonforlayers.getLayerGroupKaart();
@@ -281,5 +217,4 @@ toggle5() {
   }
 
 
-
-} // EINDE VAN DE COMPONENT NG ONINIT
+}
