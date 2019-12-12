@@ -54,7 +54,9 @@ export class TpComponent implements AfterViewInit {
     private buttonforlayers: LayerButton,
     private achterkaart: BgService,
     public geocoderService: GeocoderService,
-  ) { }
+  ) {
+
+  }
 
   ngAfterViewInit() {
     this.initializeMap();
@@ -76,15 +78,16 @@ export class TpComponent implements AfterViewInit {
   } // EINDE VAN DE MAP MAKEN
 
   eventHandler(event: string) {
-    const currentZoom = this.map.getView().getZoom();
+    console.log(event);
+    // const currentZoom = this.map.getView().getZoom();
     switch (event) {
      default:
      break;
-    case 'zoom-in':
-      this.map.getView().animate({ zoom: currentZoom + 1, duration: 250 });
+    case 'zoom_in':
+      this.map.getView().animate({ zoom: 10 + 1, duration: 250 });
       break;
-      case 'zoom-out':
-      this.map.getView().animate({ zoom: currentZoom - 1, duration: 250 });
+      case 'zoom_out':
+      this.map.getView().animate({ zoom: 20 - 1, duration: 250 });
       break;
     }
   }

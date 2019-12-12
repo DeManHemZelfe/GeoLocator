@@ -93,6 +93,7 @@ export function tokenGetter() {
     ReactiveFormsModule,
     ButtonsModule,
     MenusModule,
+    TooltipModule,
     NgbModule,
     JwtModule.forRoot({
       config: {
@@ -100,8 +101,7 @@ export function tokenGetter() {
         whitelistedDomains: ['localhost:5000'],
         blacklistedRoutes: ['localhost:5000/api/user/authenticate']
       }
-    }),
-    TooltipModule,
+    })
   ],
   providers: [
     UserService,

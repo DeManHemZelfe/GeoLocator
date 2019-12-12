@@ -41,7 +41,8 @@ export class ToolbarTweeComponent implements OnInit {
     if (button.tool) {
       this._selectedTool = button.icon;
     }
-    this.event.emit(button.event);
+    console.log(button);
+    this.event.emit(button.icon);
   }
 
   get selectedTool() {

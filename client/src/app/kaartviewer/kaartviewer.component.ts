@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, OnInit} from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, ɵConsole} from '@angular/core';
 import { Map, View, Collection,  MapBrowserEvent  } from 'ol';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import Feature from 'ol/Feature';
@@ -32,6 +32,8 @@ import { LayerButton } from '../functions/buttons-functions/layerbutton/layerbut
 import { ServiceService } from '../pdokmap/pdokmapconfigmap/service.service';
 import { BgService } from '../pdokmap/layer/bg.service';
 import { TooltipDirective } from '@progress/kendo-angular-tooltip';
+import { style } from '@angular/animations';
+import { color, source, interaction } from 'openlayers';
 
 @Component({
   selector: 'app-kaartviewer',
@@ -57,53 +59,22 @@ export class KaartviewerComponent implements AfterViewInit {
 
   private map: Map;
   private draw: OlDraw;
+  Undofeatures;
+  UndolastFeature;
 
   typeSelectTekenen = new FormControl('');
+  typeSelectStyle   = new FormControl('');
 
-  modifyselect = new Select();
-  modifytranslate = new Translate({
-    features: this.modifyselect.getFeatures(),
-  });
+  tekensource = new VectorSource({wrapX: false, });
+  tekenfunctie = new VectorLayer({source: this.tekensource, style: new Style({fill: new Fill({color: 'blue'}) }) });
 
-  select = new Select({});
-  source = new VectorSource({
-    wrapX: false,
-  });
+  @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
+  @ViewChild('menu', { static: false }) menu: ElementRef;
+  @ViewChild('searchmenu', { static: false }) searchmenu: ElementRef;
+  @ViewChild('toolbarmenu', { static: false }) toolbarmenu: ElementRef;
 
-  tekenfunctie = new VectorLayer({
-    source: this.source,
-    style: new Style({
-      fill: new Fill({
-        color: 'red'
-      }),
-      stroke: new Stroke({
-        color: 'Black',
-        width: 3
-      }),
-      image: new Circle({
-        radius: 7,
-        fill: new Fill({
-          color: '#ffcc33'
-        })
-      })
-    })
-  });
 
-  private projectionExtent = [-285401.92, 22598.08, 595401.92, 903401.92];
-  private projection = new Projection({
-    code: 'EPSG:28992',
-    units: 'm',
-    extent: this.projectionExtent
-  });
-
-@ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
-@ViewChild('menu', { static: false }) menu: ElementRef;
-@ViewChild('searchmenu', { static: false }) searchmenu: ElementRef;
-@ViewChild('toolbarmenu', { static: false }) toolbarmenu: ElementRef;
-
-snap = new Snap({source: this.source});
-
-constructor(
+  constructor(
     private spoorwegService: SpoorwegenService,
     private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
     private bagService: BagService,
@@ -114,18 +85,16 @@ constructor(
     public geocoderService: GeocoderService,
   ) {}
 
-ngAfterViewInit() {
+  ngAfterViewInit() {
     this.initializeMap();
     this.addInteraction();
     console.log(this.bestuurlijkegrenzenservice.gemeentenTile.getUrls());
     console.log(this.bestuurlijkegrenzenservice.provinciesTile.getUrls());
+    console.log(this.tekenfunctie);
   }
-initializeMap() { // BEGIN VAN DE MAP MAKEN
+  initializeMap() { // BEGIN VAN DE MAP MAKEN
 
     this.map = new Map({ // MAAK DE MAP
-      interactions: defaultInteractions().extend([
-        this.modifyselect, this.modifytranslate,
-      ]),
       target: 'map',
       layers: [
         this.achterkaart.baseLayer,
@@ -152,115 +121,108 @@ initializeMap() { // BEGIN VAN DE MAP MAKEN
 
         this.tekenfunctie,
       ],
-      view: new View({
-        center: [150000, 450000],
-        projection: this.projection,
-        zoom: 3,
-        minZoom: 0,
-        maxZoom: 15,
-      }),
+      view: this.mapconfig._view,
       controls: [
-        new Control({ element: this.searchmenu.nativeElement }),
         new Control({ element: this.toolbarmenu.nativeElement }),
-        new Control({ element: this.layerControlElement.nativeElement }),
       ]
     });
-  } // EINDE VAN DE MAP MAKEN
+   } // EINDE VAN DE MAP MAKEN
 
-toggle1() {
-    this.show1 = !this.show1;
-  }
-toggle2() {
-    this.show2 = !this.show2;
-  }
-toggle3() {
-    this.show3 = !this.show3;
-  }
-toggle4() {
-    this.show4 = !this.show4;
-  }
-toggle5() {
-    this.show5 = !this.show5;
-  }
-  toggle6() {
-    this.show6 = !this.show6;
-  }
-  toggle7() {
-    this.show7 = !this.show7;
-  }
-  toggle8() {
-    this.show8 = !this.show8;
-  }
-  toggle9() {
-    this.show9 = !this.show9;
-  }
-  toggle10() {
-    this.show10 = !this.show10;
-  }
-  toggle11() {
-    this.show11 = !this.show11;
-  }
-  toggle12() {
-    this.show12 = !this.show12;
-  }
-  toggle13() {
-    this.show13 = !this.show13;
-  }
-  toggle14() {
-    this.show14 = !this.show14;
-  }
-  toggleGrenzen() {
-    this.grenzenvisi = !this.grenzenvisi;
-  }
-  toggleBag() {
-    this.bagvisi = !this.bagvisi;
-  }
-  toggleSpoor() {
-    this.spoorvisi = !this.spoorvisi;
-  }
-  toggleDiensten() {
-    this.dienstenvisi = !this.dienstenvisi;
-  }
-  clickonselect() {
-    console.log('klik op de select');
-  }
-  modifyfunctionselect() {
-    this.map.addInteraction(this.snap);
-    console.log('er is op de functie geklikt');
-  }
+
+
 
   addInteraction() {
-    this.map.removeInteraction(this.snap);
     const value = this.typeSelectTekenen.value;
+    const getValue = this.typeSelectStyle.value;
+    console.log(getValue + 'interaction');
     if (value !== '') {
       this.draw = new OlDraw({
-        source: this.source,
+        source: this.tekensource,
         type: value,
       });
-      this.map.addInteraction(this.draw);
-      this.map.removeInteraction(this.snap);
+      this.draw.on('drawend', (event) => {
+        event.feature.setStyle(new Style({
+          fill: new Fill({color: getValue}),
+          stroke: new Stroke({color: 'Black', width: 3}),
+          image: new Circle({
+           radius: 7,
+           fill: new Fill({color: 'green'})
+         })
+        }));
+      });
       console.log(this.draw);
+      console.log(this.tekenfunctie.getLayersArray() );
+      this.map.addInteraction(this.draw);
     }
   }
-  switchMode() {
+  switchMode(event?: string | null) {
+    if (event !== '') {
+      this.typeSelectTekenen.setValue(event);
+    } else {
+      this.typeSelectTekenen.setValue('');
+    }
     this.map.removeInteraction(this.draw);
-    this.map.removeInteraction(this.snap);
     this.addInteraction();
   }
-  undo() {
-    const features = this.source.getFeatures();
-    const lastFeature = features[features.length - 1];
-    this.source.removeFeature(lastFeature);
+
+  styleswitch(Stylevent?: string | null) {
+    this.map.removeInteraction(this.draw);
+    if (Stylevent !== '') {
+      this.typeSelectStyle.setValue(Stylevent);
+      this.tekenfunctie.changed();
+
+    } else {
+      this.typeSelectStyle.setValue('');
+      this.tekenfunctie.changed();
+    }
+    console.log(Stylevent + '' + 'styleswitch');
+    this.map.removeInteraction(this.draw);
+    this.addInteraction();
+    this.tekenfunctie.changed();
   }
-  redo() {
-    const features = this.source.getFeatures();
-    const lastFeature = features[features.length - 1];
-    this.source.removeFeature(lastFeature);
-    console.log('je hebt op de knop geklikt');
-    console.log('maak een unieke id aan of probeer met de value iets aan te geven, of zet alles in een array');
+
+
+  // UNDO & REDO FUNCTIONS
+  UndoButton() {
+    console.log('klikkerdeklik');
+    this.Undofeatures = this.tekensource.getFeatures();
+    this.UndolastFeature = this.Undofeatures[this.Undofeatures.length - 1];
+    this.tekensource.removeFeature(this.UndolastFeature);
+    console.log(this.Undofeatures);
   }
+  RedoButton() {
+    // const features = this.tekensource.getFeatures();
+    // const lastFeature = features[features.length - 1];
+    // this.tekensource.removeFeature(lastFeature);
+    // console.log('je hebt op de knop geklikt');
+    // console.log('maak een unieke id aan of probeer met de value iets aan te geven, of zet alles in een array');
+    // console.log(this.tekenfunctie.getLayersArray());
+    // console.log(this.tekenfunctieBlue.getLayersArray());
+    // console.log(this.tekenfunctieRed.getLayersArray());
+    // console.log(this.tekenfunctieGreen.getLayersArray());
+    // console.log(this.map.getLayerGroup().getType());
+    const laag = this.map.getLayers().getArray();
+    const laag1 = this.map.getLayers().getArray().length.toLocaleString();
+    console.log(laag);
+    console.log(laag1);
+  }
+
+  // SAVE FUNCTIE
+  save() {}
+
+  // ZOOM IN FUNCTIE
+  zoom_in() {
+    const currentZoom = this.map.getView().getZoom();
+    this.map.getView().animate({ zoom: currentZoom + 1, duration: 250 });
+   }
+  // ZOOM OUT FUNCTIE
+  zoom_out() {
+    const currentZoom = this.map.getView().getZoom();
+    this.map.getView().animate({ zoom: currentZoom - 1, duration: 250 });
+  }
+
+  // GEOLOCATOR
   public onPlaceFound(place) {
-    console.log(place);
     this.map.getView().animate({center: place.centroide_rd.coordinates, zoom: 12});
   }
 
@@ -279,7 +241,56 @@ toggle5() {
   getSpoorButton() {
     return this.buttonforlayers.getLayerGroupSpoorwegen();
   }
+  getButtonColorBlue(Buttonevent?: string | null) {
+    const getFeatures = this.tekenfunctie.getSource().getFeatures();
+    const getFeaturesId = this.tekenfunctie.getSource().getFeatures().length + 0;
+    const recente = getFeatures[getFeatures.length - 1];
+    const geo1 = recente.getGeometry();
+    const geo2 = recente.getGeometryName();
+    console.log(getFeatures);
+    console.log(getFeaturesId);
+    console.log(recente);
+    console.log(geo1);
+    console.log(geo2);
+    // this.tekensource.removeFeature(lastFeature2);
+    this.tekenfunctie.setStyle(new Style({
+      fill: new Fill({color: 'blue'}), stroke: new Stroke({width: 3, color: 'pink'}) }) );
+    // console.log('blue');
+    this.tekensource.changed();
+
+  }
+
+  getButtonColorGreen(Buttonevent?: string | null) {
+    // this.tekensource.clear();
+    this.tekenfunctie.setStyle(new Style({
+      fill: new Fill({color: 'Green'}), stroke: new Stroke({width: 3, color: 'red'})
+    }) );
+    // const features = this.tekensource.getFeatures();
+    // const lastFeature = features[features.length - 1];
+    // lastFeature.setStyle(new Style({fill: new Fill({color: 'Green'}) }) );
+    // console.log(lastFeature);
+    console.log('Green');
+  }
+  getButtonColorRed(Buttonevent?: string | null) {
+    console.log('Red');
+    this.tekenfunctie.setStyle(new Style({
+      fill: new Fill({color: 'Red'}), stroke: new Stroke({width: 3, color: 'yellow'})
+    }) );
+  }
 
 
 
 } // EINDE VAN DE COMPONENT NG ONINIT
+
+// if (this.typeSelectStyle.value === 'blue') {
+//   console.log('BLAUUWUWWUUWW');
+//   this.tekenfunctie.setStyle (new Style({
+//     fill: new Fill({color: 'pink'}),
+//     stroke: new Stroke({color: 'Black', width: 3}),
+//     image: new Circle({
+//      radius: 7,
+//      fill: new Fill({color: 'green'})
+//    }) }) );
+// } else {
+//   console.log('FOUT');
+// }

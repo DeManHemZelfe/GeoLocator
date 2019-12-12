@@ -1,7 +1,7 @@
 <div id="app-toolbar-twee">
   <div kendoTooltip class="app-btn-container" position="right" showAfter="1000">
-    <div *ngFor="let button of buttons" class="app-btn" (click)="sendEvent(button)" [title]="button.tooltip">
+    <button *ngFor="let button of buttons" class="app-btn" (click)="sendEvent(button)" [title]="button.tooltip">
       <i class="material-icons" [class.selected]="selectedTool === button.icon" >{{ button.icon }}</i>
-    </div>
+    </button>
   </div>
 </div>
