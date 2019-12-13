@@ -34,13 +34,17 @@ import { BgService } from '../pdokmap/layer/bg.service';
 import { TooltipDirective } from '@progress/kendo-angular-tooltip';
 import { style } from '@angular/animations';
 import { color, source, interaction } from 'openlayers';
+import { singleClick } from 'ol/events/condition';
 
+// localstorage. (remove)
+// JWT
 @Component({
   selector: 'app-kaartviewer',
   templateUrl: './kaartviewer.component.html',
   styleUrls: ['./kaartviewer.component.css']
 })
 export class KaartviewerComponent implements AfterViewInit {
+  // SHOW & HIDE
   show1  = false;  show2  = false;  show3  = false;
   show4  = false;  show5  = false;  show6  = false;
   show7  = false;  show8  = false;  show9  = false;
@@ -49,6 +53,7 @@ export class KaartviewerComponent implements AfterViewInit {
   grenzenvisi = false;             bagvisi = false;
   spoorvisi = false;          dienstenvisi = false;
 
+  // GEOLOCATOR
   public searchInput = '';
   public places = [];
   public collations = [];
@@ -57,21 +62,28 @@ export class KaartviewerComponent implements AfterViewInit {
   public selectedItem = [];
   public selectedIndex = -1;
 
+  // SELECT FUNCTIONS
+
+  // MAP INTERACTIONS
   private map: Map;
   private draw: OlDraw;
-  Undofeatures;
-  UndolastFeature;
-
+  // FORMCONTROLS
   typeSelectTekenen = new FormControl('');
-  typeSelectStyle   = new FormControl('');
-
+  typeSelectStyle   = new FormControl('blue');
+  // TEKENFUNCTIES
   tekensource = new VectorSource({wrapX: false, });
   tekenfunctie = new VectorLayer({source: this.tekensource, style: new Style({fill: new Fill({color: 'blue'}) }) });
-
+  // UNDO & REDO
+  Undofeature: Feature[];
+  UndolastFeature: any;
+  Redofeature: Feature[];
+  RedolastFeature: any;
+  // @VIEWCHILD
   @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
   @ViewChild('menu', { static: false }) menu: ElementRef;
   @ViewChild('searchmenu', { static: false }) searchmenu: ElementRef;
   @ViewChild('toolbarmenu', { static: false }) toolbarmenu: ElementRef;
+
 
 
   constructor(
@@ -88,6 +100,7 @@ export class KaartviewerComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.initializeMap();
     this.addInteraction();
+    this.select();
     console.log(this.bestuurlijkegrenzenservice.gemeentenTile.getUrls());
     console.log(this.bestuurlijkegrenzenservice.provinciesTile.getUrls());
     console.log(this.tekenfunctie);
@@ -97,20 +110,25 @@ export class KaartviewerComponent implements AfterViewInit {
     this.map = new Map({ // MAAK DE MAP
       target: 'map',
       layers: [
+        // BASELAYERS
         this.achterkaart.baseLayer,
         this.achterkaart.brtWaterLayer,
         this.achterkaart.brtGrijsLayer,
+        // BORDERLAYERS
         this.bestuurlijkegrenzenservice.landsgrensLayer,
         this.bestuurlijkegrenzenservice.gemeentenLayer,
         this.bestuurlijkegrenzenservice.provinciesLayer,
+        // HOUSELAYERS
         this.bagService.BagLigplaatsLayer,
         this.bagService.BagPandLayer,
         this.bagService.BagVerblijfsobjectLayer,
         this.bagService.BagWoonplaatsLayer,
         this.bagService.BagStandplaatsLayer,
+        // OVERIGELAYERS
         this.overigedienstenSerivce.OverheidsdienstenLayer,
         this.overigedienstenSerivce.AgrarischAreaalNederlandLayer,
         this.overigedienstenSerivce.GeografischenamenLayer,
+        // TRAINLAYERS
         this.spoorwegService.KruisingLayer,
         this.spoorwegService.OverwegLayer,
         this.spoorwegService.SpoorasLayer,
@@ -118,12 +136,14 @@ export class KaartviewerComponent implements AfterViewInit {
         this.spoorwegService.TraceLayer,
         this.spoorwegService.WisselLayer,
         this.spoorwegService.KilometreringLayer,
-
+        // DRAW FUNCTION
         this.tekenfunctie,
       ],
       view: this.mapconfig._view,
       controls: [
         new Control({ element: this.toolbarmenu.nativeElement }),
+        // new Control({ element: this.toolbarmenu.nativeElement }),
+        // new Control({ element: this.toolbarmenu.nativeElement }),
       ]
     });
    } // EINDE VAN DE MAP MAKEN
@@ -137,24 +157,23 @@ export class KaartviewerComponent implements AfterViewInit {
     console.log(getValue + 'interaction');
     if (value !== '') {
       this.draw = new OlDraw({
-        source: this.tekensource,
-        type: value,
+       source: this.tekensource,
+       type: value,
       });
       this.draw.on('drawend', (event) => {
-        event.feature.setStyle(new Style({
-          fill: new Fill({color: getValue}),
-          stroke: new Stroke({color: 'Black', width: 3}),
-          image: new Circle({
-           radius: 7,
-           fill: new Fill({color: 'green'})
-         })
-        }));
+       event.feature.setStyle(new Style({
+        fill: new Fill({color: getValue}),
+        stroke: new Stroke({color: 'Black', width: 3}),
+        image: new Circle({radius: 7,
+        fill: new Fill({color: 'green'})
+        })
+       }));
       });
       console.log(this.draw);
       console.log(this.tekenfunctie.getLayersArray() );
       this.map.addInteraction(this.draw);
-    }
-  }
+     }
+   }
   switchMode(event?: string | null) {
     if (event !== '') {
       this.typeSelectTekenen.setValue(event);
@@ -184,29 +203,46 @@ export class KaartviewerComponent implements AfterViewInit {
 
   // UNDO & REDO FUNCTIONS
   UndoButton() {
-    console.log('klikkerdeklik');
-    this.Undofeatures = this.tekensource.getFeatures();
-    this.UndolastFeature = this.Undofeatures[this.Undofeatures.length - 1];
+    this.Undofeature = this.tekensource.getFeatures();
+    this.UndolastFeature = this.Undofeature[this.Undofeature.length - 1];
     this.tekensource.removeFeature(this.UndolastFeature);
-    console.log(this.Undofeatures);
   }
   RedoButton() {
-    // const features = this.tekensource.getFeatures();
-    // const lastFeature = features[features.length - 1];
-    // this.tekensource.removeFeature(lastFeature);
-    // console.log('je hebt op de knop geklikt');
-    // console.log('maak een unieke id aan of probeer met de value iets aan te geven, of zet alles in een array');
-    // console.log(this.tekenfunctie.getLayersArray());
-    // console.log(this.tekenfunctieBlue.getLayersArray());
-    // console.log(this.tekenfunctieRed.getLayersArray());
-    // console.log(this.tekenfunctieGreen.getLayersArray());
-    // console.log(this.map.getLayerGroup().getType());
-    const laag = this.map.getLayers().getArray();
-    const laag1 = this.map.getLayers().getArray().length.toLocaleString();
-    console.log(laag);
-    console.log(laag1);
+    const Redo = this.tekensource.on('addFeature', (event) => {
+      this.Undofeature = this.tekensource.getFeatures();
+      this.UndolastFeature = this.Undofeature[this.Undofeature.length - 1];
+      this.tekensource.removeFeature(this.UndolastFeature);
+    });
+    console.log(Redo);
+    // this.Undofeature = this.tekensource.getFeatures();
+    // this.UndolastFeature = this.Undofeature[this.Undofeature.length - 1];
+    // this.RedolastFeature = this.Redofeatures[this.Redofeatures.length - 1];
+    // this.tekensource.removeFeature(this.RedolastFeature);
+    // console.log(this.Redofeature);
+    // console.log(this.RedolastFeature);
   }
 
+  // SELECT BUTTON
+  // select interaction
+  select() {
+    const selecti = new Select({
+      layers: [this.bestuurlijkegrenzenservice.provinciesLayer],
+      hitTolerance: 5,
+      condition: singleClick
+    });
+    selecti.on('', (e) => {
+      const f = e.selected[0];
+      if (f) {
+        const prop = f.getProperties();
+        console.log(prop);
+      }
+      console.log('nog een klik?');
+      console.log('rrrr');
+    });
+    // console.log(test);
+    console.log('ffr');
+
+   }
   // SAVE FUNCTIE
   save() {}
 
@@ -221,7 +257,7 @@ export class KaartviewerComponent implements AfterViewInit {
     this.map.getView().animate({ zoom: currentZoom - 1, duration: 250 });
   }
 
-  // GEOLOCATOR
+  // GEOLOCATOR SEARCH PLACE
   public onPlaceFound(place) {
     this.map.getView().animate({center: place.centroide_rd.coordinates, zoom: 12});
   }
@@ -277,20 +313,5 @@ export class KaartviewerComponent implements AfterViewInit {
       fill: new Fill({color: 'Red'}), stroke: new Stroke({width: 3, color: 'yellow'})
     }) );
   }
-
-
-
 } // EINDE VAN DE COMPONENT NG ONINIT
 
-// if (this.typeSelectStyle.value === 'blue') {
-//   console.log('BLAUUWUWWUUWW');
-//   this.tekenfunctie.setStyle (new Style({
-//     fill: new Fill({color: 'pink'}),
-//     stroke: new Stroke({color: 'Black', width: 3}),
-//     image: new Circle({
-//      radius: 7,
-//      fill: new Fill({color: 'green'})
-//    }) }) );
-// } else {
-//   console.log('FOUT');
-// }

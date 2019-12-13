@@ -6,9 +6,9 @@
 
 <div #layerControlElement class="option-menu"  style="display: contents;">
  <div #menu class="menu">
-  <div class="deeerste2buttons" style="margin-bottom: 5px;">
+  <div class="deeerste2buttons" >
    <div class="test">
-    <button (click)="clickonselect()" title="Select"><i class="material-icons" style="font-size: 10px;" style="color: black;">zoom_out_map</i></button>
+    <button (click)="select()" title="Select"><i class="material-icons" style="font-size: 10px;" style="color: black;">zoom_out_map</i></button>
 
    </div>
 
@@ -25,7 +25,7 @@
    </div>
   </div>
 
-  <div class="de3buttons" style="margin-bottom: 5px;">
+  <div class="de3buttons">
       <div class="test">
        <button (click)="show3 = !show3"><i class="material-icons" title="AchtergrondKaarten" style="font-size: 10px;" style="color: black;">map</i></button>
        <mat-accordion *ngIf="show3" class="driebuttons">
@@ -84,7 +84,7 @@
          </div>
      </div>
 
-     <div class="de5buttons" style="margin-bottom: 5px;">
+     <div class="de5buttons" >
         <div class="test">
          <button (click)="show6 = !show6" title="Draw"><i class="material-icons" style="font-size: 10px;" style="color: black;">create</i></button>
          <mat-accordion *ngIf="show6" class="driebuttons">
@@ -104,9 +104,14 @@
         <div class="test">
          <button (click)="show7 = !show7"><i class="material-icons" title="Choose color" style="font-size: 10px;" style="color: black;">color_lens</i></button>
          <mat-accordion *ngIf="show7" class="driebuttons">
-         <button class="color_button_blue" title="blue" (click)="getButtonColorBlue()">Blue</button>
-         <button class="color_button_green" title="green"  (click)="getButtonColorGreen()">Green</button>
-         <button class="color_button_red" title="red"  (click)="getButtonColorRed()">Red</button>
+           <form class="form-inline"  style="background-color: white;">
+              <label> &nbsp;</label>
+            <select id="type" [formControl]="typeSelectStyle" (change)="styleswitch()">
+             <option value="blue" title="Point">blue</option>
+             <option value="green" title="LineString">green</option>
+             <option value="red" title="Polygon">red</option>
+            </select>
+           </form>
          </mat-accordion>
         </div>
 
@@ -118,7 +123,7 @@
           <button (click)="RedoButton()" title="Redo"><i class="material-icons" style="font-size: 10px;" style="color: black;">redo</i></button>
         </div>
 
-        <div class="test" style="margin-bottom: 5px;">
+        <div class="test" >
           <button (click)="SaveButton()" title="Saves the current document"><i class="material-icons" style="font-size: 10px;" style="color: black;">save</i></button>
         </div>
 
@@ -137,25 +142,18 @@
         <div>km</div>
         </mat-accordion>
        </div>
+       <div class="test">
+          <button (click)="zoom_out()" title="Zoom-out"><i class="material-icons" style="font-size: 10px;" style="color: black;">zoom_out</i></button>
+        </div>
+
       </div>
-
-    <div>
-     <select id="geom_type">
-     <option value="LineString" selected>LineString</option>
-     </select>
-    </div>
-
-    <form class="form-inline" style="background-color: white;">
-      <label> &nbsp;</label>
-      <select id="type" [formControl]="typeSelectStyle" (change)="styleswitch()">
-        <option value="blue" title="Point">blue</option>
-        <option value="green" title="LineString">green</option>
-        <option value="red" title="Polygon" >red</option>
-      </select>
-    </form>
-
-
  </div><!-- EINDE MENU ELEMENT -->
 </div><!-- EINDE LAYERCONTROL ELEMENT -->
+
+<!-- <div>
+    <select id="geom_type">
+    <option value="LineString" selected>LineString</option>
+    </select>
+   </div> -->
 
 

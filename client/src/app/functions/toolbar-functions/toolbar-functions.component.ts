@@ -47,6 +47,7 @@ export class ToolbarFunctionsComponent implements AfterViewInit {
   @Output() _getButtonColorBlue: EventEmitter<any> = new EventEmitter<any>();
   @Output() _getButtonColorGreen: EventEmitter<any> = new EventEmitter<any>();
   @Output() _getButtonColorRed: EventEmitter<any> = new EventEmitter<any>();
+  @Output() _select: EventEmitter<any> = new EventEmitter<any>();
 
   // ALLE INPUTS
 
@@ -107,38 +108,33 @@ export class ToolbarFunctionsComponent implements AfterViewInit {
   // GET COLOR
   getButtonColorBlue() {
     if (this.typeSelectStyle.value !== '') {
-      return this._getButtonColorBlue.emit(this.typeSelectStyle.value);
-    }
+    return this._getButtonColorBlue.emit(this.typeSelectStyle.value); }
     return this._getButtonColorBlue.emit('');
   }
 
   getButtonColorGreen() {
     if (this.typeSelectStyle.value !== '') {
-      return this._getButtonColorGreen.emit(this.typeSelectStyle.value);
-    }
+    return this._getButtonColorGreen.emit(this.typeSelectStyle.value); }
     return this._getButtonColorGreen.emit('');
   }
   getButtonColorRed() {
     if (this.typeSelectStyle.value !== '') {
-      return this._getButtonColorRed.emit(this.typeSelectStyle.value);
-    }
+    return this._getButtonColorRed.emit(this.typeSelectStyle.value); }
     return this._getButtonColorRed.emit('');
   }
 
   // CLICK SELECT
+  select() {return this._select.emit(); }
   clickonselect() {console.log('clickonselect'); }
-
   // SWITCHMODE
   switchMode() {
     if (this.typeSelectTekenen.value !== '') {
-      return this._mapswitch.emit(this.typeSelectTekenen.value);
-    }
+    return this._mapswitch.emit(this.typeSelectTekenen.value); }
     return this._mapswitch.emit('');
   }
   styleswitch() {
     if (this.typeSelectStyle.value !== '') {
-      return this._styleswitch.emit(this.typeSelectStyle.value);
-    }
+    return this._styleswitch.emit(this.typeSelectStyle.value); }
     return this._styleswitch.emit('');
   }
 }
