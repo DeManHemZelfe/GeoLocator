@@ -34,7 +34,7 @@ import { BgService } from '../pdokmap/layer/bg.service';
 import { TooltipDirective } from '@progress/kendo-angular-tooltip';
 import { style } from '@angular/animations';
 import { color, source, interaction } from 'openlayers';
-import { singleClick } from 'ol/events/condition';
+import { singleClick, click } from 'ol/events/condition';
 
 // localstorage. (remove)
 // JWT
@@ -63,47 +63,49 @@ export class KaartviewerComponent implements AfterViewInit {
   public selectedIndex = -1;
 
   // SELECT FUNCTIONS
-
+   selectselect = new Select({condition: click});
   // MAP INTERACTIONS
   private map: Map;
   private draw: OlDraw;
   // FORMCONTROLS
   typeSelectTekenen = new FormControl('');
-  typeSelectStyle   = new FormControl('blue');
+  typeSelectStyle   = new FormControl('');
   // TEKENFUNCTIES
   tekensource = new VectorSource({wrapX: false, });
-  tekenfunctie = new VectorLayer({source: this.tekensource, style: new Style({fill: new Fill({color: 'blue'}) }) });
-  // UNDO & REDO
-  Undofeature: Feature[];
-  UndolastFeature: any;
-  Redofeature: Feature[];
-  RedolastFeature: any;
+  tekenfunctie = new VectorLayer({
+    source: this.tekensource, style: new Style({fill: new Fill({color: 'yellow'}),
+     stroke: new Stroke({color: 'Black', width: 3}),
+     image: new Circle({radius: 7, fill: new Fill({color: '#ffcc33'})
+     })
+    })
+  });
+  // UNDO-ARRAY
+  undoArray = [];
+  dataUndoArray = [];
+  // REDO-ARRAY
+  RedoArray = [];
+  dataRedoArray = [];
   // @VIEWCHILD
   @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
   @ViewChild('menu', { static: false }) menu: ElementRef;
   @ViewChild('searchmenu', { static: false }) searchmenu: ElementRef;
   @ViewChild('toolbarmenu', { static: false }) toolbarmenu: ElementRef;
 
-
-
   constructor(
-    private spoorwegService: SpoorwegenService,
-    private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
-    private bagService: BagService,
-    private overigedienstenSerivce: OverigeDienstenService,
-    private buttonforlayers: LayerButton,
-    private mapconfig: ServiceService,
-    private achterkaart: BgService,
-    public geocoderService: GeocoderService,
+   private spoorwegService: SpoorwegenService,
+   private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
+   private bagService: BagService,
+   private overigedienstenSerivce: OverigeDienstenService,
+   private buttonforlayers: LayerButton,
+   private mapconfig: ServiceService,
+   private achterkaart: BgService,
+   public geocoderService: GeocoderService,
   ) {}
 
   ngAfterViewInit() {
-    this.initializeMap();
-    this.addInteraction();
-    this.select();
-    console.log(this.bestuurlijkegrenzenservice.gemeentenTile.getUrls());
-    console.log(this.bestuurlijkegrenzenservice.provinciesTile.getUrls());
-    console.log(this.tekenfunctie);
+   this.initializeMap();
+   this.addInteraction();
+   this.select();
   }
   initializeMap() { // BEGIN VAN DE MAP MAKEN
 
@@ -154,7 +156,7 @@ export class KaartviewerComponent implements AfterViewInit {
   addInteraction() {
     const value = this.typeSelectTekenen.value;
     const getValue = this.typeSelectStyle.value;
-    console.log(getValue + 'interaction');
+    // console.log(getValue + 'interaction');
     if (value !== '') {
       this.draw = new OlDraw({
        source: this.tekensource,
@@ -169,8 +171,8 @@ export class KaartviewerComponent implements AfterViewInit {
         })
        }));
       });
-      console.log(this.draw);
-      console.log(this.tekenfunctie.getLayersArray() );
+      // console.log(this.draw);
+      // console.log(this.tekenfunctie.getLayersArray() );
       this.map.addInteraction(this.draw);
      }
    }
@@ -194,54 +196,40 @@ export class KaartviewerComponent implements AfterViewInit {
       this.typeSelectStyle.setValue('');
       this.tekenfunctie.changed();
     }
-    console.log(Stylevent + '' + 'styleswitch');
+    // console.log(Stylevent + '' + 'styleswitch');
     this.map.removeInteraction(this.draw);
     this.addInteraction();
     this.tekenfunctie.changed();
   }
-
-
   // UNDO & REDO FUNCTIONS
   UndoButton() {
-    this.Undofeature = this.tekensource.getFeatures();
-    this.UndolastFeature = this.Undofeature[this.Undofeature.length - 1];
-    this.tekensource.removeFeature(this.UndolastFeature);
+   // (STAP 1) ZET ALLE FEATURES IN DE UNDO-ARRAY
+   this.undoArray = this.tekensource.getFeatures();
+   // (STAP 2) PAK DE LAATST GETEKENDE FEATURE
+   const lastFeatureUndo = this.undoArray.pop();
+   // PUSH ALLE GETEKENDE FEATURES NAAR DE DATA-ARRAY
+   this.dataUndoArray.push(lastFeatureUndo);
+   // REMOVE DE GETEKENDE FEATURE
+   this.tekensource.removeFeature(lastFeatureUndo);
   }
   RedoButton() {
-    const Redo = this.tekensource.on('addFeature', (event) => {
-      this.Undofeature = this.tekensource.getFeatures();
-      this.UndolastFeature = this.Undofeature[this.Undofeature.length - 1];
-      this.tekensource.removeFeature(this.UndolastFeature);
-    });
-    console.log(Redo);
-    // this.Undofeature = this.tekensource.getFeatures();
-    // this.UndolastFeature = this.Undofeature[this.Undofeature.length - 1];
-    // this.RedolastFeature = this.Redofeatures[this.Redofeatures.length - 1];
-    // this.tekensource.removeFeature(this.RedolastFeature);
-    // console.log(this.Redofeature);
-    // console.log(this.RedolastFeature);
+   // (STAP 1) ZET ALLE FEATURES IN DE UNDO-ARRAY
+   this.RedoArray = this.dataUndoArray;
+   // (STAP 2) PAK DE LAATST GETEKENDE FEATURE
+   const lastFeature = this.RedoArray.pop();
+   // (STAP 3) PUSH ALLE VERWIJDERDE FEATURES NAAR DE DATA-REDO-ARRAY
+   this.dataRedoArray.push(lastFeature);
+   // (STAP 4) VOEG DE VERWIJDERDE FEATURES TOE
+   this.tekensource.addFeature(lastFeature);
   }
-
   // SELECT BUTTON
   // select interaction
   select() {
-    const selecti = new Select({
-      layers: [this.bestuurlijkegrenzenservice.provinciesLayer],
-      hitTolerance: 5,
-      condition: singleClick
-    });
-    selecti.on('', (e) => {
-      const f = e.selected[0];
-      if (f) {
-        const prop = f.getProperties();
-        console.log(prop);
-      }
-      console.log('nog een klik?');
-      console.log('rrrr');
-    });
-    // console.log(test);
-    console.log('ffr');
-
+   this.selectselect.on('change', (event) => {
+     this.bestuurlijkegrenzenservice.provinciesLayer.setVisible(false);
+   });
+   console.log('6543');
+   this.map.addInteraction(this.selectselect);
    }
   // SAVE FUNCTIE
   save() {}
@@ -314,4 +302,257 @@ export class KaartviewerComponent implements AfterViewInit {
     }) );
   }
 } // EINDE VAN DE COMPONENT NG ONINIT
+
+
+// UNDOREDO FUNCTION (JAVASCRIPT)
+// /**
+//  * Class: UndoRedo
+//  * Instance of this class can be used to undo and redo vector edits.
+//  */
+// UndoRedo = OpenLayers.Class(OpenLayers.Contorl,{
+// 	/**
+// 	 * APIProperty: currentEditIndex
+// 	 * {integer} - sequence number for editing the feature[s]
+// 	 */
+// 	currentEditIndex: 0,
+// 	/**
+// 	 * Property: undoFeatures
+// 	 * {array} - stack of the edit features
+// 	 */
+// 	undoFeatures: [],
+// 	/**
+// 	 * Property: redoFeatures
+// 	 * {array} - stack of the undo features
+// 	 */
+// 	redoFeatures: [],
+// 	/**
+// 	 * Property: isEditMulty
+// 	 * {boolean} - true if in one action multiple features are editied
+// 	 */
+// 	isEditMulty: false,
+
+// 	/**
+// 	 * Constructor: UndoRedo
+// 	 * Parameters:
+// 	 * layers - array of {<OpenLayers.Layers.Vector>}
+// 	 */
+// 	initialize: function(layers){
+// 		if (!(layers instanceof Array)) {
+// 			layers = [layers];
+// 		}
+// 		for(var i=0;i<layers.length; i++){
+// 			layers[i].events.register("featureadded",this,this.onInsert);
+//             layers[i].events.register("beforefeatureremoved",this,this.onDelete);
+//             layers[i].events.register("beforefeaturemodified",this,this.onUpdate);
+// 		}
+// 	},
+// 	/**
+// 	 * Method: onEdit
+// 	 * on any edit operation performed this has to be triggred
+// 	 * i.e. on insert, delete, update
+// 	 * Parameters:
+// 	 * feature - {<OpenLayers.Feature.Vector>}
+// 	 * editType - {string} edit type done "Insert","Delete","Update"
+// 	 * component - {string} layer or any other identifier
+// 	 * Returns:
+// 	 */
+// 	onEdit: function(feature,editType,component){
+// 		//console.log("Updating undo stack as there is - "+editType);
+// 		if (component == undefined){
+// 			component = feature.layer.name;
+// 		}
+// 		if (this.undoFeatures[this.currentEditIndex] == undefined) {
+// 			this.undoFeatures[this.currentEditIndex] = {};
+// 			this.undoFeatures[this.currentEditIndex][component] = {"Insert":[],"Update":[],"Delete":[]};
+// 		}
+// 		if(feature.fid == undefined){
+// 			feature.fid = feature.id;
+// 		}
+// 		this.undoFeatures[this.currentEditIndex][component][editType].push(feature);
+// 		this.redoFeatures.splice(0,this.redoFeatures.length);
+// 		//run increase editIndex outside after this in case of multy feature edit
+// 		if(!this.isEditMulty){
+// 			this.setEditIndex();
+// 		}
+// 	},
+
+// 	/**
+// 	 * Method: onInsert
+// 	 * event haldler for featureadded
+// 	 */
+// 	onInsert: function(event){
+// 		//onEdit(event.feature,"Insert",event.feature.layer.name);
+// 		feature = event.feature.clone();
+// 		if(event.feature.fid == undefined) {
+// 			event.feature.fid = event.feature.id;
+// 		}
+// 		feature.fid = event.feature.fid;
+// 		feature.state = event.feature.state;
+// 		feature.layer = event.feature.layer;
+// 		this.onEdit(feature,"Insert",feature.layer.name);
+// 	},
+
+// 	/**
+// 	 * Method: onDelete
+// 	 * event haldler for beforefeatureremoved
+// 	 */
+// 	onDelete: function(event){
+// 		this.onEdit(event.feature,"Delete",event.feature.layer.name);
+// 	},
+
+// 	/**
+// 	 * Method: onUpdate
+// 	 * event haldler for beforefeaturemodified
+// 	 */
+// 	onUpdate: function(event){
+// 		//console.log("old feature geometry: " + event.feature.geometry);
+// 		feature = event.feature.clone();
+// 		feature.fid = event.feature.fid;
+// 		feature.state = event.feature.state;
+// 		feature.layer = event.feature.layer;
+// 		this.onEdit(feature,"Update",feature.layer.name);
+// 	},
+
+// 	/**
+// 	 * Method: setEditIndex
+// 	 * increase the editIndex
+// 	 */
+// 	setEditIndex: function(delta){
+// 		delta = delta ? delta : 1;
+// 		this.currentEditIndex += delta;
+// 	},
+
+// 	/**
+// 	 * Method: getUndoData
+// 	 * returns the last edited data
+// 	 */
+// 	getUndoData: function(){
+// 		var data = this.undoFeatures.pop();
+// 		this.currentEditIndex -= 1;
+// 		return data;
+// 	},
+
+// 	/* Method: getRedoData
+// 	 * returns the last redo data
+// 	 */
+// 	getRedoData: function() {
+// 		var data = this.redoFeatures.pop();
+// 		this.currentEditIndex += 1;
+// 		return data;
+// 	},
+
+// 	/**
+// 	 * APIMethod: reseteditIndex
+// 	 * reset the editIndex to 0 and empety both undo and redo stack
+// 	 */
+// 	resetEditIndex: function(){
+// 		this.currentEditIndex = 0;
+// 		this.undoFeatures.splice(0,this.undoFeatures.length);
+// 		this.redoFeatures.splice(0,this.redoFeatures.length);
+// 	},
+
+// 	/**
+// 	 * APIMethod: undo
+// 	 * perform undo operation
+// 	 */
+// 	undo: function() {
+// 		data = this.getUndoData();
+// 		//console.log("data :" + data);
+// 		for (component in data){
+// 			//console.log("component: "+component);
+// 			layer=map.getLayersByName(component)[0];
+// 			//console.log("got layer, name: " + layer.name);
+// 			for (editType in data[component]){
+// 				//console.log("edittype : "+editType);
+// 				for(var i=0;i<data[component][editType].length;i++){
+// 					feature=data[component][editType][i];
+// 					//console.log("features before undo: "+layer.features.length);
+// 					switch(editType) {
+// 						case "Insert":
+// 							//console.log("insert");
+// 							//layer.drawFeature(feature,{display : "none"});
+// 							insertedFeature = layer.getFeatureByFid(feature.fid);
+// 							layer.eraseFeatures(insertedFeature);
+// 							OpenLayers.Util.removeItem(layer.features,insertedFeature);
+// 							break;
+// 						case "Delete":
+// 							//console.log("delete");
+// 							layer.features.push(feature);
+// 							layer.drawFeature(feature);
+// 							break;
+// 						case "Update":
+// 							//console.log("update");
+// 							updatedFeature = layer.getFeatureByFid(feature.fid);
+// 							//console.log("old feature geometry: " + feature.geometry);
+// 							//console.log("updated feature geometry: " + updatedFeature.geometry);
+// 							//layer.drawFeature(updatedFeature,{display : "none"});
+// 							layer.eraseFeatures(updatedFeature);
+// 							OpenLayers.Util.removeItem(layer.features,updatedFeature);
+// 							//layer.removeFeatures(updatedFeature);
+// 							//console.log("old feature geometry: " + feature.geometry);
+// 							layer.features.push(feature);
+// 							layer.drawFeature(feature);
+// 							data[component][editType][i]= updatedFeature;
+// 							break;
+// 						default:
+// 							//console.log("unkown");
+// 							break;
+// 					}
+// 					//console.log("features after undo: "+layer.features.length);
+// 				}
+// 			}
+// 		}
+// 		this.redoFeatures.push(data);
+// 	},
+
+// 	/**
+// 	 * APIMethod:  redo
+// 	 * perform redo operation
+// 	 */
+
+// 	redo: function(){
+// 		data =this.getRedoData();
+// 		for( component in data) {
+// 			//console.log("component: "+component);
+// 			layer=map.getLayersByName(component)[0];
+// 			//console.log("got layer, name: " + layer.name);
+// 			for(editType in data[component]){
+// 				//console.log("edittype : "+editType);
+// 				for (var i=0;i<data[component][editType].length;i++){
+// 					feature=data[component][editType][i];
+// 					//console.log("features before redo: "+layer.features.length);
+// 					switch(editType) {
+// 						case "Insert":
+// 							//console.log("Insert");
+// 							layer.features.push(feature);
+// 							layer.drawFeature(feature);
+// 							break;
+// 						case "Delete":
+// 							//console.log("Delete");
+// 							deleteFeature = layer.getFeatureByFid(feature.fid)
+// 							layer.eraseFeatures(deleteFeature);
+// 							OpenLayers.Util.removeItem(layer.features,deleteFeature);
+// 							break;
+// 						case "Update":
+// 							//console.log("Update");
+// 							oldFeature = layer.getFeatureByFid(feature.fid);
+// 							//console.log("old feature id: " + oldFeature.id);
+// 							layer.eraseFeatures(oldFeature);
+// 							OpenLayers.Util.removeItem(layer.features,oldFeature);
+// 							//console.log("updated feature id: " + oldFeature.id);
+// 							layer.features.push(feature);
+// 							layer.drawFeature(feature);
+// 							data[component][editType][i]= oldFeature;
+// 							break;
+// 						default:
+// 							break;
+// 					}
+// 				}
+// 			}
+// 		}
+// 		this.undoFeatures.push(data);
+// 	},
+
+// 	CLASS_NAME : "UndoRedo"
+// });
 
