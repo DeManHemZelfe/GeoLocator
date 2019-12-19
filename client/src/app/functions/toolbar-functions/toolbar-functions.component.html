@@ -13,15 +13,7 @@
    </div>
 
    <div class="test">
-    <button (click)="show2 = !show2" title="Transform"><i class="material-icons" style="font-size: 10px;" style="color: black;">tab_unselected</i></button>
-    <mat-accordion *ngIf="show2" class="tweebuttons" style="background-color: white;">
-     <form class="form-inline" style="background-color: white;">
-      <mat-radio-group [formControl]="typeSelectTekenen" (change)="switchMode()">
-      <mat-radio-button value="1" style="width: 100%;">Modify</mat-radio-button>
-      <mat-radio-button value="2" style="width: 100%;">None</mat-radio-button>
-      </mat-radio-group>
-     </form>
-    </mat-accordion>
+    <button (click)="transform()" title="Transform"><i class="material-icons" style="font-size: 10px;" style="color: black;">tab_unselected</i></button>
    </div>
   </div>
 
@@ -107,9 +99,9 @@
            <form class="form-inline"  style="background-color: white;">
               <label> &nbsp;</label>
             <select id="type" [formControl]="typeSelectStyle" (change)="styleswitch()">
-             <option value="blue" title="Point">blue</option>
-             <option value="green" title="LineString">green</option>
-             <option value="red" title="Polygon">red</option>
+             <option value="blue" title="Point" style="color: blue; background-color: blue;">blue</option>
+             <option value="green" title="LineString" style="color: green; background-color: green;">green</option>
+             <option value="red" title="Polygon" style="color: red; background-color: red;">red</option>
             </select>
            </form>
          </mat-accordion>

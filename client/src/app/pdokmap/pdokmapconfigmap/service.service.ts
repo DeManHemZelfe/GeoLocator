@@ -8,7 +8,7 @@ import Projection from 'ol/proj/Projection';
 export class ServiceService {
 // The map projection.
 private projectionExtent = [-285401.92, 22598.08, 595401.9199999999, 903401.9199999999];
-private projection = new Projection({ code: 'EPSG:28992', units: 'm', extent: this.projectionExtent });
+public readonly projection = new Projection({ code: 'EPSG:28992', units: 'm', extent: this.projectionExtent });
 
 // Zoom resolutions
 private resolutions = [

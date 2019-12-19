@@ -12,17 +12,17 @@ import { FormControl } from '@angular/forms';
 import OlDraw from 'ol/interaction/Draw';
 import TileWMS, { Options as TileWMSOptions } from 'ol/source/TileWMS';
 import { Options as TileOptions } from 'ol/layer/Tile';
-import { OSM, Vector as VectorSource, TileJSON } from 'ol/source';
+import { OSM, Vector as VectorSource, TileJSON, ImageWMS } from 'ol/source';
 import { Icon, Stroke, Style, Fill, Circle} from 'ol/style';
 import LocationSuggestData from '../_interfaces/_datainterface/location-suggest-data-interface';
 import { BestuurlijkegrenzenService } from '../layers/bestuurlijkegrenzen.service';
 import { BagService } from '../layers/bag.service';
-
+import GeoJSON from 'ol/format/GeoJSON';
 import { SpoorwegenService, ITileOptions } from '../layers/spoorwegen.service';
 import {defaults as defaultControls, Control, ZoomToExtent, Rotate, ScaleLine, ZoomSlider, OverviewMap, Zoom} from 'ol/control';
 
 import { OverigeDienstenService } from '../layers/overigediensten.service';
-import {defaults as defaultInteractions, Modify, Select, Snap,  Translate, Draw } from 'ol/interaction';
+import {defaults as defaultInteractions, Modify, Snap,  Translate, Draw } from 'ol/interaction';
 import LayerGroup from 'ol/layer/Group';
 import { GeocoderService } from 'angular-geocoder';
 import { ToolbarFunctionsComponent } from '../functions/toolbar-functions/toolbar-functions.component';
@@ -33,9 +33,12 @@ import { ServiceService } from '../pdokmap/pdokmapconfigmap/service.service';
 import { BgService } from '../pdokmap/layer/bg.service';
 import { TooltipDirective } from '@progress/kendo-angular-tooltip';
 import { style } from '@angular/animations';
-import { color, source, interaction } from 'openlayers';
-import { singleClick, click } from 'ol/events/condition';
-
+import { color, source, interaction, coordinate } from 'openlayers';
+import {click, pointerMove, altKeyOnly, singleClick} from 'ol/events/condition';
+import Select, { SelectEvent } from 'ol/interaction/Select';
+import { transformExtent, addProjection } from 'ol/proj';
+import { transformGeom2D } from 'ol/geom/SimpleGeometry';
+import ImageLayer from 'ol/layer/Image';
 // localstorage. (remove)
 // JWT
 @Component({
@@ -61,9 +64,8 @@ export class KaartviewerComponent implements AfterViewInit {
   public foundPlace: any = null;
   public selectedItem = [];
   public selectedIndex = -1;
-
   // SELECT FUNCTIONS
-   selectselect = new Select({condition: click});
+  Arrow = new Select();
   // MAP INTERACTIONS
   private map: Map;
   private draw: OlDraw;
@@ -90,6 +92,16 @@ export class KaartviewerComponent implements AfterViewInit {
   @ViewChild('menu', { static: false }) menu: ElementRef;
   @ViewChild('searchmenu', { static: false }) searchmenu: ElementRef;
   @ViewChild('toolbarmenu', { static: false }) toolbarmenu: ElementRef;
+  // VECTORLAYER
+  wmsSource = new TileWMS({
+    url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?',
+    params: { LAYERS: 'gemeenten', TILED: true },
+    serverType: 'geoserver',
+    crossOrigin: 'anonymous'
+  });
+  wmsLayer = new TileLayer({
+    source: this.wmsSource,
+  });
 
   constructor(
    private spoorwegService: SpoorwegenService,
@@ -105,17 +117,16 @@ export class KaartviewerComponent implements AfterViewInit {
   ngAfterViewInit() {
    this.initializeMap();
    this.addInteraction();
-   this.select();
   }
   initializeMap() { // BEGIN VAN DE MAP MAKEN
-
+    addProjection(this.mapconfig.projection);
     this.map = new Map({ // MAAK DE MAP
       target: 'map',
       layers: [
         // BASELAYERS
         this.achterkaart.baseLayer,
-        this.achterkaart.brtWaterLayer,
-        this.achterkaart.brtGrijsLayer,
+        // this.achterkaart.brtWaterLayer,
+        // this.achterkaart.brtGrijsLayer,
         // BORDERLAYERS
         this.bestuurlijkegrenzenservice.landsgrensLayer,
         this.bestuurlijkegrenzenservice.gemeentenLayer,
@@ -140,6 +151,7 @@ export class KaartviewerComponent implements AfterViewInit {
         this.spoorwegService.KilometreringLayer,
         // DRAW FUNCTION
         this.tekenfunctie,
+        // this.wmsLayer,
       ],
       view: this.mapconfig._view,
       controls: [
@@ -150,8 +162,20 @@ export class KaartviewerComponent implements AfterViewInit {
     });
    } // EINDE VAN DE MAP MAKEN
 
-
-
+   mapClick() {
+    this.map.on('singleclick', (evt) => {
+      const viewResolution = this.mapconfig._view.getResolution();
+      const url = (this.bestuurlijkegrenzenservice.provinciesTile as any).getFeatureInfoUrl(
+       evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'application/json' } );
+      console.log(url);
+      if (url) {
+       const test = fetch(url).then((response) => {
+        response.text().then((html) => {
+        document.getElementById('info').innerHTML = html; });
+        console.log(test);  });
+      }
+    });
+   }
 
   addInteraction() {
     const value = this.typeSelectTekenen.value;
@@ -224,12 +248,35 @@ export class KaartviewerComponent implements AfterViewInit {
   }
   // SELECT BUTTON
   // select interaction
-  select() {
-   this.selectselect.on('change', (event) => {
-     this.bestuurlijkegrenzenservice.provinciesLayer.setVisible(false);
+  displayFeatureInfo() {
+   const getVis = this.bestuurlijkegrenzenservice.provinciesLayer.getVisible();
+   this.map.on('click', (evt) => {
+    if (getVis === false ) {
+      console.log(this.bestuurlijkegrenzenservice.provinciesLayer.getProperties());
+      console.log(this.bestuurlijkegrenzenservice.provinciesLayer.getSource());
+      console.log( this.bestuurlijkegrenzenservice.provinciesTile.getUrls());
+     } else {
+       this.bestuurlijkegrenzenservice.gemeentenLayer.setVisible(true);
+      //  this.bestuurlijkegrenzenservice.provinciesLayer.on();
+
+       }
    });
-   console.log('6543');
-   this.map.addInteraction(this.selectselect);
+  }
+  select() {
+    const translate = new Translate({features: this.Arrow.getFeatures() });
+    this.map.removeInteraction(this.draw);
+    this.map.removeInteraction(translate);
+    this.map.removeInteraction(this.Arrow);
+   }
+
+   transform() {
+    const translate = new Translate({features: this.Arrow.getFeatures() });
+    this.map.removeInteraction(this.draw);
+    this.map.removeInteraction(translate);
+    this.map.removeInteraction(this.Arrow);
+
+    this.map.addInteraction(translate);
+    this.map.addInteraction(this.Arrow);
    }
   // SAVE FUNCTIE
   save() {}
@@ -238,6 +285,7 @@ export class KaartviewerComponent implements AfterViewInit {
   zoom_in() {
     const currentZoom = this.map.getView().getZoom();
     this.map.getView().animate({ zoom: currentZoom + 1, duration: 250 });
+    console.log(this.map.getProperties());
    }
   // ZOOM OUT FUNCTIE
   zoom_out() {
@@ -285,15 +333,7 @@ export class KaartviewerComponent implements AfterViewInit {
   }
 
   getButtonColorGreen(Buttonevent?: string | null) {
-    // this.tekensource.clear();
-    this.tekenfunctie.setStyle(new Style({
-      fill: new Fill({color: 'Green'}), stroke: new Stroke({width: 3, color: 'red'})
-    }) );
-    // const features = this.tekensource.getFeatures();
-    // const lastFeature = features[features.length - 1];
-    // lastFeature.setStyle(new Style({fill: new Fill({color: 'Green'}) }) );
-    // console.log(lastFeature);
-    console.log('Green');
+
   }
   getButtonColorRed(Buttonevent?: string | null) {
     console.log('Red');

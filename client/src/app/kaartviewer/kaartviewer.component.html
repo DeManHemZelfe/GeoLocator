@@ -1,5 +1,5 @@
 
-<div id="map" class="map"></div>
+<div id="map" class="map" (click)="mapClick()"></div>
 
 <div #toolbarmenu class="toolbarmenu" kendoTooltip position="right" style="background-color:red;" style="width: 10%;">
   <app-toolbar-functions
@@ -8,9 +8,27 @@
   (_zoomin)="zoom_in($event)"           (_zoomout)="zoom_out($event)"
   (_styleswitch)="styleswitch($event)"  (_getButtonColorBlue)="getButtonColorBlue($event)"
   (_getButtonColorGreen)="getButtonColorGreen($event)" (_getButtonColorRed)="getButtonColorRed($event)"
-  (_select)="select($event)">
+  (_select)="select($event)" (_transform)="transform($event)">
 </app-toolbar-functions>
 </div>
+
+<div id="info">&nbsp;</div>
+<!-- <div>
+  <table id="info">
+    <tr>
+      <td>Provincienaam:</td>
+      <td id="provincienaam"></td>
+    </tr>
+    <tr>
+      <td>provincie-feature-omtrek:</td>
+      <td id="Features"></td>
+    </tr>
+    <tr>
+      <td>feature:</td>
+      <td id="feature"></td>
+    </tr>
+  </table>
+</div> -->
 
 
 <!-- TOOLTIP -->

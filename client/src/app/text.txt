@@ -38,3 +38,135 @@ DIT DE INFORMATIE PAGINA OVER HOE SOMMIGE DINGEN MOETEN EN OF KUNNEN
    const test = data.pop();
    this.tekensource.addFeature(test);
   }
+
+this.map.on('click', (evt) => {
+     const url = this.bestuurlijkegrenzenservice.provinciesTile.getGetFeatureInfoUrl(
+     evt.coordinate, viewResolution, viewProjection, {INFO_FORMAT: 'text/javascript', propertyName: 'formal_en'});
+     if (url) {this.bestuurlijkegrenzenservice.gemeentenLayer.setVisible(true); }
+    });
+
+
+WATWERKT
+WATWERKT
+
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?LAYERS=landsgrens
+
+this.map.on('click', (evt) => {
+      const wmsSource = this.bestuurlijkegrenzenservice.provinciesTile;
+      const viewResolution = this.mapconfig._view.getResolution();
+      const url = wmsSource.getGetFeatureInfoUrl(
+       evt.coordinate, viewResolution, 'EPSG:2899',
+       {FORMAT: 'application/json', QOUARY_LAYERS: 'provincies'} );
+      console.log(url);
+    });
+
+WATWERKT
+WATWERKT
+
+
+
+
+
+
+
+http://geodata.nationaalgeoregister.nl/bag/wfs?service=WFS&request=GetFeature&typeName=bag:pand&count=100&startIndex=0&outputFormat=json
+
+<Name>bestuurlijkegrenzen:gemeenten</Name> <Title>gemeenten</Title>
+<Name>bestuurlijkegrenzen:landsgrens</Name><Title>landsgrens</Title>
+<Name>bestuurlijkegrenzen:provincies</Name><Title>provincies</Title>
+
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?request=DescribeFeatureType&typeNames=bestuurlijkegrenzen:gemeententype
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?request=GetFeature&typeNames=namespace:featuetype
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?request=GetFeature&typeNames=bestuurlijkegrenzen:gemeententype
+
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?request=GetFeature&typeNames=gemeenten
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?request=GetFeature&typeNames=provincies
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?request=GetFeature&typeNames=landsgrens
+
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?request=GetFeature&typeNames=provincies&featureID=11
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?request=GetFeature&typeNames=provincies&featureID=12
+
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?&featureID=11
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?&GetFeature&featureID=11
+
+foto zwart met rood https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&layers=provincies&CRS=EPSG%3A28992&STYLES=&FORMAT_OPTIONS=dpi%3A113&WIDTH=2881&HEIGHT=1260&BBOX=-335634.432%2C238092.2879999999%2C655613.9519999998%2C671612.9279999998
+https://geodata.nationaalgeoregister.nl/tiles/service/wmts?layer=brtachtergrondkaart&style=default&tilematrixset=EPSG%3A28992&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix=03&TileCol=7&TileRow=5
+<TileMap title="brtachtergrondkaart" srs="EPSG:28992" profile="local" href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG:28992"/>
+
+<TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/0" units-per-pixel="3440.64" order="0"/>
+<TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/1" units-per-pixel="1720.32" order="1"/>
+<TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/2" units-per-pixel="860.16" order="2"/>
+<TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/3" units-per-pixel="430.08" order="3"/>
+<TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/4" units-per-pixel="215.04" order="4"/>
+<TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/5" units-per-pixel="107.52" order="5"/>
+<TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/6" units-per-pixel="53.76" order="6"/>
+<TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/7" units-per-pixel="26.88" order="7"/>
+<TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/8" units-per-pixel="13.44" order="8"/>
+<TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/9" units-per-pixel="6.72" order="9"/>
+<TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/10" units-per-pixel="3.36" order="10"/>
+<TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/11" units-per-pixel="1.68" order="11"/>
+<TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/12" units-per-pixel="0.84" order="12"/>
+<TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/13" units-per-pixel="0.42" order="13"/>
+<TileSet href="https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG%3A28992/14" units-per-pixel="0.21" order="14"/>
+
+DEZE CODE HAALT EEN STUKJE VAN DE KAART OP VAN DORDERRECHT
+http://geodata.nationaalgeoregister.nl/wmts/?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=brtachtergrondkaart&STYLE=default&TILEMATRIXSET=EPSG:28992&TILEMATRIX=EPSG:28992:3&TILEROW=4&TILECOL=3&FORMAT=image/png8
+
+http://geodata.nationaalgeoregister.nl/wmts/?
+SERVICE=WMTS
+&REQUEST=GetTile
+&VERSION=1.0.0
+&LAYER=brtachtergrondkaart
+&STYLE=default
+&TILEMATRIXSET=EPSG:28992
+&TILEMATRIX=EPSG:28992:3
+&TILEROW=4
+&TILECOL=3
+&FORMAT=image/png8
+
+OPSTARTEN
+http://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?service=WFS&version=2.0.0&request=GetFeature&typename=provincies&outputformat=json
+
+
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?&GetFeature&typeName=provincies&featureID=1,2,7,5&outputformat=json
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?request=GetFeature&typeName=provincies
+
+
+
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?
+SERVICE=WMS&VERSION=1.3.0&
+REQUEST=GetMap&
+FORMAT=image%2Fpng&
+TRANSPARENT=true&
+layers=provincies&
+CRS=EPSG%3A28992&
+STYLES=&
+FORMAT_OPTIONS=dpi%3A113&
+WIDTH=2881&
+HEIGHT=1260&
+BBOX=-335634.432%2C238092.2879999999%2C655613.9519999998%2C671612.9279999998
+
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?
+service=wms&
+version=1.3.0&
+request=getfeatureinfo&
+layers=provincies&
+bbox=13014,306243,286599,623492&
+width=400&
+height=500&
+format=image/png&
+srs=EPSG:28992&
+query_layers=provincies&
+info_format=application/json&
+x=353&
+y=145
+
+landsgrens https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?LAYERS=landsgrens&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A28992&BBOX=-281961.28,153772.48,618626.24,755024.32&WIDTH=1047&HEIGHT=699
+gemeeneten https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?LAYERS=gemeenten&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A28992&BBOX=-281961.28,153772.48,618626.24,755024.32&WIDTH=1047&HEIGHT=699
+provincies https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?LAYERS=provincies&FORMAT=image%2Fpng&TRANSPARENT=TRUE&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A28992&BBOX=-281961.28,153772.48,618626.24,755024.32&WIDTH=1047&HEIGHT=699
+
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/ows?service=wms&VERSION=1.1.1&LAYERS=gemeenten&FORMAT=json&REQUEST=GetMap&STYLES=&SRS=EPSG%3A28992&BBOX=189406.4,318493.12,192847.04,321933.76&WIDTH=256&HEIGHT=256
+
+
+http://geodata.nationaalgeoregister.nl/brocpt/wfs?service=WFS&version=2.0.0&typeName=brocpt:cpt&propertyName=broid,geom&count=3&bbox=153714.96,462328.44,156285.36000000002,463672.44,EPSG:28992&request=GetFeature
+https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?LAYERS=gemeenten&SERVICE=WMS&REQUEST=GetMap&WIDTH=1047&HEIGHT=699&SRS=EPSG%3A28992&FORMAT=image/png&BBOX=-281961.28,153772.48,618626.24,755024.32

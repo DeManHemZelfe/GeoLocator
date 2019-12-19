@@ -48,6 +48,7 @@ export class ToolbarFunctionsComponent implements AfterViewInit {
   @Output() _getButtonColorGreen: EventEmitter<any> = new EventEmitter<any>();
   @Output() _getButtonColorRed: EventEmitter<any> = new EventEmitter<any>();
   @Output() _select: EventEmitter<any> = new EventEmitter<any>();
+  @Output() _transform: EventEmitter<any> = new EventEmitter<any>();
 
   // ALLE INPUTS
 
@@ -125,6 +126,7 @@ export class ToolbarFunctionsComponent implements AfterViewInit {
 
   // CLICK SELECT
   select() {return this._select.emit(); }
+  transform() {return this._transform.emit(); }
   clickonselect() {console.log('clickonselect'); }
   // SWITCHMODE
   switchMode() {
