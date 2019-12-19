@@ -165,15 +165,17 @@ export class KaartviewerComponent implements AfterViewInit {
    mapClick() {
     this.map.on('singleclick', (evt) => {
       const viewResolution = this.mapconfig._view.getResolution();
+      const getVis = this.bestuurlijkegrenzenservice.provinciesLayer.getVisible();
       const url = (this.bestuurlijkegrenzenservice.provinciesTile as any).getFeatureInfoUrl(
        evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'application/json' } );
-      console.log(url);
-      if (url) {
-       const test = fetch(url).then((response) => {
-        response.text().then((html) => {
-        document.getElementById('info').innerHTML = html; });
-        console.log(test);  });
-      }
+      if (getVis === true) {
+        if (url) {
+          const test = fetch(url).then((response) => {
+           response.text().then((html) => {
+           document.getElementById('info').innerHTML = html; });
+           console.log(test);  });
+         }
+       }
     });
    }
 
