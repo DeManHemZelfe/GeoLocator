@@ -3,6 +3,7 @@ import TileWMS, {Options as TileWMSOptions} from 'ol/source/TileWMS';
 import TileLayer, {Options as TileOptions} from 'ol/layer/Tile';
 import { Vector as VectorLayer } from 'ol/layer';
 import GeoJSON from 'ol/format/GeoJSON';
+import { Style, Stroke, Fill } from 'ol/style';
 
 
 @Injectable()
@@ -36,11 +37,13 @@ export class BestuurlijkegrenzenService {
     } as ITileOptions);
 
     provinciesTile = new TileWMS({
-     url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?&typeName=provincies',
+     url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?&GetFeature&typeName=provincies',
+
      params: {
        LAYERS: 'provincies',
        TILED: true,
        crossOrigin: 'anonymous', },
+       serverType: 'geoserver',
     });
     provinciesLayer = new TileLayer({
      source: this.provinciesTile,
