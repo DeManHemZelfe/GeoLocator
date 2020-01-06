@@ -26,6 +26,7 @@
     "@ng-bootstrap/ng-bootstrap": "^5.1.4",
     "@progress/kendo-angular-buttons": "^5.0.0",
     "@progress/kendo-angular-common": "^1.0.0",
+    "@progress/kendo-angular-dialog": "^4.1.0",
     "@progress/kendo-angular-dropdowns": "^4.2.0",
     "@progress/kendo-angular-intl": "^2.0.0",
     "@progress/kendo-angular-l10n": "^2.0.0",

@@ -6,22 +6,35 @@
   (_mapswitch)="switchMode($event)"     (_placefound)="onPlaceFound($event)"
   (_undo)="UndoButton($event)"          (_redo)="RedoButton($event)"
   (_zoomin)="zoom_in($event)"           (_zoomout)="zoom_out($event)"
-  (_styleswitch)="styleswitch($event)"  (_getButtonColorBlue)="getButtonColorBlue($event)"
+  (_getButtonColorBlue)="getButtonColorBlue($event)"
   (_getButtonColorGreen)="getButtonColorGreen($event)" (_getButtonColorRed)="getButtonColorRed($event)"
   (_select)="select($event)" (_transform)="transform($event)"
   (_popup)="popup($event)">
 </app-toolbar-functions>
 </div>
+
+
+
+<app-dialog-component (_styleswitchDialog)="styleswitchDialog($event)"></app-dialog-component>
+
+
 <div id="provincienaam">provincies</div>
 
-<button>open</button>
-<kendo-popup>test</kendo-popup>
+
+
+<!-- <div class="example-wrapper">
+  <button kendoButton *ngIf="!opened" (click)="open()">Open dialog</button>
+  <kendo-dialog title="Please confirm" *ngIf="opened" (close)="close('cancel')" [minWidth]="250" [width]="450">
+      <p style="margin: 30px; text-align: center;">Are you sure you want to continue?</p>
+      <kendo-dialog-actions>
+          <button kendoButton (click)="close('no')">No</button>
+          <button kendoButton (click)="close('yes')" primary="true">Yes</button>
+      </kendo-dialog-actions>
+  </kendo-dialog>
+</div> -->
 
 
 
 
-<!--  -->
+<!-- (_styleswitch)="styleswitch($event)"  -->
 
-
-<!-- TOOLTIP -->
-<!-- kendoTooltip style="text-align: center; padding-top: 10px;" -->

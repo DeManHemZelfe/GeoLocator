@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, ɵConsole } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, ɵConsole, Output, EventEmitter } from '@angular/core';
 import { Map, View, Collection,  MapBrowserEvent  } from 'ol';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import Feature from 'ol/Feature';
@@ -42,6 +42,7 @@ import ImageLayer from 'ol/layer/Image';
 import WMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo';
 
 
+
 // localstorage. (remove)
 // JWT
 @Component({
@@ -75,6 +76,7 @@ export class KaartviewerComponent implements AfterViewInit {
   // FORMCONTROLS
   typeSelectTekenen = new FormControl('');
   typeSelectStyle   = new FormControl('');
+  kleurschema;
   // TEKENFUNCTIES
   tekensource = new VectorSource({wrapX: false, });
   tekenfunctie = new VectorLayer({
@@ -84,12 +86,28 @@ export class KaartviewerComponent implements AfterViewInit {
      })
     })
   });
+
   // UNDO-ARRAY
   undoArray = [];
   dataUndoArray = [];
   // REDO-ARRAY
   RedoArray = [];
   dataRedoArray = [];
+
+  child1: {futbols: Array<boolean>, name: string, id: number} = {
+    futbols: [true, true, true, true, true],
+    name: 'Child 1',
+    id: 1
+  };
+  child2: {futbols: Array<boolean>, name: string, id: number} = {
+    futbols: [true, true, true, true],
+    name: 'Child 2',
+    id: 2
+  };
+
+  // @OUTPUT
+  @Output() _afu: EventEmitter<any> = new EventEmitter<any>();
+  @Output() _afr: EventEmitter<any> = new EventEmitter<any>();
   // @VIEWCHILD
   @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
   @ViewChild('menu', { static: false }) menu: ElementRef;
@@ -165,6 +183,12 @@ export class KaartviewerComponent implements AfterViewInit {
     });
    } // EINDE VAN DE MAP MAKEN
 
+
+
+   // OUTPUT RETURN
+   ArrayForUndo() { console.log('Array voor undo'); return this._afu.emit(); }
+   ArrayForRedo() { console.log('Array voor undo'); return this._afr.emit(); }
+
    mapClick() {
     this.map.on('singleclick', (evt) => {
       const viewResolution = this.mapconfig._view.getResolution();
@@ -195,6 +219,7 @@ export class KaartviewerComponent implements AfterViewInit {
     });
    }
   openDialog() {}
+
   popup() {
     if (click) {
      console.log('NICE');
@@ -204,6 +229,7 @@ export class KaartviewerComponent implements AfterViewInit {
   }
 
   addInteraction() {
+    const schema = this.kleurschema;
     const value = this.typeSelectTekenen.value;
     const getValue = this.typeSelectStyle.value;
     // console.log(getValue + 'interaction');
@@ -214,7 +240,7 @@ export class KaartviewerComponent implements AfterViewInit {
       });
       this.draw.on('drawend', (event) => {
        event.feature.setStyle(new Style({
-        fill: new Fill({color: getValue}),
+        fill: new Fill({color: schema}),
         stroke: new Stroke({color: 'Black', width: 3}),
         image: new Circle({radius: 7,
         fill: new Fill({color: 'green'})
@@ -236,21 +262,42 @@ export class KaartviewerComponent implements AfterViewInit {
     this.addInteraction();
   }
 
-  styleswitch(Stylevent?: string | null) {
-    this.map.removeInteraction(this.draw);
-    if (Stylevent !== '') {
-      this.typeSelectStyle.setValue(Stylevent);
-      this.tekenfunctie.changed();
+  // dialog(event) {
+  //   // this.kleurschema = event;
+  //   // console.log(this.kleurschema);
+  //   // this.addInteraction();
+  //   // this.tekenfunctie.changed();
+  // }
 
-    } else {
-      this.typeSelectStyle.setValue('');
-      this.tekenfunctie.changed();
-    }
-    // console.log(Stylevent + '' + 'styleswitch');
+  styleswitchDialog(Stylevent?: string | null) {
     this.map.removeInteraction(this.draw);
+    if (Stylevent) {console.log(Stylevent); }
+    this.kleurschema = Stylevent;
+    this.typeSelectStyle.setValue(Stylevent);
+    this.tekenfunctie.changed();
+
+
+    // console.log(Stylevent + '' + 'styleswitch');
+    // this.map.removeInteraction(this.draw);
     this.addInteraction();
     this.tekenfunctie.changed();
   }
+
+  // styleswitch(Stylevent?: string | null) {
+  //   this.map.removeInteraction(this.draw);
+  //   if (Stylevent !== '') {
+  //     this.typeSelectStyle.setValue(Stylevent);
+  //     this.tekenfunctie.changed();
+
+  //   } else {
+  //     this.typeSelectStyle.setValue('');
+  //     this.tekenfunctie.changed();
+  //   }
+  //   // console.log(Stylevent + '' + 'styleswitch');
+  //   this.map.removeInteraction(this.draw);
+  //   this.addInteraction();
+  //   this.tekenfunctie.changed();
+  // }
   // UNDO & REDO FUNCTIONS
   UndoButton() {
    // (STAP 1) ZET ALLE FEATURES IN DE UNDO-ARRAY
@@ -288,6 +335,7 @@ export class KaartviewerComponent implements AfterViewInit {
        }
    });
   }
+
   select() {
     const translate = new Translate({features: this.Arrow.getFeatures() });
     this.map.removeInteraction(this.draw);
@@ -357,7 +405,6 @@ export class KaartviewerComponent implements AfterViewInit {
       fill: new Fill({color: 'blue'}), stroke: new Stroke({width: 3, color: 'pink'}) }) );
     // console.log('blue');
     this.tekensource.changed();
-
   }
 
   getButtonColorGreen(Buttonevent?: string | null) {

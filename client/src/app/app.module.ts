@@ -47,7 +47,12 @@ import { TpComponent } from './testmap/testpage/tp/tp.component';
 import { MapconfigService } from './testmap/testpage/config/mapconfig/mapconfig.service';
 import { LayerconfigService } from './testmap/testpage/config/layerconfig/layerconfig.service';
 import {ToolbarTweeComponent} from './testmap/testpage/toolbar/toolbar.component';
-import {MatDialogModule} from '@angular/material/dialog';
+import {DialogComponent} from './dialog/dialog';
+// import {MatDialogModule} from '@angular/material/dialog';
+
+import {DialogsModule, DialogModule,  DialogService,
+  DialogRef,
+  DialogCloseResult} from '@progress/kendo-angular-dialog';
 
 import { PopupModule } from '@progress/kendo-angular-popup';
 
@@ -74,16 +79,17 @@ export function tokenGetter() {
     ToolbarComponent,
     ToolbarTweeComponent,
     TpComponent,
+    DialogComponent
 
   ],
   imports: [
     RouterModule,
     PopupModule,
-    MatDialogModule,
+    DialogsModule, ButtonsModule, DialogModule,
     GeocoderModule,
     ScrollingModule,
     BrowserModule,
-    MatInputModule, MatOptionModule, MatSelectModule, MatIconModule, MatDialogModule,
+    MatInputModule, MatOptionModule, MatSelectModule, MatIconModule,
     MatSliderModule,
     MatSidenavModule,
     MatCheckboxModule,
@@ -97,7 +103,6 @@ export function tokenGetter() {
     MatMenuModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    ButtonsModule,
     MenusModule,
     TooltipModule,
     NgbModule,
@@ -108,6 +113,7 @@ export function tokenGetter() {
         blacklistedRoutes: ['localhost:5000/api/user/authenticate']
       }
     }),
+    DialogsModule,
   ],
 
   providers: [
