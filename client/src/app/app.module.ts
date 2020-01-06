@@ -17,7 +17,7 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { GroupService } from './services/group.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { RouterModule,  Routes } from '@angular/router';
-import {MatInputModule, MatOptionModule, MatSelectModule } from '@angular/material';
+import {MatInputModule, MatOptionModule, MatSelectModule, MatButtonModule } from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
@@ -47,6 +47,10 @@ import { TpComponent } from './testmap/testpage/tp/tp.component';
 import { MapconfigService } from './testmap/testpage/config/mapconfig/mapconfig.service';
 import { LayerconfigService } from './testmap/testpage/config/layerconfig/layerconfig.service';
 import {ToolbarTweeComponent} from './testmap/testpage/toolbar/toolbar.component';
+import {MatDialogModule} from '@angular/material/dialog';
+
+import { PopupModule } from '@progress/kendo-angular-popup';
+
 
 
 export function tokenGetter() {
@@ -74,10 +78,12 @@ export function tokenGetter() {
   ],
   imports: [
     RouterModule,
+    PopupModule,
+    MatDialogModule,
     GeocoderModule,
     ScrollingModule,
     BrowserModule,
-    MatInputModule, MatOptionModule, MatSelectModule, MatIconModule,
+    MatInputModule, MatOptionModule, MatSelectModule, MatIconModule, MatDialogModule,
     MatSliderModule,
     MatSidenavModule,
     MatCheckboxModule,
@@ -101,8 +107,9 @@ export function tokenGetter() {
         whitelistedDomains: ['localhost:5000'],
         blacklistedRoutes: ['localhost:5000/api/user/authenticate']
       }
-    })
+    }),
   ],
+
   providers: [
     UserService,
     GroupService,

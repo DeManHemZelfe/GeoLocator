@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, ɵConsole} from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, ɵConsole } from '@angular/core';
 import { Map, View, Collection,  MapBrowserEvent  } from 'ol';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import Feature from 'ol/Feature';
@@ -40,6 +40,8 @@ import { transformExtent, addProjection } from 'ol/proj';
 import { transformGeom2D } from 'ol/geom/SimpleGeometry';
 import ImageLayer from 'ol/layer/Image';
 import WMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo';
+
+
 // localstorage. (remove)
 // JWT
 @Component({
@@ -173,32 +175,15 @@ export class KaartviewerComponent implements AfterViewInit {
         if (url) {
            const veggie = fetch(url).then((response) => {
             response.text().then((html) => {
-            document.getElementById('all').innerHTML = html.length.toString();
+            document.getElementById('provincienaam').innerHTML = html;
+            console.log('test');
           });
         });
            console.log(veggie); }
       }
     });
-     // MAPCLICK FUNCTION
-    // this.map.on('singleclick', (evt) => {
-    //   const viewResolution = this.mapconfig._view.getResolution();
-    //   const getVis = this.bestuurlijkegrenzenservice.provinciesLayer.getVisible();
-    //   const grid = this.bestuurlijkegrenzenservice.provinciesTile.getProperties();
-    //   console.log(grid);
-    //   const url = (this.bestuurlijkegrenzenservice.provinciesTile as any).getFeatureInfoUrl(
-    //    evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'text/html' } );
-    //   if (getVis === true) {
-    //     // LAAT DE PROVINCIE NAAM ZIEN
-    //     // if (url) {fetch(url).then((response) => response.text()).then((html) => {document.getElementById('info').innerHTML = html; }); }
-    //     if (url) {
-    //       const test = fetch(url).then((response) => {
-    //        response.text().then((html) => {
-    //        document.getElementById('info').innerHTML = html; console.log(html); });
-    //        console.log(test);  console.log(); });
-    //      }
-    //    }
-    // });
    }
+
    testvoordemap() {
     this.map.on('singleclick', (evt) => {
       fetch('https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?&GetFeature&typeName=provincies').then((response) => {
@@ -209,13 +194,15 @@ export class KaartviewerComponent implements AfterViewInit {
         });
     });
    }
+  openDialog() {}
+  popup() {
+    if (click) {
+     console.log('NICE');
+    } else {
+      console.log('ELSE');
+    }
+  }
 
-  // if (url) {
-  //   const test = fetch(url).then((response) => {
-  //    response.text().then((html) => {
-  //    document.getElementById('info').innerHTML = html; });
-  //    console.log(test);  });
-  //  }
   addInteraction() {
     const value = this.typeSelectTekenen.value;
     const getValue = this.typeSelectStyle.value;
@@ -383,6 +370,7 @@ export class KaartviewerComponent implements AfterViewInit {
     }) );
   }
 } // EINDE VAN DE COMPONENT NG ONINIT
+
 
 
 // UNDOREDO FUNCTION (JAVASCRIPT)

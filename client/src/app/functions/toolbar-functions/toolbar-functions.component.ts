@@ -42,6 +42,7 @@ export class ToolbarFunctionsComponent implements AfterViewInit {
   @Output() _placefound: EventEmitter<any> = new EventEmitter<any>();
   @Output() _zoomin: EventEmitter<any> = new EventEmitter<any>();
   @Output() _zoomout: EventEmitter<any> = new EventEmitter<any>();
+  @Output() _popup: EventEmitter<any> = new EventEmitter<any>();
   @Output() _undo: EventEmitter<any> = new EventEmitter<any>();
   @Output() _redo: EventEmitter<any> = new EventEmitter<any>();
   @Output() _getButtonColorBlue: EventEmitter<any> = new EventEmitter<any>();
@@ -98,6 +99,7 @@ export class ToolbarFunctionsComponent implements AfterViewInit {
   SaveButton() {console.log('klik op de save knop'); }
   zoom_in()  {console.log('klik op zoom in knop'); return this._zoomin.emit(); }
   zoom_out() {console.log('klik op zoom out knop'); return this._zoomout.emit(); }
+  PopUp() {console.log('PopUp'); return this._popup.emit(); }
 
   // MAPBUTTONS
   getKaartButton() {return this.buttonforlayers.getLayerGroupKaart(); }
