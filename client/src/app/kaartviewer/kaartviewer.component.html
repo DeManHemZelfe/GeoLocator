@@ -9,16 +9,18 @@
   (_getButtonColorBlue)="getButtonColorBlue($event)"
   (_getButtonColorGreen)="getButtonColorGreen($event)" (_getButtonColorRed)="getButtonColorRed($event)"
   (_select)="select($event)" (_transform)="transform($event)"
-  (_popup)="popup($event)">
+  (_popup)="popup($event)"
+  (_info)="Info($event)">
 </app-toolbar-functions>
 </div>
 
 
 
-<app-dialog-component (_styleswitchDialog)="styleswitchDialog($event)"></app-dialog-component>
+<app-dialog-component (_styleswitchDialog)="styleswitchDialog($event)" [DataArray]="dataUndoArray"></app-dialog-component>
 
 
 <div id="provincienaam">provincies</div>
+<button (click)="getMapFeatures()">getMapFeatures</button>
 
 
 

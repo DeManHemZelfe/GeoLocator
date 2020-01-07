@@ -1,9 +1,12 @@
 <button kendoButton *ngIf="!opened" (click)="open()">Color Schema</button>
 <button kendoButton *ngIf="!opened1" (click)="open1()">Undo & Redo actie's</button>
 
-
 <kendo-dialog title="Color Schema" *ngIf="opened" (close)="close()">
  <div>
+
+  <label for="colorWell">Color:</label>
+  <input type="color" value="#ff0000" id="colorWell">
+
   <form class="form-inline"  style="background-color: white;">
    <select id="type" [formControl]="typeSelectDialogStyle" (change)="styleswitchDialog()" >
     <option value="blue" title="Point" style="color: blue; background-color: blue;">blue</option>
@@ -23,17 +26,37 @@
 
 <kendo-dialog title="Actions" *ngIf="opened1" (close)="close1()">
   <div>
-    <table border="1px">
-      <tr style="border: red 5px solid;"><th>Redo</th><th>Undo</th></tr>
-      <tr><td>Links 1</td><td>Rechts 1</td></tr>
-      <tr><td>Links 2</td><td>Rechts 2</td></tr>
-      <tr><td>Links 3</td><td>Rechts 3</td></tr>
-      <tr><td>Links 4</td><td>Rechts 4</td></tr>
-
+    <table border="3px" style="margin-bottom: 10px;">
+      <tr><th>Naam</th><th>Color</th><th>OL_UID</th><th>Undo</th><th>Redo</th></tr>
+      <tr style="background-color: seashell;"  *ngFor="let array of DataArray" >
+        <td>{{array.geometryName_}}</td><td>{{array.style_.fill_.color_}}</td><td>{{array.ol_uid }}</td>
+        <td>
+         <button kendoButton style="background-color: lightblue;" (click)="test()">Undo</button>
+       </td>
+       <td>
+         <button kendoButton style="background-color: red;" (click)="test()">Redo</button>
+       </td>
+      </tr>
     </table>
   </div>
 </kendo-dialog>
 
 
 
+<!-- <div *ngFor="let array of DataArray"> Values: {{array.values_| json}}</div> -->
+
+<div class="mama">
+
+  <div class="example-box" cdkDrag>
+    I can only be dragged using the handle
+
+    <div class="example-handle" cdkDragHandle>
+      <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+      </svg>
+    </div>
+  </div>
+
+</div>
 

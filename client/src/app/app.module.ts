@@ -48,6 +48,7 @@ import { MapconfigService } from './testmap/testpage/config/mapconfig/mapconfig.
 import { LayerconfigService } from './testmap/testpage/config/layerconfig/layerconfig.service';
 import {ToolbarTweeComponent} from './testmap/testpage/toolbar/toolbar.component';
 import {DialogComponent} from './dialog/dialog';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 // import {MatDialogModule} from '@angular/material/dialog';
 
 import {DialogsModule, DialogModule,  DialogService,
@@ -84,6 +85,7 @@ export function tokenGetter() {
   ],
   imports: [
     RouterModule,
+    DragDropModule,
     PopupModule,
     DialogsModule, ButtonsModule, DialogModule,
     GeocoderModule,

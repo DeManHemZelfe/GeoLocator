@@ -22,7 +22,7 @@ import { SpoorwegenService, ITileOptions } from '../layers/spoorwegen.service';
 import {defaults as defaultControls, Control, ZoomToExtent, Rotate, ScaleLine, ZoomSlider, OverviewMap, Zoom} from 'ol/control';
 
 import { OverigeDienstenService } from '../layers/overigediensten.service';
-import {defaults as defaultInteractions, Modify, Snap,  Translate, Draw } from 'ol/interaction';
+import {defaults as defaultInteractions, Modify, Snap, Draw } from 'ol/interaction';
 import LayerGroup from 'ol/layer/Group';
 import { GeocoderService } from 'angular-geocoder';
 import { ToolbarFunctionsComponent } from '../functions/toolbar-functions/toolbar-functions.component';
@@ -36,10 +36,11 @@ import { style } from '@angular/animations';
 import { color, source, interaction, coordinate } from 'openlayers';
 import {click, pointerMove, altKeyOnly, singleClick} from 'ol/events/condition';
 import Select, { SelectEvent } from 'ol/interaction/Select';
-import { transformExtent, addProjection } from 'ol/proj';
+import { transformExtent, addProjection, transform } from 'ol/proj';
 import { transformGeom2D } from 'ol/geom/SimpleGeometry';
 import ImageLayer from 'ol/layer/Image';
 import WMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo';
+import Translate from 'ol/interaction/Translate';
 
 
 
@@ -77,6 +78,7 @@ export class KaartviewerComponent implements AfterViewInit {
   typeSelectTekenen = new FormControl('');
   typeSelectStyle   = new FormControl('');
   kleurschema;
+  translate = new Translate({});
   // TEKENFUNCTIES
   tekensource = new VectorSource({wrapX: false, });
   tekenfunctie = new VectorLayer({
@@ -90,6 +92,8 @@ export class KaartviewerComponent implements AfterViewInit {
   // UNDO-ARRAY
   undoArray = [];
   dataUndoArray = [];
+  // currentData = this.dataUndoArray;
+  // currentData = this.dataUndoArray;
   // REDO-ARRAY
   RedoArray = [];
   dataRedoArray = [];
@@ -106,8 +110,9 @@ export class KaartviewerComponent implements AfterViewInit {
   };
 
   // @OUTPUT
-  @Output() _afu: EventEmitter<any> = new EventEmitter<any>();
-  @Output() _afr: EventEmitter<any> = new EventEmitter<any>();
+  // @Output() _afu: EventEmitter<any> = new EventEmitter<any>();
+  // @Output() _afr: EventEmitter<any> = new EventEmitter<any>();
+  currentItem = 'Television';
   // @VIEWCHILD
   @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
   @ViewChild('menu', { static: false }) menu: ElementRef;
@@ -183,11 +188,9 @@ export class KaartviewerComponent implements AfterViewInit {
     });
    } // EINDE VAN DE MAP MAKEN
 
-
-
    // OUTPUT RETURN
-   ArrayForUndo() { console.log('Array voor undo'); return this._afu.emit(); }
-   ArrayForRedo() { console.log('Array voor undo'); return this._afr.emit(); }
+   ArrayForUndo() { console.log('Array voor undo'); }
+   ArrayForRedo() { console.log('Array voor undo'); }
 
    mapClick() {
     this.map.on('singleclick', (evt) => {
@@ -262,13 +265,6 @@ export class KaartviewerComponent implements AfterViewInit {
     this.addInteraction();
   }
 
-  // dialog(event) {
-  //   // this.kleurschema = event;
-  //   // console.log(this.kleurschema);
-  //   // this.addInteraction();
-  //   // this.tekenfunctie.changed();
-  // }
-
   styleswitchDialog(Stylevent?: string | null) {
     this.map.removeInteraction(this.draw);
     if (Stylevent) {console.log(Stylevent); }
@@ -276,28 +272,10 @@ export class KaartviewerComponent implements AfterViewInit {
     this.typeSelectStyle.setValue(Stylevent);
     this.tekenfunctie.changed();
 
-
-    // console.log(Stylevent + '' + 'styleswitch');
-    // this.map.removeInteraction(this.draw);
     this.addInteraction();
     this.tekenfunctie.changed();
   }
 
-  // styleswitch(Stylevent?: string | null) {
-  //   this.map.removeInteraction(this.draw);
-  //   if (Stylevent !== '') {
-  //     this.typeSelectStyle.setValue(Stylevent);
-  //     this.tekenfunctie.changed();
-
-  //   } else {
-  //     this.typeSelectStyle.setValue('');
-  //     this.tekenfunctie.changed();
-  //   }
-  //   // console.log(Stylevent + '' + 'styleswitch');
-  //   this.map.removeInteraction(this.draw);
-  //   this.addInteraction();
-  //   this.tekenfunctie.changed();
-  // }
   // UNDO & REDO FUNCTIONS
   UndoButton() {
    // (STAP 1) ZET ALLE FEATURES IN DE UNDO-ARRAY
@@ -318,6 +296,19 @@ export class KaartviewerComponent implements AfterViewInit {
    this.dataRedoArray.push(lastFeature);
    // (STAP 4) VOEG DE VERWIJDERDE FEATURES TOE
    this.tekensource.addFeature(lastFeature);
+  }
+  getMapFeatures() {
+    const BaseArray = [];
+    const numb1 = this.dataUndoArray;
+    const numb2 = this.tekensource.getFeatures();
+
+    BaseArray.push(numb1);
+    BaseArray.push(numb2);
+
+
+    console.log('Base Array', '', BaseArray);
+    console.log('Data Undo' , '' , this.dataUndoArray);
+    console.log('TekenSource' , '' , this.tekensource.getFeatures());
   }
   // SELECT BUTTON
   // select interaction
@@ -346,14 +337,9 @@ export class KaartviewerComponent implements AfterViewInit {
    // SERVICE LAYERS EN SOURCE VAN DE KAARTLAGEN UIT EN STAAN OM ZO DE FEATURES MEE TEN GEVEN
 
    transform() {
-    const translate = new Translate({features: this.Arrow.getFeatures() });
-    this.map.removeInteraction(this.draw);
-    this.map.removeInteraction(translate);
-    this.map.removeInteraction(this.Arrow);
-
-    this.map.addInteraction(translate);
-    this.map.addInteraction(this.Arrow);
+    console.log('translate');
    }
+
   // SAVE FUNCTIE
   save() {}
 
@@ -372,6 +358,9 @@ export class KaartviewerComponent implements AfterViewInit {
   // GEOLOCATOR SEARCH PLACE
   public onPlaceFound(place) {
     this.map.getView().animate({center: place.centroide_rd.coordinates, zoom: 12});
+  }
+  Info(event) {
+    console.log('info');
   }
 
   getKaartButton() {

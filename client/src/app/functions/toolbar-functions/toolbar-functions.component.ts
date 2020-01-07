@@ -50,6 +50,7 @@ export class ToolbarFunctionsComponent implements AfterViewInit {
   @Output() _getButtonColorRed: EventEmitter<any> = new EventEmitter<any>();
   @Output() _select: EventEmitter<any> = new EventEmitter<any>();
   @Output() _transform: EventEmitter<any> = new EventEmitter<any>();
+  @Output() _info: EventEmitter<any> = new EventEmitter<any>();
 
   // ALLE INPUTS
 
@@ -95,6 +96,7 @@ export class ToolbarFunctionsComponent implements AfterViewInit {
   // FUNCTIONS VOOR TOOLBAR BUTTONS
   UndoButton() {return this._undo.emit(); }
   RedoButton() {return this._redo.emit(); }
+  Info() { return this._info.emit(); }
   onPlaceFound(place) { return this._placefound.emit(place); }
   SaveButton() {console.log('klik op de save knop'); }
   zoom_in()  {console.log('klik op zoom in knop'); return this._zoomin.emit(); }
@@ -141,4 +143,5 @@ export class ToolbarFunctionsComponent implements AfterViewInit {
     return this._styleswitch.emit(this.typeSelectStyle.value); }
     return this._styleswitch.emit('');
   }
+
 }

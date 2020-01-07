@@ -1,25 +1,36 @@
-import {Component, ViewChild, ElementRef, AfterViewInit, OnInit, Input, Optional, Output, EventEmitter} from '@angular/core';
+import {Component, ViewChild, ElementRef, AfterViewInit, OnInit, Input, Optional, Output, EventEmitter,  Renderer2} from '@angular/core';
 import { DialogService, DialogRef, DialogCloseResult
 } from '@progress/kendo-angular-dialog';
 import { FormControl } from '@angular/forms';
 import { click } from 'ol/events/condition';
+import { Feature } from 'ol';
 
 @Component({
   selector: 'app-dialog-component',
   templateUrl: 'dialog.html',
+  styleUrls: ['./dialog.css']
 })
 export class DialogComponent {
   waarde;
   // ALLE OUTPUTS
   @Output() _submit: EventEmitter<any> = new EventEmitter<any>();
   @Output() _styleswitchDialog: EventEmitter<any> = new EventEmitter<any>();
+  @Input() DataArray;
 
 
-
+  boundary: any = {};
+  draggable: any;
+  isMouseDown = false;
+  draggableHeight = 50;
+  draggableWidth = 100;
 
   typeSelectDialogStyle = new FormControl('');
 
-  constructor(private dialogService: DialogService) {}
+  constructor(
+    private dialogService: DialogService,
+    private renderer: Renderer2,
+    ) {}
+
   // PUBLIC
   opened  = false;
   opened1 = false;
@@ -28,6 +39,7 @@ export class DialogComponent {
   public opened4 = false;
   public opened5 = false;
   // PRIVATE
+
 
   // OPEN
   open()   { this.opened = true; }
@@ -46,6 +58,10 @@ export class DialogComponent {
   check() {
     console.log(this.waarde);
   }
+  test() {
+    console.log(this.DataArray);
+
+  }
   submit() {
     if (click) {
       this.waarde = this.typeSelectDialogStyle.value;
@@ -60,6 +76,15 @@ export class DialogComponent {
      return this._styleswitchDialog.emit(this.waarde); }
      return this._styleswitchDialog.emit('');
   }
+  save() {
+    // stap 1) als je tekent dan push je de feature
+  }
+
+
+
+
+
+
 
 
 } // EINDE
