@@ -170,3 +170,44 @@ https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/ows?service=wms&VERS
 
 http://geodata.nationaalgeoregister.nl/brocpt/wfs?service=WFS&version=2.0.0&typeName=brocpt:cpt&propertyName=broid,geom&count=3&bbox=153714.96,462328.44,156285.36000000002,463672.44,EPSG:28992&request=GetFeature
 https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?LAYERS=gemeenten&SERVICE=WMS&REQUEST=GetMap&WIDTH=1047&HEIGHT=699&SRS=EPSG%3A28992&FORMAT=image/png&BBOX=-281961.28,153772.48,618626.24,755024.32
+
+
+
+
+
+mapClick() {
+    this.map.on('click', (evt) => {
+      const viewResolution = this.mapconfig._view.getResolution();
+      this.map.forEachLayerAtPixel(evt.pixel, (layer) => {
+        console.log(layer);  console.log(evt.pixel);
+
+        if (layer) {
+          console.log(layer.getProperties());
+          console.log(layer);         // console.log('test');
+          // const url2 = (layer as any).getFeatureInfoUrl(
+          //   evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'application/json' } );
+        } else { console.log('fout'); }
+      });
+
+
+      // DIT HIERONDER IS GOED
+
+      // const getVis = this.bestuurlijkegrenzenservice.provinciesLayer.getVisible();
+      // const url = (this.bestuurlijkegrenzenservice.provinciesTile as any).getFeatureInfoUrl(
+      //   evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'application/json' } );
+      // if (getVis === true) {
+      //   if (url) {
+      //     fetch(url).then((response) => {
+      //       response.json().then((geojsonData) => {
+      //       const features = new GeoJSON({dataProjection: 'EPSG:28992', featureProjection: 'EPSG:28992'}).readFeatures(geojsonData);
+      //       if (features[0]) {
+      //         console.log(features[0].getProperties());
+      //         document.getElementById('provincienaam').innerHTML = features[0].get('provincienaam');
+      //         this.highlightsource.addFeature(features[0]);
+      //       }
+      //     });
+      //   });
+      //     }
+      // }
+    });
+   }

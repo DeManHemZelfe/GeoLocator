@@ -59,6 +59,7 @@ import { PopupModule } from '@progress/kendo-angular-popup';
 
 
 
+
 export function tokenGetter() {
   return localStorage.getItem('JWT');
 }

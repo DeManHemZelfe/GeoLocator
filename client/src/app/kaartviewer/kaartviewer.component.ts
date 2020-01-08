@@ -36,11 +36,16 @@ import { style } from '@angular/animations';
 import { color, source, interaction, coordinate } from 'openlayers';
 import {click, pointerMove, altKeyOnly, singleClick} from 'ol/events/condition';
 import Select, { SelectEvent } from 'ol/interaction/Select';
-import { transformExtent, addProjection, transform } from 'ol/proj';
+import { transformExtent, addProjection,  } from 'ol/proj';
 import { transformGeom2D } from 'ol/geom/SimpleGeometry';
 import ImageLayer from 'ol/layer/Image';
 import WMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo';
 import Translate from 'ol/interaction/Translate';
+import Transform from 'ol-ext/interaction/transform';
+
+console.log(Transform);
+
+
 
 
 
@@ -79,10 +84,19 @@ export class KaartviewerComponent implements AfterViewInit {
   typeSelectStyle   = new FormControl('');
   kleurschema;
   translate = new Translate({});
+  // transform = new transform({});
   // TEKENFUNCTIES
   tekensource = new VectorSource({wrapX: false, });
   tekenfunctie = new VectorLayer({
     source: this.tekensource, style: new Style({fill: new Fill({color: 'yellow'}),
+     stroke: new Stroke({color: 'Black', width: 3}),
+     image: new Circle({radius: 7, fill: new Fill({color: '#ffcc33'})
+     })
+    })
+  });
+  highlightsource = new VectorSource({wrapX: false, });
+  highlight = new VectorLayer({
+    source: this.highlightsource, style: new Style({fill: new Fill({color: 'pink'}),
      stroke: new Stroke({color: 'Black', width: 3}),
      image: new Circle({radius: 7, fill: new Fill({color: '#ffcc33'})
      })
@@ -97,22 +111,7 @@ export class KaartviewerComponent implements AfterViewInit {
   // REDO-ARRAY
   RedoArray = [];
   dataRedoArray = [];
-
-  child1: {futbols: Array<boolean>, name: string, id: number} = {
-    futbols: [true, true, true, true, true],
-    name: 'Child 1',
-    id: 1
-  };
-  child2: {futbols: Array<boolean>, name: string, id: number} = {
-    futbols: [true, true, true, true],
-    name: 'Child 2',
-    id: 2
-  };
-
   // @OUTPUT
-  // @Output() _afu: EventEmitter<any> = new EventEmitter<any>();
-  // @Output() _afr: EventEmitter<any> = new EventEmitter<any>();
-  currentItem = 'Television';
   // @VIEWCHILD
   @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
   @ViewChild('menu', { static: false }) menu: ElementRef;
@@ -151,7 +150,7 @@ export class KaartviewerComponent implements AfterViewInit {
       layers: [
         // BASELAYERS
         this.achterkaart.baseLayer,
-        // this.achterkaart.brtWaterLayer,
+        this.achterkaart.brtWaterLayer,
         // this.achterkaart.brtGrijsLayer,
         // BORDERLAYERS
         this.bestuurlijkegrenzenservice.landsgrensLayer,
@@ -177,6 +176,7 @@ export class KaartviewerComponent implements AfterViewInit {
         this.spoorwegService.KilometreringLayer,
         // DRAW FUNCTION
         this.tekenfunctie,
+        this.highlight,
         // this.wmsLayer,
       ],
       view: this.mapconfig._view,
@@ -186,6 +186,7 @@ export class KaartviewerComponent implements AfterViewInit {
         // new Control({ element: this.toolbarmenu.nativeElement }),
       ]
     });
+    this.mapClick();
    } // EINDE VAN DE MAP MAKEN
 
    // OUTPUT RETURN
@@ -193,22 +194,46 @@ export class KaartviewerComponent implements AfterViewInit {
    ArrayForRedo() { console.log('Array voor undo'); }
 
    mapClick() {
-    this.map.on('singleclick', (evt) => {
+    this.map.on('click', (evt) => {
       const viewResolution = this.mapconfig._view.getResolution();
-      const getVis = this.bestuurlijkegrenzenservice.provinciesLayer.getVisible();
-      const url = (this.bestuurlijkegrenzenservice.provinciesTile as any).getFeatureInfoUrl(
-        evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'text/html' } );
-      if (getVis === true) {
-        if (url) {
-           const veggie = fetch(url).then((response) => {
-            response.text().then((html) => {
-            document.getElementById('provincienaam').innerHTML = html;
-            console.log('test');
-          });
-        });
-           console.log(veggie); }
-      }
+      this.map.forEachLayerAtPixel(evt.pixel, (layer) => {
+        console.log(layer);  console.log(evt.pixel);
+
+        if (layer) {
+          console.log(layer.getProperties());
+          console.log(layer);         // console.log('test');
+          // const url2 = (layer as any).getFeatureInfoUrl(
+          //   evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'application/json' } );
+        } else { console.log('fout'); }
+      });
+
+
+      // DIT HIERONDER IS GOED
+
+      // const getVis = this.bestuurlijkegrenzenservice.provinciesLayer.getVisible();
+      // const url = (this.bestuurlijkegrenzenservice.provinciesTile as any).getFeatureInfoUrl(
+      //   evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'application/json' } );
+      // if (getVis === true) {
+      //   if (url) {
+      //     fetch(url).then((response) => {
+      //       response.json().then((geojsonData) => {
+      //       const features = new GeoJSON({dataProjection: 'EPSG:28992', featureProjection: 'EPSG:28992'}).readFeatures(geojsonData);
+      //       if (features[0]) {
+      //         console.log(features[0].getProperties());
+      //         document.getElementById('provincienaam').innerHTML = features[0].get('provincienaam');
+      //         this.highlightsource.addFeature(features[0]);
+      //       }
+      //     });
+      //   });
+      //     }
+      // }
     });
+   }
+
+   klikerdeklik() {
+     // Voor de geojeson ofzo
+     const testselect = new Select({condition: click});
+     this.map.addInteraction(testselect);
    }
 
    testvoordemap() {
@@ -336,9 +361,10 @@ export class KaartviewerComponent implements AfterViewInit {
    // TRANSFORM SELECT FUNCTIE MAKEN EN COMPONENT AAN MAKEN DIE CHECKT WELKE
    // SERVICE LAYERS EN SOURCE VAN DE KAARTLAGEN UIT EN STAAN OM ZO DE FEATURES MEE TEN GEVEN
 
-   transform() {
-    console.log('translate');
-   }
+   transformFunction() {
+     console.log('transform');
+    }
+   translateFunction() {console.log('translate'); }
 
   // SAVE FUNCTIE
   save() {}

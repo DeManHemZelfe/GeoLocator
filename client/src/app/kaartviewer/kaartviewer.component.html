@@ -1,5 +1,5 @@
 
-<div id="map" class="map" (click)="mapClick()"></div>
+<div id="map" class="map"></div>
 
 <div #toolbarmenu class="toolbarmenu" kendoTooltip position="right" style="background-color:red;" style="width: 10%;">
   <app-toolbar-functions
@@ -8,7 +8,7 @@
   (_zoomin)="zoom_in($event)"           (_zoomout)="zoom_out($event)"
   (_getButtonColorBlue)="getButtonColorBlue($event)"
   (_getButtonColorGreen)="getButtonColorGreen($event)" (_getButtonColorRed)="getButtonColorRed($event)"
-  (_select)="select($event)" (_transform)="transform($event)"
+  (_select)="select($event)" (_transform)="transformFunction($event)" (_translate)="translateFunction($event)"
   (_popup)="popup($event)"
   (_info)="Info($event)">
 </app-toolbar-functions>
