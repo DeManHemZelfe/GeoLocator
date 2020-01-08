@@ -14,8 +14,11 @@ export class DialogComponent {
   waarde;
   // ALLE OUTPUTS
   @Output() _submit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() _checkfu: EventEmitter<any> = new EventEmitter<any>();
   @Output() _styleswitchDialog: EventEmitter<any> = new EventEmitter<any>();
-  @Input() DataArray;
+  @Input() DrawArray;
+  @Input() DataUndoArray;
+  @Input() DataActiveArray;
 
 
   boundary: any = {};
@@ -55,12 +58,7 @@ export class DialogComponent {
   public close4() { this.opened4 = false; }
 
   // SUBMIT
-  check() {
-    console.log(this.waarde);
-  }
-  test() {
-    console.log(this.DataArray);
-
+  test() { console.log('test');
   }
   submit() {
     if (click) {
@@ -79,6 +77,7 @@ export class DialogComponent {
   save() {
     // stap 1) als je tekent dan push je de feature
   }
+  checkForupdateDialog() { return this._checkfu.emit(); }
 
 
 

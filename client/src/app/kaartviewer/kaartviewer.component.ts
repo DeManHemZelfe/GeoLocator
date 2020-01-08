@@ -33,7 +33,6 @@ import { ServiceService } from '../pdokmap/pdokmapconfigmap/service.service';
 import { BgService } from '../pdokmap/layer/bg.service';
 import { TooltipDirective } from '@progress/kendo-angular-tooltip';
 import { style } from '@angular/animations';
-import { color, source, interaction, coordinate } from 'openlayers';
 import {click, pointerMove, altKeyOnly, singleClick} from 'ol/events/condition';
 import Select, { SelectEvent } from 'ol/interaction/Select';
 import { transformExtent, addProjection,  } from 'ol/proj';
@@ -42,8 +41,9 @@ import ImageLayer from 'ol/layer/Image';
 import WMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo';
 import Translate from 'ol/interaction/Translate';
 import Transform from 'ol-ext/interaction/transform';
+import TileSource from 'ol/source/Tile';
 
-console.log(Transform);
+// console.log(Transform);
 
 
 
@@ -106,6 +106,8 @@ export class KaartviewerComponent implements AfterViewInit {
   // UNDO-ARRAY
   undoArray = [];
   dataUndoArray = [];
+  dataActiveArray = [];
+  drawArray = [];
   // currentData = this.dataUndoArray;
   // currentData = this.dataUndoArray;
   // REDO-ARRAY
@@ -151,7 +153,7 @@ export class KaartviewerComponent implements AfterViewInit {
         // BASELAYERS
         this.achterkaart.baseLayer,
         this.achterkaart.brtWaterLayer,
-        // this.achterkaart.brtGrijsLayer,
+        this.achterkaart.brtGrijsLayer,
         // BORDERLAYERS
         this.bestuurlijkegrenzenservice.landsgrensLayer,
         this.bestuurlijkegrenzenservice.gemeentenLayer,
@@ -177,7 +179,6 @@ export class KaartviewerComponent implements AfterViewInit {
         // DRAW FUNCTION
         this.tekenfunctie,
         this.highlight,
-        // this.wmsLayer,
       ],
       view: this.mapconfig._view,
       controls: [
@@ -193,41 +194,34 @@ export class KaartviewerComponent implements AfterViewInit {
    ArrayForUndo() { console.log('Array voor undo'); }
    ArrayForRedo() { console.log('Array voor undo'); }
 
+   checkforupdate() {
+    // const f = this.tekensource.getFeatures(); const l = f.pop(); this.dataActiveArray.push(l);
+    // const p = l.getProperties(); console.log(p);
+    const s = this.tekenfunctie.getSource();
+    const f = s.getFeatures();
+    const p = f.pop();
+    const pr = p;
+
+    console.log(pr);
+
+   }
    mapClick() {
     this.map.on('click', (evt) => {
-      const viewResolution = this.mapconfig._view.getResolution();
-      this.map.forEachLayerAtPixel(evt.pixel, (layer) => {
-        console.log(layer);  console.log(evt.pixel);
-
-        if (layer) {
-          console.log(layer.getProperties());
-          console.log(layer);         // console.log('test');
-          // const url2 = (layer as any).getFeatureInfoUrl(
-          //   evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'application/json' } );
-        } else { console.log('fout'); }
-      });
-
-
-      // DIT HIERONDER IS GOED
-
-      // const getVis = this.bestuurlijkegrenzenservice.provinciesLayer.getVisible();
-      // const url = (this.bestuurlijkegrenzenservice.provinciesTile as any).getFeatureInfoUrl(
-      //   evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'application/json' } );
-      // if (getVis === true) {
-      //   if (url) {
-      //     fetch(url).then((response) => {
-      //       response.json().then((geojsonData) => {
-      //       const features = new GeoJSON({dataProjection: 'EPSG:28992', featureProjection: 'EPSG:28992'}).readFeatures(geojsonData);
-      //       if (features[0]) {
-      //         console.log(features[0].getProperties());
-      //         document.getElementById('provincienaam').innerHTML = features[0].get('provincienaam');
-      //         this.highlightsource.addFeature(features[0]);
-      //       }
-      //     });
-      //   });
-      //     }
-      // }
-    });
+     const viewResolution = this.mapconfig._view.getResolution();
+     this.map.forEachLayerAtPixel(evt.pixel, (layer) => {
+      const source = layer.getSource();
+      if ((source as any).getFeatureInfoUrl) {
+       const url = (source as any).getFeatureInfoUrl(
+        evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'application/json' } );
+       if (url) {
+        fetch(url).then((response) => {
+        response.json().then((geojsonData) => {
+        const features = new GeoJSON({dataProjection: 'EPSG:28992', featureProjection: 'EPSG:28992'}).readFeatures(geojsonData);
+        if (features[0]) {
+        console.log(features[0].getProperties());
+        document.getElementById('provincienaam').innerHTML = features[0].get('provincienaam');
+        this.highlightsource.addFeature(features[0]);
+        } }); }); } } }); });
    }
 
    klikerdeklik() {
@@ -235,7 +229,6 @@ export class KaartviewerComponent implements AfterViewInit {
      const testselect = new Select({condition: click});
      this.map.addInteraction(testselect);
    }
-
    testvoordemap() {
     this.map.on('singleclick', (evt) => {
       fetch('https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?&GetFeature&typeName=provincies').then((response) => {
@@ -301,6 +294,14 @@ export class KaartviewerComponent implements AfterViewInit {
     this.tekenfunctie.changed();
   }
 
+  DrawArray() {
+   const feature = this.tekensource.getFeatures();
+   const featurepop = feature.pop();
+   this.drawArray.push(featurepop);
+   console.log(this.drawArray);
+   console.log(featurepop);
+  }
+
   // UNDO & REDO FUNCTIONS
   UndoButton() {
    // (STAP 1) ZET ALLE FEATURES IN DE UNDO-ARRAY
@@ -321,19 +322,6 @@ export class KaartviewerComponent implements AfterViewInit {
    this.dataRedoArray.push(lastFeature);
    // (STAP 4) VOEG DE VERWIJDERDE FEATURES TOE
    this.tekensource.addFeature(lastFeature);
-  }
-  getMapFeatures() {
-    const BaseArray = [];
-    const numb1 = this.dataUndoArray;
-    const numb2 = this.tekensource.getFeatures();
-
-    BaseArray.push(numb1);
-    BaseArray.push(numb2);
-
-
-    console.log('Base Array', '', BaseArray);
-    console.log('Data Undo' , '' , this.dataUndoArray);
-    console.log('TekenSource' , '' , this.tekensource.getFeatures());
   }
   // SELECT BUTTON
   // select interaction
@@ -362,8 +350,11 @@ export class KaartviewerComponent implements AfterViewInit {
    // SERVICE LAYERS EN SOURCE VAN DE KAARTLAGEN UIT EN STAAN OM ZO DE FEATURES MEE TEN GEVEN
 
    transformFunction() {
-     console.log('transform');
+    const SelectFeature = new Select({condition: click});
+    this.map.addInteraction(SelectFeature);
+    console.log('transform');
     }
+    setHandleStyle() {}
    translateFunction() {console.log('translate'); }
 
   // SAVE FUNCTIE

@@ -10,7 +10,7 @@ import { Style, Stroke, Fill } from 'ol/style';
 export class BestuurlijkegrenzenService {
 
     landsgrensTile = new TileWMS({
-      url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?',
+      url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?',
       params: {
         LAYERS: 'landsgrens',
          TILED: true,
@@ -24,9 +24,9 @@ export class BestuurlijkegrenzenService {
     } as ITileOptions);
 
     gemeentenTile = new TileWMS({
-     url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?LAYERS=gemeenten',
+     url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?n',
      params: {
-      // LAYERS: 'gemeenten',
+      LAYERS: 'gemeenten',
       TILED: true},
      crossOrigin: 'anonymous',
     });
