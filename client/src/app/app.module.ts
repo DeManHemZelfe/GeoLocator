@@ -49,6 +49,7 @@ import { LayerconfigService } from './testmap/testpage/config/layerconfig/layerc
 import {ToolbarTweeComponent} from './testmap/testpage/toolbar/toolbar.component';
 import {DialogComponent} from './dialog/dialog';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+
 // import {MatDialogModule} from '@angular/material/dialog';
 
 import {DialogsModule, DialogModule,  DialogService,
@@ -56,7 +57,10 @@ import {DialogsModule, DialogModule,  DialogService,
   DialogCloseResult} from '@progress/kendo-angular-dialog';
 
 import { PopupModule } from '@progress/kendo-angular-popup';
-
+import {DragMenuComponent} from './kaart/layout/.ts/drag-menu/drag-menu';
+import {MatTreeModule} from '@angular/material/tree';
+import { LayoutModule } from '@progress/kendo-angular-layout';
+import {TreeViewModule} from '@progress/kendo-angular-treeview';
 
 
 
@@ -81,11 +85,14 @@ export function tokenGetter() {
     ToolbarComponent,
     ToolbarTweeComponent,
     TpComponent,
-    DialogComponent
+    DialogComponent,
+    DragMenuComponent
 
   ],
   imports: [
     RouterModule,
+    MatTreeModule,
+    LayoutModule,
     DragDropModule,
     PopupModule,
     DialogsModule, ButtonsModule, DialogModule,
@@ -117,6 +124,7 @@ export function tokenGetter() {
       }
     }),
     DialogsModule,
+    TreeViewModule,
   ],
 
   providers: [

@@ -16,12 +16,11 @@
 
 
 
-<app-dialog-component (_styleswitchDialog)="styleswitchDialog($event)" (_checkfu)="checkforupdate($event)" [DataActiveArray]="dataActiveArray" [DrawArray]="drawArray" [DataUndoArray]="dataUndoArray"></app-dialog-component>
-
+<app-dialog-component (_styleswitchDialog)="styleswitchDialog($event)" (_checkfu)="checkforupdate($event)" [TekenSource]="tekensource" [DrawArray]="drawArray" [DataActiveArray]="dataActiveArray" [DataUndoArray]="dataUndoArray"></app-dialog-component>
+<div #dragmenu><app-drag-menu></app-drag-menu></div>
 
 <div id="provincienaam">provincies</div>
-<div id="prop">prop</div>
-<button (click)="checkforupdate()">test2</button>
+
 
 
 

@@ -56,6 +56,9 @@ export class ToolbarFunctionsComponent implements AfterViewInit {
   // ALLE INPUTS
 
   // ALLE SHOW FUNCTIONS
+  maakopen = false;
+  maakopen2 = false;
+  maakopen3 = false;
   show1 = false;  show2 = false;   show3 = false;
   show4 = false;  show5 = false;   show6 = false;
   show7 = false;  show8 = false;   show9 = false;

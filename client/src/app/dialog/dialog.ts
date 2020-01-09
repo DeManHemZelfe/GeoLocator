@@ -16,10 +16,10 @@ export class DialogComponent {
   @Output() _submit: EventEmitter<any> = new EventEmitter<any>();
   @Output() _checkfu: EventEmitter<any> = new EventEmitter<any>();
   @Output() _styleswitchDialog: EventEmitter<any> = new EventEmitter<any>();
+  @Input() TekenSource;
+  @Input() DataUndoArray = [];
   @Input() DrawArray;
-  @Input() DataUndoArray;
   @Input() DataActiveArray;
-
 
   boundary: any = {};
   draggable: any;
@@ -43,7 +43,6 @@ export class DialogComponent {
   public opened5 = false;
   // PRIVATE
 
-
   // OPEN
   open()   { this.opened = true; }
   open1()  { this.opened1 = true; }
@@ -58,7 +57,24 @@ export class DialogComponent {
   public close4() { this.opened4 = false; }
 
   // SUBMIT
-  test() { console.log('test');
+  test() { console.log(this.DrawArray); }
+
+  undo(value) {
+    console.log(value);
+    console.log(this.DrawArray);
+    const index = this.DrawArray.findIndex(x => x === value);
+    this.DrawArray.splice(index, 1);
+    this.DataUndoArray.push(value);
+    this.TekenSource.removeFeature(value);
+  }
+  redo(array) {
+   console.log(array);
+   console.log(this.DrawArray);
+   const index = this.DataUndoArray.findIndex(x => x === array);
+   this.DataUndoArray.splice(index, 1);
+   this.DrawArray.push(array);
+   this.TekenSource.addFeature(array);
+  //  this.TekenSource.removeFeature(array);
   }
   submit() {
     if (click) {

@@ -119,6 +119,7 @@ export class KaartviewerComponent implements AfterViewInit {
   @ViewChild('menu', { static: false }) menu: ElementRef;
   @ViewChild('searchmenu', { static: false }) searchmenu: ElementRef;
   @ViewChild('toolbarmenu', { static: false }) toolbarmenu: ElementRef;
+  @ViewChild('dragmenu', { static: false }) dragmenu: ElementRef;
   // VECTORLAYER
   wmsSource = new TileWMS({
     url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?',
@@ -183,8 +184,7 @@ export class KaartviewerComponent implements AfterViewInit {
       view: this.mapconfig._view,
       controls: [
         new Control({ element: this.toolbarmenu.nativeElement }),
-        // new Control({ element: this.toolbarmenu.nativeElement }),
-        // new Control({ element: this.toolbarmenu.nativeElement }),
+        new Control({ element: this.dragmenu.nativeElement }),
       ]
     });
     this.mapClick();
@@ -267,9 +267,8 @@ export class KaartviewerComponent implements AfterViewInit {
         fill: new Fill({color: 'green'})
         })
        }));
+       this.drawArray.push(event.feature);
       });
-      // console.log(this.draw);
-      // console.log(this.tekenfunctie.getLayersArray() );
       this.map.addInteraction(this.draw);
      }
    }
@@ -294,14 +293,6 @@ export class KaartviewerComponent implements AfterViewInit {
     this.tekenfunctie.changed();
   }
 
-  DrawArray() {
-   const feature = this.tekensource.getFeatures();
-   const featurepop = feature.pop();
-   this.drawArray.push(featurepop);
-   console.log(this.drawArray);
-   console.log(featurepop);
-  }
-
   // UNDO & REDO FUNCTIONS
   UndoButton() {
    // (STAP 1) ZET ALLE FEATURES IN DE UNDO-ARRAY
@@ -312,6 +303,7 @@ export class KaartviewerComponent implements AfterViewInit {
    this.dataUndoArray.push(lastFeatureUndo);
    // REMOVE DE GETEKENDE FEATURE
    this.tekensource.removeFeature(lastFeatureUndo);
+   console.log(this.undoArray);
   }
   RedoButton() {
    // (STAP 1) ZET ALLE FEATURES IN DE UNDO-ARRAY
