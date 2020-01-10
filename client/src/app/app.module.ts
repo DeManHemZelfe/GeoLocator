@@ -58,9 +58,13 @@ import {DialogsModule, DialogModule,  DialogService,
 
 import { PopupModule } from '@progress/kendo-angular-popup';
 import {DragMenuComponent} from './kaart/layout/.ts/drag-menu/drag-menu';
+import {DrawMenuComponent} from './kaart/layout/.ts/draw-menu/draw-menu';
 import {MatTreeModule} from '@angular/material/tree';
 import { LayoutModule } from '@progress/kendo-angular-layout';
 import {TreeViewModule} from '@progress/kendo-angular-treeview';
+import { MobileComponent } from './device/mobile/pages/components/mobile/mobile.component';
+import { HomeComponent } from './pages/home/home/home.component';
+import { GeosetComponent } from './kaart/layout/.ts/geoset-menu/geoset-menu';
 
 
 
@@ -86,7 +90,11 @@ export function tokenGetter() {
     ToolbarTweeComponent,
     TpComponent,
     DialogComponent,
-    DragMenuComponent
+    DragMenuComponent,
+    DrawMenuComponent,
+    MobileComponent,
+    HomeComponent,
+    GeosetComponent
 
   ],
   imports: [

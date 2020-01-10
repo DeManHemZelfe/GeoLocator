@@ -108,6 +108,7 @@ export class KaartviewerComponent implements AfterViewInit {
   dataUndoArray = [];
   dataActiveArray = [];
   drawArray = [];
+  objectarray = [];
   // currentData = this.dataUndoArray;
   // currentData = this.dataUndoArray;
   // REDO-ARRAY
@@ -120,6 +121,8 @@ export class KaartviewerComponent implements AfterViewInit {
   @ViewChild('searchmenu', { static: false }) searchmenu: ElementRef;
   @ViewChild('toolbarmenu', { static: false }) toolbarmenu: ElementRef;
   @ViewChild('dragmenu', { static: false }) dragmenu: ElementRef;
+  @ViewChild('drawmenu', { static: false }) drawmenu: ElementRef;
+  @ViewChild('geosetmenu', { static: false }) geosetmenu: ElementRef;
   // VECTORLAYER
   wmsSource = new TileWMS({
     url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wms?',
@@ -185,6 +188,8 @@ export class KaartviewerComponent implements AfterViewInit {
       controls: [
         new Control({ element: this.toolbarmenu.nativeElement }),
         new Control({ element: this.dragmenu.nativeElement }),
+        new Control({ element: this.drawmenu.nativeElement }),
+        new Control({ element: this.geosetmenu.nativeElement }),
       ]
     });
     this.mapClick();
@@ -210,25 +215,29 @@ export class KaartviewerComponent implements AfterViewInit {
      const viewResolution = this.mapconfig._view.getResolution();
      this.map.forEachLayerAtPixel(evt.pixel, (layer) => {
       const source = layer.getSource();
+
       if ((source as any).getFeatureInfoUrl) {
        const url = (source as any).getFeatureInfoUrl(
         evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'application/json' } );
+
        if (url) {
         fetch(url).then((response) => {
         response.json().then((geojsonData) => {
         const features = new GeoJSON({dataProjection: 'EPSG:28992', featureProjection: 'EPSG:28992'}).readFeatures(geojsonData);
+
         if (features[0]) {
+        const pushFeature = features[0].getProperties();
         console.log(features[0].getProperties());
         document.getElementById('provincienaam').innerHTML = features[0].get('provincienaam');
+        // const pushFeature2 = document.getElementById('provincienaam').innerHTML = features[0].get('provincienaam');
+
+        this.objectarray.push(pushFeature);
         this.highlightsource.addFeature(features[0]);
+
         } }); }); } } }); });
    }
 
-   klikerdeklik() {
-     // Voor de geojeson ofzo
-     const testselect = new Select({condition: click});
-     this.map.addInteraction(testselect);
-   }
+
    testvoordemap() {
     this.map.on('singleclick', (evt) => {
       fetch('https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?&GetFeature&typeName=provincies').then((response) => {

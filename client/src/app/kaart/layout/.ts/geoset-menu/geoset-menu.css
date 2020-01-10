@@ -1,0 +1,29 @@
+.Geo{
+  width: 20%;
+  position: absolute;
+  margin-top: 60px;
+  margin-left: 15px;
+  left: 1%;
+  height: 45%;
+}
+
+.mat-expansion-panel-header-description {
+  color: blue;
+}
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+  box-shadow: none;
+}
+ul {
+  display: contents;
+  color: blue;
+  /* list-style-type: disc; */
+  /* margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px; */
+}
+mat-expansion-panel-header {
+  height: 0px;
+
+}

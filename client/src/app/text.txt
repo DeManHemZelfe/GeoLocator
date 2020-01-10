@@ -211,3 +211,42 @@ mapClick() {
       // }
     });
    }
+
+
+
+
+ <div>
+  <fieldset id="layer0">
+   <kendo-treeview
+   [nodes]="data2"
+   textField="text2"
+   kendoTreeViewExpandable
+   kendoTreeViewSelectable
+   kendoTreeViewHierarchyBinding
+   [kendoTreeViewCheckable]="checkableSettings"
+   [(checkedKeys)]="checkedKeys2"
+   childrenField="items2">
+   </kendo-treeview>
+  </fieldset>
+
+
+<kendo-treeview
+[nodes]="data" textField="text"
+kendoTreeViewExpandable
+kendoTreeViewSelectable
+kendoTreeViewHierarchyBinding
+[nodes]="data"
+[children]="children"
+[hasChildren]="hasChildren"
+textField="text"
+
+[kendoTreeViewCheckable]="checkableSettings"
+[(checkedKeys)]="checkedKeys">
+</kendo-treeview>
+<div style="margin: 10px 0">
+  <div class="example-config">
+      Checked keys: {{checkedKeys.join(",")}}
+      Checked keys2: {{checkedKeys2.join(",")}}
+  </div>
+ </div>
+</div>

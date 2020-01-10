@@ -43,7 +43,7 @@ i{
 
 .menu{
   display: none;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   position: absolute;
   top: 10px;
@@ -158,35 +158,7 @@ i{
       border-color: #000;
     }
 
-    .Geo{
-      width: 20%;
-      position: absolute;
-      margin-top: 60px;
-      margin-left: 15px;
-      left: 1%;
-      height: 45%;
-    }
-    .GeoSet{
-      background-color: #fff;
-      padding-top: 2.5%;
-      padding-left: 3%;
-      padding-bottom: 6%;
-      margin-right: 4%;
-      height: 5%;
-      text-align: left;
-      color: #212668;
-      font-weight: 700;
-      pointer-events: all;
-    }
 
-    .containerGeoSet{
-      z-index: 50;
-      position: absolute;
-      margin-top: 46px;
-      left: 1%;
-      height: 45%;
-      pointer-events: none
-    }
     .zoekbalk{
     /* z-index: 100; */
     position: absolute;

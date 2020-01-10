@@ -35,7 +35,6 @@ import { TooltipDirective } from '@progress/kendo-angular-tooltip';
   styleUrls: ['./toolbar-functions.component.css']
 })
 export class ToolbarFunctionsComponent implements AfterViewInit {
-
   // ALLE OUTPUTS
   @Output() _mapswitch: EventEmitter<any> = new EventEmitter<any>();
   @Output() _styleswitch: EventEmitter<any> = new EventEmitter<any>();

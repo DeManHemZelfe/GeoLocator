@@ -6,24 +6,18 @@ import { click } from 'ol/events/condition';
 import { Feature } from 'ol';
 
 @Component({
-  selector: 'app-drag-menu',
-  templateUrl: 'drag-menu.html',
-  styleUrls: ['./drag-menu.css']
+  selector: 'app-draw-menu',
+  templateUrl: 'draw-menu.html',
+  styleUrls: ['./draw-menu.css']
 })
-export class DragMenuComponent {
-  @Output() _submit: EventEmitter<any> = new EventEmitter<any>();
-  @Input() ObjectInformatie;
+export class DrawMenuComponent {
 
 
   constructor(
     private dialogService: DialogService
     ) {}
 
-    check() {
-      console.log(this.ObjectInformatie);
-    }
-
-}
+} // EINDE
 
 
 

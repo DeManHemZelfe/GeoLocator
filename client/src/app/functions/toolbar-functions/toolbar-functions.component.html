@@ -1,74 +1,8 @@
-
-
-
 <div #searchmenu class="zoekbalk" style="width: 20%; z-index: 99; margin-left: 15px;">
   <div class="container-geocoder">
     <div class="geocodergeocoder"><geocoder class="geocoder" (placeFound)="onPlaceFound($event)" style="z-index: 99;"></geocoder></div>
   </div>
 </div>
-
-
-
- <div class="Geo">
-  <mat-accordion>
-   <mat-expansion-panel>
-    <mat-expansion-panel-header>
-     <mat-panel-title style="border-bottom: 1px solid black;">
-      Selecteer een Geoset
-     </mat-panel-title>
-    </mat-expansion-panel-header>
-    <mat-panel-description>
-
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title style="color: royalblue;">Kaart</mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-panel-description style="display: grid;">
-          <mat-checkbox>Achtergrond Kaarten</mat-checkbox>
-          <mat-checkbox>BaseLayer</mat-checkbox>
-          <mat-checkbox>Water</mat-checkbox>
-          <mat-checkbox>Leeg</mat-checkbox>
-        </mat-panel-description>
-      </mat-expansion-panel>
-
-
-    </mat-panel-description>
-      <mat-panel-description>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title style="color: royalblue;">Overige Kaarten</mat-panel-title>
-          </mat-expansion-panel-header>
-          <mat-panel-description style="display: grid; ">
-            <mat-checkbox>Bestuurlijke Grenzen</mat-checkbox>
-            <mat-checkbox>LandsGrens</mat-checkbox>
-            <mat-checkbox>GemeenteGrens</mat-checkbox>
-            <mat-checkbox>ProvincieGrens</mat-checkbox>
-          </mat-panel-description>
-        </mat-expansion-panel>
-      </mat-panel-description>
-  </mat-expansion-panel>
- </mat-accordion>
- </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <div #layerControlElement class="option-menu"  style="display: contents;">
  <div #menu class="menu">
