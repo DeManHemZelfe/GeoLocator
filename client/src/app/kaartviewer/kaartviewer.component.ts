@@ -211,7 +211,7 @@ export class KaartviewerComponent implements AfterViewInit {
 
    }
    mapClick() {
-    this.map.on('click', (evt) => {
+    this.map.on('singleclick', (evt) => {
      const viewResolution = this.mapconfig._view.getResolution();
      this.map.forEachLayerAtPixel(evt.pixel, (layer) => {
       const source = layer.getSource();

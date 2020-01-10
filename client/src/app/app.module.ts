@@ -17,7 +17,7 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { GroupService } from './services/group.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { RouterModule,  Routes } from '@angular/router';
-import {MatInputModule, MatOptionModule, MatSelectModule, MatButtonModule } from '@angular/material';
+import {MatInputModule, MatOptionModule, MatSelectModule, } from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
@@ -60,11 +60,14 @@ import { PopupModule } from '@progress/kendo-angular-popup';
 import {DragMenuComponent} from './kaart/layout/.ts/drag-menu/drag-menu';
 import {DrawMenuComponent} from './kaart/layout/.ts/draw-menu/draw-menu';
 import {MatTreeModule} from '@angular/material/tree';
+import {MatTabsModule} from '@angular/material/tabs';
 import { LayoutModule } from '@progress/kendo-angular-layout';
 import {TreeViewModule} from '@progress/kendo-angular-treeview';
 import { MobileComponent } from './device/mobile/pages/components/mobile/mobile.component';
 import { HomeComponent } from './pages/home/home/home.component';
 import { GeosetComponent } from './kaart/layout/.ts/geoset-menu/geoset-menu';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatButtonModule} from '@angular/material/button';
 
 
 
@@ -99,6 +102,8 @@ export function tokenGetter() {
   ],
   imports: [
     RouterModule,
+    MatGridListModule,
+    MatButtonModule,
     MatTreeModule,
     LayoutModule,
     DragDropModule,
@@ -133,6 +138,7 @@ export function tokenGetter() {
     }),
     DialogsModule,
     TreeViewModule,
+    MatTabsModule,
   ],
 
   providers: [

@@ -11,13 +11,40 @@ import { Feature } from 'ol';
   styleUrls: ['./draw-menu.css']
 })
 export class DrawMenuComponent {
+  maakopen = false;
+  maakopen2 = false;
+  maakopen3 = false;
+  show1 = false;  show2 = false;   show3 = false;
+  show4 = false;  show5 = false;   show6 = false;
+  show7 = false;  show8 = false;   show9 = false;
+  show10 = false; show11 = false; show12 = false;
+  show13 = false; show14 = false; show15 = false;
+  grenzenvisi = false;           bagvisi = false;
+  spoorvisi = false;        dienstenvisi = false;
+
+  tooltip;
+  drawCheck = new FormControl('');
+  typeSelectStyle = new FormControl('');
 
 
   constructor(
     private dialogService: DialogService
     ) {}
 
-} // EINDE
+    drawclick() {
+      if (click) {
+      console.log('Good');
+      } else {
+      console.log('Wrong');
+     }
+    }
+
+    switchMode(value) {
+      if (value !== '') { console.log(value); } else {console.log('fout'); }
+    }
+
+
+}
 
 
 

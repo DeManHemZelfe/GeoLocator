@@ -1,15 +1,10 @@
 .mother{
- /* background: white; */
- width: 20%;
+ /* background-color: aqua; */
+ width: 12%;
  height: 100px;
  bottom: 4%;
- /* background-color: #fff; */
- /* border: 1px solid #ccc!important; */
  border-radius: 0 0 4px 4px;
  border-top: 0 solid #ccc!important;
- /* padding-top: 1%; */
- /* padding-left: 3%; */
- /* padding-bottom: 4%; */
  margin-right: 1%;
  height: 5%;
  min-height: 35px;
@@ -20,33 +15,8 @@
  pointer-events: all;
  right: 1%;
 }
-.btn-collapse {
-  width: 100%;
-  height: 100%;
-  border: none;
-  text-align: left;
-  color: #212668;
-  font-weight: 700;
-}
 
-.btn-featureinfo[_ngcontent-c7] {
-  bottom: 4%;
-  background-color: #fff;
-  border: 1px solid #ccc!important;
-  border-radius: 0 0 4px 4px;
-  border-top: 0 solid #ccc!important;
-  padding-top: 1%;
-  padding-left: 3%;
-  padding-bottom: 4%;
-  margin-right: 4%;
-  height: 5%;
-  min-height: 35px;
-  text-align: left;
-  color: #212668;
-  font-weight: 700;
-  position: absolute;
-  pointer-events: all;
-}
+
 
 .btn-featureinfo.collapsed[_ngcontent-c7] {
   border-top: 1px solid #ccc!important;
@@ -55,7 +25,44 @@
 }
 
 button, input, optgroup, select, textarea {
+  width: 100%;
   margin: 0;
   font: inherit;
   color: inherit;
 }
+.content {
+  width: 100%;
+  padding:10px;
+  color: #fff;
+  background-color: blue;
+  border: 1px solid rgba(0,0,0,.05);
+}
+
+.content p {
+ width: 100%;
+ margin: 0;
+ background: red;
+}
+
+.anchor {
+  background-color: rebeccapurple;
+  width: 208px;
+  height: 250px;
+}
+.buttonmat{
+  width: 56px;
+  height: 56px;
+  bottom: 2%;
+  margin-left: 4px;
+  font-weight: 700;
+  position: absolute;
+}
+.material-icons{
+  font-size: 25px;
+}
+.mat-fab .mat-button-wrapper {
+  padding: 0px;
+  display: inline-block;
+  line-height: 24px;
+}
+

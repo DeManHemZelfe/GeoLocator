@@ -1,7 +1,20 @@
 <div class="drawmenu">
  <button><i class="material-icons" title="Select" style="font-size: 10px;" style="color: black;">zoom_out_map</i></button>
  <button><i class="material-icons" title="Transform" style="font-size: 10px;" style="color: black;">tab_unselected</i></button>
- <button><i class="material-icons" title="Polygon" style="font-size: 10px;" style="color: black;">edit</i></button>
+
+ <button (click)="show1 = !show1">
+   <i class="material-icons" title="Edit" style="font-size: 10px;" style="color: black;">edit</i>
+  </button>
+  <div *ngIf="show1" class="draw-menu">
+   <button (click)="switchMode('Point')" value="Point" title="Point" id="Point"><i class="material-icons" style="font-size: 10px;" style="color: black;">brightness_1</i></button>
+   <button value="Linestring" title="Linestring" id="Linestring"> <i class="material-icons" style="font-size: 10px;" style="color: black;">call_made</i></button>
+   <button value="Polygon" title="Polygon" id="Polygon"> <i class="material-icons" style="font-size: 10px;" style="color: black;">crop_square</i></button>
+   <button value="Circle" title="Circle" id="Circle"> <i class="material-icons" style="font-size: 10px;" style="color: black;">panorama_fish_eye</i></button>
+  </div>
+
  <button><i class="material-icons" title="Color" style="font-size: 10px;" style="color: black;">color_lens</i></button>
+
  <button><i class="material-icons" title="undo & redo" style="font-size: 10px;" style="color: black;">undo</i></button>
 </div>
+
+

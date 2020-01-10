@@ -1,7 +1,26 @@
 <div class="mother">
-  <button (click)="check()">ObjectInformatie</button>
-  <div><h2>Titel</h2></div>
+ <div>
+  <button class="button" (click)="onClick()" #anchor >ObjectInformatie</button>
+  </div>
 </div>
+
+ <kendo-popup class="kendopopup" style="left: 1377.59px; top: 776.688px;" [anchor]="anchor" [anchorAlign]="anchorAlign" [popupAlign]="popupAlign" *ngIf="show">
+  <div class="anchor content">
+    <h2>Informatie</h2>
+    <div>
+     <mat-grid-list cols="2" rowHeight="2:1" style="border: 1px solid black;" *ngFor="let informatie of ObjectInformatie">
+      <mat-grid-tile>Naam</mat-grid-tile><mat-grid-tile>{{informatie.gemeentenaam}}</mat-grid-tile>
+      <mat-grid-tile>laag</mat-grid-tile><mat-grid-tile>Layer.</mat-grid-tile>
+      <mat-grid-tile>Legenda</mat-grid-tile><mat-grid-tile>imgage.</mat-grid-tile>
+     </mat-grid-list>
+    </div>
+  </div>
+</kendo-popup>
+
+<button mat-fab color="primary" class="buttonmat">
+  <i class="material-icons" title="Polygon" style="color: white;">info</i>
+</button>
+
 
 <!-- <div *ngFor="let informatie of ObjectInformatie" style="background-color: royalblue; color: gray;">
   Objectinformatie: {{informatie.gemeentenaam}}
