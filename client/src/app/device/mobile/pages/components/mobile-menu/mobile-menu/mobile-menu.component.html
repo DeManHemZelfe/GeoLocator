@@ -1,1 +1,13 @@
-<div class="test">test</div>
+<div class="menu">
+ <div class="item1">
+  <button mat-button [matMenuTriggerFor]="menu" style="display: contents;"><mat-icon>more_vert</mat-icon></button>
+   <mat-menu #menu="matMenu" class="matmenu">
+    <button mat-menu-item>Item 1</button>
+    <button mat-menu-item>Item 2</button>
+  </mat-menu>
+  </div>
+ <div class="item2"><geocoder [placeholder]="'Zoek hier'" (placeFound)="onPlaceFound($event)" style="z-index: 99; box-shadow: none;"></geocoder></div>
+</div>
+
+
+

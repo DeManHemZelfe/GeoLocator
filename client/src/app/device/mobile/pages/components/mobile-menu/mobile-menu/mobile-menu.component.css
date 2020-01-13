@@ -1,4 +1,28 @@
-.test
+.menu
 {
-  background-color: aqua;
+  display: flex;
+  background-color: white;
+}
+.matmenu
+{
+  background-color: red;
+}
+.item1
+{
+  background-color: white;
+  width: 14%;
+  margin-left: 12px;
+}
+.item2
+{
+  width: 88%;
+  background-color: green;
+  box-shadow: none;
+}
+.geocoder-search-container {
+  width: 100%;
+  border: none;
+  box-shadow: none;
+  background: #fff;
+  background-color: red;
 }

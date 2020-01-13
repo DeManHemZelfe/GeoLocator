@@ -43,14 +43,6 @@ import Translate from 'ol/interaction/Translate';
 import Transform from 'ol-ext/interaction/transform';
 import TileSource from 'ol/source/Tile';
 
-// console.log(Transform);
-
-
-
-
-
-// localstorage. (remove)
-// JWT
 @Component({
   selector: 'app-kaartviewer',
   templateUrl: './kaartviewer.component.html',

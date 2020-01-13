@@ -43,6 +43,8 @@ import Geolocation from 'ol//Geolocation';
 import Point from 'ol/geom/Point';
 // import {register} from 'ol/proj/proj4';
 
+import {MobileMenuComponent} from '../mobile-menu/mobile-menu/mobile-menu.component';
+
 @Component({
   selector: 'app-mobile',
   templateUrl: './mobile.component.html',
@@ -70,8 +72,9 @@ export class MobileComponent implements OnInit {
     maxZoom: 15
   });
 
-  public geolocation: Geolocation;
   @ViewChild('mobilemenu', { static: false }) mobilemenu: ElementRef;
+
+  public geolocation: Geolocation;
   constructor(
     private spoorwegService: SpoorwegenService,
     private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
@@ -126,7 +129,7 @@ export class MobileComponent implements OnInit {
       ],
       view: this.view,
       controls: [
-        new Control({ element: this.mobilemenu.nativeElement }),
+        // new Control({ element: this.mobilemenu.nativeElement }),
         // new Control({ element: this.dragmenu.nativeElement }),
         // new Control({ element: this.drawmenu.nativeElement }),
         // new Control({ element: this.geosetmenu.nativeElement }),
@@ -163,9 +166,11 @@ export class MobileComponent implements OnInit {
       this.posfeaturesource.addFeature(feature);
      });
   }
-
   el(event) {
    this.geolocation.setTracking(event.target.checked);
+  }
+  public onPlaceFound(place) {
+    this.map.getView().animate({center: place.centroide_rd.coordinates, zoom: 12});
   }
 }
 

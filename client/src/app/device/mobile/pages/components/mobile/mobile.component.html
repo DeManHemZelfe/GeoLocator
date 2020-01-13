@@ -8,13 +8,14 @@
 
 <div class="center">
   <div class="mobile">
-    <div class="screen"></div>
-    <!-- <div id="map" class="map"></div> -->
+    <!-- <div class="screen"></div> -->
+    <div id="map" class="map">
+      <div #mobilemenu class="mobile-menu"><app-mobile-menu  (_placefound)="onPlaceFound($event)"></app-mobile-menu></div>
+    </div>
     <div class="home"></div>
     <div class="inner"></div>
   </div>
 </div>
 
 
-<div id="map" class="map"></div>
-<div #mobilemenu><app-mobile-menu></app-mobile-menu></div>
+
