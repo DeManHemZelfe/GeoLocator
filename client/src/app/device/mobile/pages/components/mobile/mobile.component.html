@@ -1,28 +1,20 @@
-<label for="track2">
-  track position
-  <input (change)="el($event)" id="track" type="checkbox"/>
-</label>
+<div class="container">
+  <label for="track2">
+    track position
+    <input (change)="el($event)" id="track" type="checkbox"/>
+  </label>
+</div>
 
 
 <div class="center">
   <div class="mobile">
     <div class="screen"></div>
+    <!-- <div id="map" class="map"></div> -->
     <div class="home"></div>
     <div class="inner"></div>
-    <ul class="volume">
-      <li></li>
-      <li></li>
-    </ul>
-    <ul class="silent">
-      <li></li>
-      <li></li>
-    </ul>
-    <div id="map" class="map"></div>
   </div>
 </div>
 
 
-
-
-
 <div id="map" class="map"></div>
+<div #mobilemenu><app-mobile-menu></app-mobile-menu></div>

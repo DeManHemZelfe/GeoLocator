@@ -41,7 +41,7 @@ import { GeocoderService } from 'angular-geocoder';
 import Geolocation from 'ol//Geolocation';
 // import { coordinate, events } from 'openlayers';
 import Point from 'ol/geom/Point';
-import {register} from 'ol/proj/proj4';
+// import {register} from 'ol/proj/proj4';
 
 @Component({
   selector: 'app-mobile',
@@ -71,9 +71,7 @@ export class MobileComponent implements OnInit {
   });
 
   public geolocation: Geolocation;
-
-  positionhtml;
-
+  @ViewChild('mobilemenu', { static: false }) mobilemenu: ElementRef;
   constructor(
     private spoorwegService: SpoorwegenService,
     private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
@@ -128,7 +126,7 @@ export class MobileComponent implements OnInit {
       ],
       view: this.view,
       controls: [
-        // new Control({ element: this.toolbarmenu.nativeElement }),
+        new Control({ element: this.mobilemenu.nativeElement }),
         // new Control({ element: this.dragmenu.nativeElement }),
         // new Control({ element: this.drawmenu.nativeElement }),
         // new Control({ element: this.geosetmenu.nativeElement }),

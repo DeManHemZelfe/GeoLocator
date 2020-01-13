@@ -49,13 +49,10 @@ import { LayerconfigService } from './testmap/testpage/config/layerconfig/layerc
 import {ToolbarTweeComponent} from './testmap/testpage/toolbar/toolbar.component';
 import {DialogComponent} from './dialog/dialog';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-
 // import {MatDialogModule} from '@angular/material/dialog';
-
 import {DialogsModule, DialogModule,  DialogService,
   DialogRef,
   DialogCloseResult} from '@progress/kendo-angular-dialog';
-
 import { PopupModule } from '@progress/kendo-angular-popup';
 import {DragMenuComponent} from './kaart/layout/.ts/drag-menu/drag-menu';
 import {DrawMenuComponent} from './kaart/layout/.ts/draw-menu/draw-menu';
@@ -68,6 +65,7 @@ import { HomeComponent } from './pages/home/home/home.component';
 import { GeosetComponent } from './kaart/layout/.ts/geoset-menu/geoset-menu';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatButtonModule} from '@angular/material/button';
+import { MobileMenuComponent } from './device/mobile/pages/components/mobile-menu/mobile-menu/mobile-menu.component';
 
 
 
@@ -97,7 +95,8 @@ export function tokenGetter() {
     DrawMenuComponent,
     MobileComponent,
     HomeComponent,
-    GeosetComponent
+    GeosetComponent,
+    MobileMenuComponent
 
   ],
   imports: [
