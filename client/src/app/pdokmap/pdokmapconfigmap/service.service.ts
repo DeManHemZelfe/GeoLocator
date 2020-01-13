@@ -1,7 +1,14 @@
 import {Injectable} from '@angular/core';
 import {View} from 'ol';
 import Projection from 'ol/proj/Projection';
+import { addProjection } from 'ol/proj';
+import {register} from 'ol/proj/proj4';
+import proj4 from 'proj4';
 
+proj4.defs('EPSG:28992',
+  `+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.999908 +x_0=155000 +y_0=463000
+  +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs`);
+register(proj4);
 @Injectable({
   providedIn: 'root'
 })
@@ -51,6 +58,7 @@ constructor() {
   for (let i = 0, n = this.matrixIds.length; i < n; i++) {
     this.matrixIds[i] = `EPSG:28992:${i}`;
   }
+  addProjection(this.projection);
 }
 
 get _projectionExtent() {

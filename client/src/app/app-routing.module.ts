@@ -10,12 +10,14 @@ import { ToolbarFunctionsComponent } from './functions/toolbar-functions/toolbar
 import { SidebarComponent } from './pdokmap/sidebar.component';
 import { LayerbuttonComponent } from './functions/buttons-functions/layerbutton/layerbutton.component';
 import { TpComponent } from './testmap/testpage/tp/tp.component';
+import { MobileComponent } from './device/mobile/pages/components/mobile/mobile.component';
 
 
 const routes: Routes = [
   { path: 'login', component:  LoginComponent }, // DIT WORD DE LOGIN \\
   { path: '', component:  IndexComponent, canActivate: [AuthGuard] }, // DIT WORD VERWIJDERD \\
   { path: 'kaartviewer', component:  KaartviewerComponent }, // DIT WORD DE LOGIN \\
+  { path: 'mobileviewer', component:  MobileComponent }, // DIT WORD DE LOGIN \\
   { path: 'toolbar', component:  ToolbarFunctionsComponent }, // DIT WORD DE LOGIN TOOLBAR\\
   { path: 'lossekaart', component: LossekaartComponent }, // DEZE KAART GAAT VERWIJDERD WORDEN \\
   { path: 'todo', component: TodoComponent }, // DIT IS DE TODO \\
