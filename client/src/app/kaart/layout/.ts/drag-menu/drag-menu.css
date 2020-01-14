@@ -47,7 +47,7 @@ button, input, optgroup, select, textarea {
 .anchor {
   background-color: rebeccapurple;
   width: 208px;
-  height: 250px;
+  height: 300px;
 }
 .buttonmat{
   width: 56px;
@@ -64,5 +64,9 @@ button, input, optgroup, select, textarea {
   padding: 0px;
   display: inline-block;
   line-height: 24px;
+}
+.matborder
+{
+  border-left: 1px black solid;
 }
 
