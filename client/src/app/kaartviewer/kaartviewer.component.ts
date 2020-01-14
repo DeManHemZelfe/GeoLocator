@@ -42,6 +42,7 @@ import WMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo';
 import Translate from 'ol/interaction/Translate';
 import Transform from 'ol-ext/interaction/transform';
 import TileSource from 'ol/source/Tile';
+import { Polygon } from 'ol/geom';
 
 @Component({
   selector: 'app-kaartviewer',
@@ -52,6 +53,7 @@ export class KaartviewerComponent implements AfterViewInit {
   public anchorPosition: Position;
   public dialogOpened = false;
   public windowOpened = false;
+  tooltip = 'dit is een tekst';
 
   // SHOW & HIDE
   show1  = false;  show2  = false;  show3  = false;
@@ -146,8 +148,8 @@ export class KaartviewerComponent implements AfterViewInit {
   ngAfterViewInit() {
    this.initializeMap();
    this.addInteraction();
+   this.addMeetInteraction();
   }
-
 
   initializeMap() { // BEGIN VAN DE MAP MAKEN
     addProjection(this.mapconfig.projection);
@@ -199,6 +201,57 @@ export class KaartviewerComponent implements AfterViewInit {
    // OUTPUT RETURN
    ArrayForUndo() { console.log('Array voor undo'); }
    ArrayForRedo() { console.log('Array voor undo'); }
+   addMeetInteraction() {
+    const value = this.typeSelectTekenen.value;
+    if (value !== '') {
+      this.draw = new OlDraw({
+       source: this.tekensource,
+       type: value,
+      });
+      this.draw.on('drawstart', (event) => {
+       console.log('start');
+
+       const geomconsole = event.feature.getGeometry();
+       const geom = event.feature.getGeometry().on('change', (evt) => {
+       const target = evt.target;
+
+       if (target instanceof Polygon) {
+        const output = target.getCoordinates();
+        console.log(output);
+        console.log('denk het');
+       } else {
+        console.log('wedden dat ik dit te zien krijg');
+       }
+
+       console.log(target);
+        });
+       console.log(geomconsole);
+      });
+
+      this.draw.on('drawend', (event) => {
+       console.log('einde');
+       event.feature.setStyle(new Style({
+        fill: new Fill({color: 'blue'}),
+        stroke: new Stroke({color: 'Black', width: 3, lineDash: [10, 10]}),
+        image: new Circle({radius: 7,
+        fill: new Fill({color: 'green'})
+        })
+       }));
+       this.drawArray.push(event.feature);
+      });
+      this.map.addInteraction(this.draw);
+     }
+   }
+  switchMeetMode(event) {
+   console.log(event);
+   if (event !== '') {
+     this.typeSelectTekenen.setValue(event);
+   } else {
+     this.typeSelectTekenen.setValue('');
+   }
+   this.map.removeInteraction(this.draw);
+   this.addMeetInteraction();
+  }
 
    checkforupdate() {
     // const f = this.tekensource.getFeatures(); const l = f.pop(); this.dataActiveArray.push(l);
@@ -216,7 +269,6 @@ export class KaartviewerComponent implements AfterViewInit {
      const viewResolution = this.mapconfig._view.getResolution();
      this.map.forEachLayerAtPixel(evt.pixel, (layer) => {
       const source = layer.getSource();
-      console.log(source);
 
       if ((source as any).getFeatureInfoUrl) {
        const url = (source as any).getFeatureInfoUrl(
@@ -241,11 +293,6 @@ export class KaartviewerComponent implements AfterViewInit {
 
         } }); }); } } }); });
    }
-   hiddenclass() {
-     console.log('class');
-   }
-
-  openDialog() {}
   addInteraction() {
     const schema = this.kleurschema;
     const value = this.typeSelectTekenen.value;
@@ -268,15 +315,6 @@ export class KaartviewerComponent implements AfterViewInit {
       this.map.addInteraction(this.draw);
      }
    }
-  // switchMode(event?: string | null) {
-  //   if (event !== '') {
-  //     this.typeSelectTekenen.setValue(event);
-  //   } else {
-  //     this.typeSelectTekenen.setValue('');
-  //   }
-  //   this.map.removeInteraction(this.draw);
-  //   this.addInteraction();
-  // }
   switchDrawMode(event) {
     console.log(event);
     if (event !== '') {
