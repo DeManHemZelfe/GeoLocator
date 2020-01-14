@@ -44,6 +44,7 @@ import Point from 'ol/geom/Point';
 // import {register} from 'ol/proj/proj4';
 
 import {MobileMenuComponent} from '../mobile-menu/mobile-menu/mobile-menu.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-mobile',
@@ -84,11 +85,18 @@ export class MobileComponent implements OnInit {
     private mapconfig: ServiceService,
     private achterkaart: BgService,
     public geocoderService: GeocoderService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
    this.initializeMap();
+   this.openSnackBar();
    this.initializeGeolocation();
+  }
+  openSnackBar() {
+    this._snackBar.open('Dit is een beta verise, er kunnen bugs plaats vinden ', 'Ok', {
+      duration: 25000,
+    });
   }
 
   initializeMap() { // BEGIN VAN DE MAP MAKEN

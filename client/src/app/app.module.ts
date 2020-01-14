@@ -66,6 +66,7 @@ import { GeosetComponent } from './kaart/layout/.ts/geoset-menu/geoset-menu';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatButtonModule} from '@angular/material/button';
 import { MobileMenuComponent } from './device/mobile/pages/components/mobile-menu/mobile-menu/mobile-menu.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 
@@ -138,6 +139,7 @@ export function tokenGetter() {
     DialogsModule,
     TreeViewModule,
     MatTabsModule,
+    MatSnackBarModule,
   ],
 
   providers: [

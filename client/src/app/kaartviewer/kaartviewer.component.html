@@ -1,7 +1,25 @@
 
-<div id="map" class="map"></div>
+<div #PopUpMenu>
+    <div *ngFor="let informatie of objectarray">
+     <kendo-window [minWidth]="200" [minHeight]="125" [height]="380" title="Bag"
+      style="height: 380px; background-color: white; color: black;">
+      <div class="kendocontent">
+        <table class="table">
+         <th>Titel</th>
+         <tr>
+          <td>links</td><td>{{informatie.bouwjaar}}</td>
+         </tr>
+         <tr>
+          <td>links</td><td>{{informatie.status}}</td>
+        </tr>
+        </table>
+      </div>
+      </kendo-window>
+    </div>
+</div>
 
-<div #toolbarmenu class="toolbarmenu" kendoTooltip position="right" style="background-color:red;" style="width: 10%;">
+<div id="map" class="map"></div>
+ <div #toolbarmenu class="toolbarmenu" kendoTooltip position="right" style="background-color:red;" style="width: 10%;">
   <app-toolbar-functions
   (_placefound)="onPlaceFound($event)"
   (_undo)="UndoButton($event)"          (_redo)="RedoButton($event)"
@@ -9,9 +27,8 @@
   (_getButtonColorBlue)="getButtonColorBlue($event)"
   (_getButtonColorGreen)="getButtonColorGreen($event)" (_getButtonColorRed)="getButtonColorRed($event)"
   (_select)="select($event)" (_transform)="transformFunction($event)" (_translate)="translateFunction($event)"
-  (_popup)="popup($event)"
   (_info)="Info($event)">
-</app-toolbar-functions>
+ </app-toolbar-functions>
 </div>
 
 
@@ -22,6 +39,7 @@
 <div #geosetmenu><app-geoset-menu></app-geoset-menu></div>
 
 <div id="provincienaam">provincies</div>
+
 
 
 

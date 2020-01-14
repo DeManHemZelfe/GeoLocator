@@ -15,6 +15,9 @@ export class DrawMenuComponent {
 
  @Output() _giveDrawValue: EventEmitter<any> = new EventEmitter<any>();
  @Output() _select: EventEmitter<any> = new EventEmitter<any>();
+ public windowOpened = false;
+ public dialogOpened = false;
+
 
  maakopen = false;
  maakopen2 = false;
@@ -34,6 +37,13 @@ export class DrawMenuComponent {
  constructor(
   private dialogService: DialogService
   ) {}
+
+  public close(component) {
+    this[component + 'Opened'] = false;
+  }
+  public open(component) {
+    this[component + 'Opened'] = true;
+  }
  // Select
  Select() {return this._select.emit(); }
  // Drawclick
@@ -50,8 +60,6 @@ export class DrawMenuComponent {
   if (value !== '') {
   return this._giveDrawValue.emit(value); }
   return this._giveDrawValue.emit('');
-
-
  }
  OpenSettings() {
  console.log('Open Settings');

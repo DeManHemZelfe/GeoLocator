@@ -94,4 +94,7 @@
   border-radius: 50%;
   transform: translateX(-50%);
 }
-
+mat-form-field
+{
+ margin-right: 12px;
+}

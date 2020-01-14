@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, ɵConsole, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, ɵConsole, Output, EventEmitter, Input } from '@angular/core';
 import { Map, View, Collection,  MapBrowserEvent  } from 'ol';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import Feature from 'ol/Feature';
@@ -49,12 +49,17 @@ import TileSource from 'ol/source/Tile';
   styleUrls: ['./kaartviewer.component.css']
 })
 export class KaartviewerComponent implements AfterViewInit {
+  public anchorPosition: Position;
+  public dialogOpened = false;
+  public windowOpened = false;
+
   // SHOW & HIDE
   show1  = false;  show2  = false;  show3  = false;
   show4  = false;  show5  = false;  show6  = false;
   show7  = false;  show8  = false;  show9  = false;
   show10 = false;  show11 = false;  show12 = false;
   show13 = false;  show14 = false;  show15 = false;
+  show16 = false;  show17 = false;  show18 = false;
   grenzenvisi = false;             bagvisi = false;
   spoorvisi = false;          dienstenvisi = false;
 
@@ -109,6 +114,7 @@ export class KaartviewerComponent implements AfterViewInit {
   // @OUTPUT
   // @VIEWCHILD
   @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
+  @ViewChild('PopUpMenu', { static: false }) PopUpMenu: ElementRef;
   @ViewChild('menu', { static: false }) menu: ElementRef;
   @ViewChild('searchmenu', { static: false }) searchmenu: ElementRef;
   @ViewChild('toolbarmenu', { static: false }) toolbarmenu: ElementRef;
@@ -141,6 +147,8 @@ export class KaartviewerComponent implements AfterViewInit {
    this.initializeMap();
    this.addInteraction();
   }
+
+
   initializeMap() { // BEGIN VAN DE MAP MAKEN
     addProjection(this.mapconfig.projection);
     this.map = new Map({ // MAAK DE MAP
@@ -178,6 +186,7 @@ export class KaartviewerComponent implements AfterViewInit {
       ],
       view: this.mapconfig._view,
       controls: [
+        new Control({ element: this.PopUpMenu.nativeElement }),
         new Control({ element: this.toolbarmenu.nativeElement }),
         new Control({ element: this.dragmenu.nativeElement }),
         new Control({ element: this.drawmenu.nativeElement }),
@@ -207,6 +216,7 @@ export class KaartviewerComponent implements AfterViewInit {
      const viewResolution = this.mapconfig._view.getResolution();
      this.map.forEachLayerAtPixel(evt.pixel, (layer) => {
       const source = layer.getSource();
+      console.log(source);
 
       if ((source as any).getFeatureInfoUrl) {
        const url = (source as any).getFeatureInfoUrl(
@@ -221,40 +231,21 @@ export class KaartviewerComponent implements AfterViewInit {
         const pushNewFeature = features[0].getProperties();
         console.log(features[0].getProperties());
         document.getElementById('provincienaam').innerHTML = features[0].get('provincienaam');
-        // const pushFeature2 = document.getElementById('provincienaam').innerHTML = features[0].get('provincienaam');
 
         const index = this.objectarray.findIndex(x => x === pushNewFeature);
         this.objectarray.splice(index, 1);
         this.objectarray.push(pushNewFeature);
-
 
         this.highlightsource.clear();
         this.highlightsource.addFeature(features[0]);
 
         } }); }); } } }); });
    }
-
-
-   testvoordemap() {
-    this.map.on('singleclick', (evt) => {
-      fetch('https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?&GetFeature&typeName=provincies').then((response) => {
-        return response.text(); }).then((response) => {
-          // TO READ ALL THE FEATURES
-        const allFeatures = new WMSGetFeatureInfo().readFeatures(response);
-        document.getElementById('all').innerText = allFeatures.length.toString();
-        });
-    });
+   hiddenclass() {
+     console.log('class');
    }
+
   openDialog() {}
-
-  popup() {
-    if (click) {
-     console.log('NICE');
-    } else {
-      console.log('ELSE');
-    }
-  }
-
   addInteraction() {
     const schema = this.kleurschema;
     const value = this.typeSelectTekenen.value;

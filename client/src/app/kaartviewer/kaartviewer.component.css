@@ -134,5 +134,18 @@
   color: #212529;
   /* background-color: whitesmoke; */
 }
-
-
+k-content k-window-content ng-star-inserted
+{
+  background-color: beige;
+}
+.kendocontent
+{
+  /* background-color: beige; */
+  z-index: 150;
+  margin: -16px;
+}
+.table
+{
+  background-color: #f1f1f1;
+  width: 100%;
+}

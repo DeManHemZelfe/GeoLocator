@@ -1,6 +1,6 @@
 <div class="container">
   <label for="track2">
-    track position
+    track your position
     <input (change)="el($event)" id="track" type="checkbox"/>
   </label>
 </div>
@@ -10,7 +10,7 @@
   <div class="mobile">
     <!-- <div class="screen"></div> -->
     <div id="map" class="map">
-      <div #mobilemenu class="mobile-menu"><app-mobile-menu  (_placefound)="onPlaceFound($event)"></app-mobile-menu></div>
+      <div #mobilemenu class="mobile-menu"><app-mobile-menu (_placefound)="onPlaceFound($event)"></app-mobile-menu></div>
     </div>
     <div class="home"></div>
     <div class="inner"></div>

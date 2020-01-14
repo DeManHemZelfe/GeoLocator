@@ -1,11 +1,12 @@
 <div class="drawmenu">
  <button (click)="Select($event)"><i class="material-icons" title="Select" style="font-size: 10px;" style="color: black;">zoom_out_map</i></button>
  <button><i class="material-icons" title="Transform" style="font-size: 10px;" style="color: black;">tab_unselected</i></button>
+ <button><i class="material-icons" title="Meten" style="font-size: 10px;" style="color: black;">tab_unselected</i></button>
 
- <button (click)="show1 = !show1">
+ <button (click)="show1 = !show1" class="button">
    <i class="material-icons" title="Edit" style="font-size: 10px;" style="color: black;">edit</i>
   </button>
-  <div *ngIf="show1" class="draw-menu">
+  <div *ngIf="show1" class="draw-menu" id="menu">
    <button (click)="switchMode('Point')" value="Point" title="Point" id="Point"><i class="material-icons" style="font-size: 10px;" style="color: black;">brightness_1</i></button>
    <button (click)="switchMode('LineString')" value="LineString" title="LineString" id="LineString"><i class="material-icons" style="font-size: 10px;" style="color: black;">call_made</i></button>
    <button (click)="switchMode('Polygon')" value="Polygon" title="Polygon" id="Polygon"> <i class="material-icons" style="font-size: 10px;" style="color: black;">crop_square</i></button>
@@ -18,5 +19,12 @@
 
  <button (click)="OpenSettings()"><i class="material-icons" title="draw options" style="font-size: 10px;" style="color: black;">settings</i></button>
 </div>
+
+
+
+<!-- <button kendoButton *ngIf="!dialogOpened && !windowOpened" (click)="open('window')">Open window</button>
+<kendo-window [minWidth]="200" [minHeight]="125" title="About" *ngIf="windowOpened" (close)="close('window')">
+  <p style="text-align: center;">Additional info</p>
+</kendo-window> -->
 
 
