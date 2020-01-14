@@ -14,6 +14,7 @@ import { Icon, Stroke, Style, Fill, Circle} from 'ol/style';
 export class DrawMenuComponent {
 
  @Output() _giveDrawValue: EventEmitter<any> = new EventEmitter<any>();
+ @Output() _giveMeetValue: EventEmitter<any> = new EventEmitter<any>();
  @Output() _select: EventEmitter<any> = new EventEmitter<any>();
  public windowOpened = false;
  public dialogOpened = false;
@@ -60,6 +61,12 @@ export class DrawMenuComponent {
   if (value !== '') {
   return this._giveDrawValue.emit(value); }
   return this._giveDrawValue.emit('');
+ }
+ switchMetenMode(value) {
+  console.log(value);
+  if (value !== '') {
+  return this._giveMeetValue.emit(value); }
+  return this._giveMeetValue.emit('');
  }
  OpenSettings() {
  console.log('Open Settings');
