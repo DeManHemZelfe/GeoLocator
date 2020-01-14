@@ -258,7 +258,6 @@ export class KaartviewerComponent implements AfterViewInit {
   addInteraction() {
     const schema = this.kleurschema;
     const value = this.typeSelectTekenen.value;
-    const getValue = this.typeSelectStyle.value;
     // console.log(getValue + 'interaction');
     if (value !== '') {
       this.draw = new OlDraw({
@@ -278,7 +277,17 @@ export class KaartviewerComponent implements AfterViewInit {
       this.map.addInteraction(this.draw);
      }
    }
-  switchMode(event?: string | null) {
+  // switchMode(event?: string | null) {
+  //   if (event !== '') {
+  //     this.typeSelectTekenen.setValue(event);
+  //   } else {
+  //     this.typeSelectTekenen.setValue('');
+  //   }
+  //   this.map.removeInteraction(this.draw);
+  //   this.addInteraction();
+  // }
+  switchDrawMode(event) {
+    console.log(event);
     if (event !== '') {
       this.typeSelectTekenen.setValue(event);
     } else {

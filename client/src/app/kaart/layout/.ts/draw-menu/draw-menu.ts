@@ -4,6 +4,7 @@ import { DialogService, DialogRef, DialogCloseResult
 import { FormControl } from '@angular/forms';
 import { click } from 'ol/events/condition';
 import { Feature } from 'ol';
+import { Icon, Stroke, Style, Fill, Circle} from 'ol/style';
 
 @Component({
   selector: 'app-draw-menu',
@@ -11,40 +12,52 @@ import { Feature } from 'ol';
   styleUrls: ['./draw-menu.css']
 })
 export class DrawMenuComponent {
-  maakopen = false;
-  maakopen2 = false;
-  maakopen3 = false;
-  show1 = false;  show2 = false;   show3 = false;
-  show4 = false;  show5 = false;   show6 = false;
-  show7 = false;  show8 = false;   show9 = false;
-  show10 = false; show11 = false; show12 = false;
-  show13 = false; show14 = false; show15 = false;
-  grenzenvisi = false;           bagvisi = false;
-  spoorvisi = false;        dienstenvisi = false;
 
-  tooltip;
-  drawCheck = new FormControl('');
-  typeSelectStyle = new FormControl('');
+ @Output() _giveDrawValue: EventEmitter<any> = new EventEmitter<any>();
+ @Output() _select: EventEmitter<any> = new EventEmitter<any>();
 
+ maakopen = false;
+ maakopen2 = false;
+ maakopen3 = false;
+ show1 = false;  show2 = false;   show3 = false;
+ show4 = false;  show5 = false;   show6 = false;
+ show7 = false;  show8 = false;   show9 = false;
+ show10 = false; show11 = false; show12 = false;
+ show13 = false; show14 = false; show15 = false;
+ grenzenvisi = false;           bagvisi = false;
+ spoorvisi = false;        dienstenvisi = false;
 
-  constructor(
-    private dialogService: DialogService
-    ) {}
-
-    drawclick() {
-      if (click) {
-      console.log('Good');
-      } else {
-      console.log('Wrong');
-     }
-    }
-
-    switchMode(value) {
-      if (value !== '') { console.log(value); } else {console.log('fout'); }
-    }
+ tooltip;
 
 
-}
+
+ constructor(
+  private dialogService: DialogService
+  ) {}
+ // Select
+ Select() {return this._select.emit(); }
+ // Drawclick
+ drawclick() {
+  if (click) {
+   console.log('Good');
+  } else {
+   console.log('Wrong');
+  }
+ }
+ // SwitchMode
+ switchMode(value) {
+  console.log(value);
+  if (value !== '') {
+  return this._giveDrawValue.emit(value); }
+  return this._giveDrawValue.emit('');
+
+
+ }
+ OpenSettings() {
+ console.log('Open Settings');
+ }
+
+} // Einde
 
 
 

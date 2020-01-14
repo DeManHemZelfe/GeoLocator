@@ -1,4 +1,5 @@
-.Geo{
+.Geo
+{
   width: 20%;
   position: absolute;
   margin-top: 60px;
@@ -7,13 +8,16 @@
   height: 45%;
 }
 
-.mat-expansion-panel-header-description {
+.mat-expansion-panel-header-description
+{
   color: blue;
 }
-.mat-expansion-panel:not([class*=mat-elevation-z]) {
+.mat-expansion-panel:not([class*=mat-elevation-z])
+{
   box-shadow: none;
 }
-ul {
+ul
+{
   display: contents;
   color: blue;
   /* list-style-type: disc; */
@@ -23,7 +27,11 @@ ul {
   margin-inline-end: 0px;
   padding-inline-start: 40px; */
 }
-mat-expansion-panel-header {
+mat-expansion-panel-header
+{
   height: 0px;
-
+}
+.list
+{
+  width: 75%;
 }
