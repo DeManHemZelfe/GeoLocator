@@ -57,16 +57,23 @@ export class DrawMenuComponent {
  }
  // SwitchMode
  switchMode(value) {
-  console.log(value);
   if (value !== '') {
   return this._giveDrawValue.emit(value); }
   return this._giveDrawValue.emit('');
  }
- switchMetenMode(value) {
-  console.log(value);
-  if (value !== '') {
-  return this._giveMeetValue.emit(value); }
-  return this._giveMeetValue.emit('');
+ switchMetenMode(value: 'length' | 'area') {
+   if (value === 'length') {
+     return this._giveMeetValue.emit('LineString');
+   } else if (value === 'area') {
+    return this._giveMeetValue.emit('Polygon');
+   } else {
+    return this._giveMeetValue.emit('');
+   }
+  // const check = value === 'area' ? 'Polygon' : 'LineString';
+  // console.log(check);
+  // if (check !== '') {
+  // return this._giveMeetValue.emit(value); }
+  // return this._giveMeetValue.emit('');
  }
  OpenSettings() {
  console.log('Open Settings');

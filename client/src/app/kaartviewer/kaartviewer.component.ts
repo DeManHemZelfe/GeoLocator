@@ -9,7 +9,7 @@ import Projection from 'ol/proj/Projection';
 import { getTopLeft } from 'ol/extent';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import { FormControl } from '@angular/forms';
-import OlDraw from 'ol/interaction/Draw';
+import OlDraw, { DrawEvent } from 'ol/interaction/Draw';
 import TileWMS, { Options as TileWMSOptions } from 'ol/source/TileWMS';
 import { Options as TileOptions } from 'ol/layer/Tile';
 import { OSM, Vector as VectorSource, TileJSON, ImageWMS } from 'ol/source';
@@ -21,8 +21,9 @@ import GeoJSON from 'ol/format/GeoJSON';
 import { SpoorwegenService, ITileOptions } from '../layers/spoorwegen.service';
 import {defaults as defaultControls, Control, ZoomToExtent, Rotate, ScaleLine, ZoomSlider, OverviewMap, Zoom} from 'ol/control';
 
+
 import { OverigeDienstenService } from '../layers/overigediensten.service';
-import {defaults as defaultInteractions, Modify, Snap, Draw } from 'ol/interaction';
+import {defaults as defaultInteractions, Modify, Snap, Draw} from 'ol/interaction';
 import LayerGroup from 'ol/layer/Group';
 import { GeocoderService } from 'angular-geocoder';
 import { ToolbarFunctionsComponent } from '../functions/toolbar-functions/toolbar-functions.component';
@@ -42,7 +43,11 @@ import WMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo';
 import Translate from 'ol/interaction/Translate';
 import Transform from 'ol-ext/interaction/transform';
 import TileSource from 'ol/source/Tile';
-import { Polygon } from 'ol/geom';
+
+
+import { Polygon, LineString } from 'ol/geom';
+import {getArea, getLength} from 'ol/sphere';
+import GeometryType from 'ol/geom/GeometryType';
 
 @Component({
   selector: 'app-kaartviewer',
@@ -78,7 +83,12 @@ export class KaartviewerComponent implements AfterViewInit {
   // MAP INTERACTIONS
   private map: Map;
   private draw: OlDraw;
+  private meetdraw;
   // FORMCONTROLS
+  sketch;
+  measureTooltipElement;
+  tooltipcoord;
+  measureTooltip;
   typeSelectTekenen = new FormControl('');
   typeSelectStyle   = new FormControl('');
   kleurschema;
@@ -202,49 +212,38 @@ export class KaartviewerComponent implements AfterViewInit {
    ArrayForUndo() { console.log('Array voor undo'); }
    ArrayForRedo() { console.log('Array voor undo'); }
    addMeetInteraction() {
-    const value = this.typeSelectTekenen.value;
-    if (value !== '') {
-      this.draw = new OlDraw({
-       source: this.tekensource,
-       type: value,
-      });
-      this.draw.on('drawstart', (event) => {
-       console.log('start');
-
-       const geomconsole = event.feature.getGeometry();
-       const geom = event.feature.getGeometry().on('change', (evt) => {
-       const target = evt.target;
-
-       if (target instanceof Polygon) {
-        const output = target.getCoordinates();
-        console.log(output);
-        console.log('denk het');
-       } else {
-        console.log('wedden dat ik dit te zien krijg');
-       }
-
-       console.log(target);
-        });
-       console.log(geomconsole);
-      });
-
-      this.draw.on('drawend', (event) => {
-       console.log('einde');
-       event.feature.setStyle(new Style({
-        fill: new Fill({color: 'blue'}),
-        stroke: new Stroke({color: 'Black', width: 3, lineDash: [10, 10]}),
-        image: new Circle({radius: 7,
-        fill: new Fill({color: 'green'})
+     if (this.typeSelectTekenen.value !== '') {
+       const Drawtype = this.typeSelectTekenen.value;
+       this.draw = new OlDraw({
+        source: this.tekensource,
+        type: (Drawtype as GeometryType),
+        style: new Style({
+          fill: new Fill({
+            color: 'rgba(255, 255, 255, 0.2)'
+          }),
+          stroke: new Stroke({
+            color: 'rgba(0, 0, 0, 0.5)',
+            lineDash: [10, 10],
+            width: 2
+          }),
+          image: new Circle({
+            radius: 5,
+            stroke: new Stroke({
+              color: 'rgba(0, 0, 0, 0.7)'
+            }),
+            fill: new Fill({
+              color: 'rgba(255, 255, 255, 0.2)'
+            })
+          })
         })
-       }));
-       this.drawArray.push(event.feature);
-      });
-      this.map.addInteraction(this.draw);
+        });
+       this.map.addInteraction(this.draw);
      }
    }
-  switchMeetMode(event) {
+
+  switchMeetMode(event: GeometryType) {
    console.log(event);
-   if (event !== '') {
+   if (event === 'LineString' || event === 'Polygon') {
      this.typeSelectTekenen.setValue(event);
    } else {
      this.typeSelectTekenen.setValue('');
@@ -316,7 +315,7 @@ export class KaartviewerComponent implements AfterViewInit {
      }
    }
   switchDrawMode(event) {
-    console.log(event);
+    // console.log(event);
     if (event !== '') {
       this.typeSelectTekenen.setValue(event);
     } else {
