@@ -8,7 +8,7 @@ export class BagService {
 
   BagLigplaatsTile = new TileWMS({
     url: 'https://geodata.nationaalgeoregister.nl/bag/wms?',
-    params: {LAYERS: 'pand', TILED: true},
+    params: {LAYERS: 'pand', TILED: true, title: 'bagligplaats'},
     crossOrigin: 'anonymous',
    });
    BagLigplaatsLayer = new TileLayer({

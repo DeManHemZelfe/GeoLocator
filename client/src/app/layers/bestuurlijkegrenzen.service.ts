@@ -27,7 +27,8 @@ export class BestuurlijkegrenzenService {
      url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?n',
      params: {
       LAYERS: 'gemeenten',
-      TILED: true},
+      TILED: true,
+    },
      crossOrigin: 'anonymous',
     });
     gemeentenLayer = new TileLayer({

@@ -277,35 +277,44 @@ export class KaartviewerComponent implements AfterViewInit {
    mapClick() {
     this.map.on('singleclick', (evt) => {
      const viewResolution = this.mapconfig._view.getResolution();
-
      this.map.forEachLayerAtPixel(evt.pixel, (layer) => {
       const source = layer.getSource();
 
       if ((source as any).getFeatureInfoUrl) {
        const url = (source as any).getFeatureInfoUrl(
-        evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'application/json' } );
-
-
+       evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'application/json' });
 
        if (url) {
         fetch(url).then((response) => {
-        response.json().then((geojsonData) => {
-        const features = new GeoJSON({dataProjection: 'EPSG:28992', featureProjection: 'EPSG:28992'}).readFeatures(geojsonData);
+         response.json().then((geojsonData) => {
+          const features = new GeoJSON({dataProjection: 'EPSG:28992', featureProjection: 'EPSG:28992'}).readFeatures(geojsonData);
+          const Bagname = features[0].get('bouwjaar');
 
-        if (features[0]) {
-        const pushNewFeature = features[0].getProperties();
-        console.log(features[0].getProperties());
-        document.getElementById('provincienaam').innerHTML = features[0].get('provincienaam');
+          if (Bagname) {
+           const pushNewFeature = features[0].getProperties();
+           const index = this.objectarray.findIndex(x => x === pushNewFeature);
+           this.objectarray.splice(index, 1);
+           this.objectarray.push(pushNewFeature);
+           console.log(features[0].getProperties());
+           console.log(Bagname);
+          } else {
 
-        const index = this.objectarray.findIndex(x => x === pushNewFeature);
-        this.objectarray.splice(index, 1);
-        this.objectarray.push(pushNewFeature);
-
-        this.highlightsource.clear();
-        this.highlightsource.addFeature(features[0]);
-
-        } }); }); } } }); });
-   }
+          if (features[0]) {
+           document.getElementById('provincienaam').innerHTML = features[0].get('provincienaam');
+           const pushNewFeature = features[0].getProperties();
+           const index = this.objectarray.findIndex(x => x === pushNewFeature);
+           this.objectarray.splice(index, 1);
+           this.highlightsource.clear();
+           this.highlightsource.addFeature(features[0]);
+            }
+           }
+          });
+         });
+        }
+       }
+      });
+     });
+    }
   addInteraction() {
     const schema = this.kleurschema;
     const value = this.typeSelectTekenen.value;
