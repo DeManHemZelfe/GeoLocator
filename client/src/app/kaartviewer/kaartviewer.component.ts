@@ -83,7 +83,6 @@ export class KaartviewerComponent implements AfterViewInit {
   // MAP INTERACTIONS
   private map: Map;
   private draw: OlDraw;
-  private meetdraw;
   // FORMCONTROLS
   sketch;
   measureTooltipElement;
@@ -212,32 +211,44 @@ export class KaartviewerComponent implements AfterViewInit {
    ArrayForUndo() { console.log('Array voor undo'); }
    ArrayForRedo() { console.log('Array voor undo'); }
    addMeetInteraction() {
-     if (this.typeSelectTekenen.value !== '') {
-       const Drawtype = this.typeSelectTekenen.value;
-       this.draw = new OlDraw({
-        source: this.tekensource,
-        type: (Drawtype as GeometryType),
-        style: new Style({
-          fill: new Fill({
-            color: 'rgba(255, 255, 255, 0.2)'
-          }),
-          stroke: new Stroke({
-            color: 'rgba(0, 0, 0, 0.5)',
-            lineDash: [10, 10],
-            width: 2
-          }),
-          image: new Circle({
-            radius: 5,
-            stroke: new Stroke({
-              color: 'rgba(0, 0, 0, 0.7)'
-            }),
-            fill: new Fill({
-              color: 'rgba(255, 255, 255, 0.2)'
-            })
-          })
+    const schema = this.kleurschema;
+    if (this.typeSelectTekenen.value !== '') {
+     const Drawtype = this.typeSelectTekenen.value;
+     this.draw = new OlDraw({
+      source: this.tekensource,
+      type: (Drawtype as GeometryType),
+      style: new Style({
+       fill: new Fill({
+        color: 'rgba(255, 255, 255, 0.2)'
+       }),
+       stroke: new Stroke({
+        color: 'rgba(0, 0, 0, 0.5)',
+        lineDash: [10, 10],
+        width: 2
+       }),
+       image: new Circle({
+        radius: 5,
+        stroke: new Stroke({
+        color: 'rgba(0, 0, 0, 0.7)'
+       }),
+       fill: new Fill({
+        color: 'rgba(255, 255, 255, 0.2)'
         })
-        });
-       this.map.addInteraction(this.draw);
+       })
+      })
+     });
+     this.draw.on('drawend', (event) => {
+      event.feature.setStyle(new Style({
+       fill: new Fill({color: 'yellow'}),
+        stroke: new Stroke({color: 'rgba(0, 0, 0, 0.5)', lineDash: [10, 10], width: 2}),
+        image: new Circle({radius: 5,
+         stroke: new Stroke({ color: 'rgba(0, 0, 0, 0.7)'}),
+         fill: new Fill({color: 'rgba(255, 255, 255, 0.2)'}) })
+      })
+      );
+      this.drawArray.push(event.feature);
+     });
+     this.map.addInteraction(this.draw);
      }
    }
 
@@ -266,12 +277,15 @@ export class KaartviewerComponent implements AfterViewInit {
    mapClick() {
     this.map.on('singleclick', (evt) => {
      const viewResolution = this.mapconfig._view.getResolution();
+
      this.map.forEachLayerAtPixel(evt.pixel, (layer) => {
       const source = layer.getSource();
 
       if ((source as any).getFeatureInfoUrl) {
        const url = (source as any).getFeatureInfoUrl(
         evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'application/json' } );
+
+
 
        if (url) {
         fetch(url).then((response) => {
