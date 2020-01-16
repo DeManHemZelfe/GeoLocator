@@ -6,9 +6,10 @@
 }
 .draw-menu{
   background-color: red;
+  z-index: 1;
   position: absolute;
 }
-.button:hover
+/* .button:hover
 {
   background-color: red;
 }
@@ -16,4 +17,4 @@
 {
   display: block;
   background-color: royalblue;
-}
+} */

@@ -45,7 +45,7 @@ import Transform from 'ol-ext/interaction/transform';
 import TileSource from 'ol/source/Tile';
 
 
-import { Polygon, LineString } from 'ol/geom';
+import { Polygon, LineString, Geometry } from 'ol/geom';
 import {getArea, getLength} from 'ol/sphere';
 import GeometryType from 'ol/geom/GeometryType';
 
@@ -84,10 +84,11 @@ export class KaartviewerComponent implements AfterViewInit {
   private map: Map;
   private draw: OlDraw;
   // FORMCONTROLS
+  output;
   sketch;
-  measureTooltipElement;
+  measureTooltipElement: HTMLElement;
   tooltipcoord;
-  measureTooltip;
+  measureTooltip: Overlay;
   typeSelectTekenen = new FormControl('');
   typeSelectStyle   = new FormControl('');
   kleurschema;
@@ -210,6 +211,43 @@ export class KaartviewerComponent implements AfterViewInit {
    // OUTPUT RETURN
    ArrayForUndo() { console.log('Array voor undo'); }
    ArrayForRedo() { console.log('Array voor undo'); }
+
+   // Tooltip (openlayers codesandbox)
+   createMeasureTooltip() {
+     if (this.measureTooltipElement) {
+      this.measureTooltipElement.parentNode.removeChild(this.measureTooltipElement);
+     }
+     this.measureTooltipElement = document.createElement('div');
+     this.measureTooltipElement.className = 'ol-tooltip ol-tooltip-measure';
+     const bottomcenter = 'bottom-center';
+     this.measureTooltip = new Overlay({
+       element: this.measureTooltipElement,
+       offset: [0, -15],
+       positioning: bottomcenter as OverlayPositioning,
+     });
+     this.map.addOverlay(this.measureTooltip);
+   }
+
+   formatLength(line) {
+     const length = getLength(line);
+     if (length > 100) {
+       this.output = (Math.round(length / 1000 * 100) / 100) + '' + 'km';
+     } else {
+       this.output = (Math.round(length * 100) / 100) + '' + 'm';
+     }
+     return this.output;
+   }
+   formatArea(polygon) {
+     const area = getArea(polygon);
+     if (area > 10000) {
+      this.output  = (Math.round(area / 1000000 * 100) / 100) +
+       '' + 'km<sup>2</sup>';
+     } else {
+      this.output = (Math.round(area * 100) / 100) + '' + 'm<sup>2</sup>';
+     }
+     return this.output;
+   }
+
    addMeetInteraction() {
     const schema = this.kleurschema;
     if (this.typeSelectTekenen.value !== '') {
@@ -237,7 +275,39 @@ export class KaartviewerComponent implements AfterViewInit {
        })
       })
      });
+
+     this.draw.on('drawstart', (event) => {
+      this.createMeasureTooltip();
+      const Meetsketch = event.feature;
+      Meetsketch.getGeometry().on('change', (_event) => {
+        const geom = _event.target;
+        console.log(geom);
+
+        if (geom instanceof Polygon) {
+          this.output = this.formatArea(geom);
+          this.tooltipcoord = geom.getInteriorPoint().getCoordinates();
+
+          // console.log(this.tooltipcoord);
+
+        } else if (geom instanceof LineString) {
+          this.output = this.formatLength(geom);
+          this.tooltipcoord = geom.getLastCoordinate();
+        }
+        this.measureTooltipElement.innerHTML = this.output;
+        this.measureTooltip.setPosition(this.tooltipcoord);
+      });
+     });
+
      this.draw.on('drawend', (event) => {
+      this.measureTooltipElement.className = 'ol-tooltip ol-tooltip-static';
+      this.measureTooltip.setOffset([0, -7]);
+      this.sketch = null;
+      this.measureTooltipElement = null;
+      this.createMeasureTooltip();
+
+      // VANAF HIER HIER HIER
+
+      console.log(event.feature);
       event.feature.setStyle(new Style({
        fill: new Fill({color: 'yellow'}),
         stroke: new Stroke({color: 'rgba(0, 0, 0, 0.5)', lineDash: [10, 10], width: 2}),
@@ -247,19 +317,22 @@ export class KaartviewerComponent implements AfterViewInit {
       })
       );
       this.drawArray.push(event.feature);
+
      });
+
      this.map.addInteraction(this.draw);
+     this.createMeasureTooltip();
      }
    }
-
   switchMeetMode(event: GeometryType) {
-   console.log(event);
+  //  console.log(event);
    if (event === 'LineString' || event === 'Polygon') {
      this.typeSelectTekenen.setValue(event);
    } else {
      this.typeSelectTekenen.setValue('');
    }
    this.map.removeInteraction(this.draw);
+  //  this.map.removeInteraction(this.measureTooltip);
    this.addMeetInteraction();
   }
 
@@ -304,6 +377,8 @@ export class KaartviewerComponent implements AfterViewInit {
            const pushNewFeature = features[0].getProperties();
            const index = this.objectarray.findIndex(x => x === pushNewFeature);
            this.objectarray.splice(index, 1);
+           this.objectarray.push(pushNewFeature);
+
            this.highlightsource.clear();
            this.highlightsource.addFeature(features[0]);
             }
