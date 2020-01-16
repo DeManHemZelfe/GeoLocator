@@ -34,7 +34,7 @@ import { ServiceService } from '../pdokmap/pdokmapconfigmap/service.service';
 import { BgService } from '../pdokmap/layer/bg.service';
 import { TooltipDirective } from '@progress/kendo-angular-tooltip';
 import { style } from '@angular/animations';
-import {click, pointerMove, altKeyOnly, singleClick} from 'ol/events/condition';
+import {click, pointerMove, altKeyOnly, singleClick, doubleClick} from 'ol/events/condition';
 import Select, { SelectEvent } from 'ol/interaction/Select';
 import { transformExtent, addProjection,  } from 'ol/proj';
 import { transformGeom2D } from 'ol/geom/SimpleGeometry';
@@ -78,21 +78,19 @@ export class KaartviewerComponent implements AfterViewInit {
   public foundPlace: any = null;
   public selectedItem = [];
   public selectedIndex = -1;
-  // SELECT FUNCTIONS
-  Arrow = new Select();
+  // INTERACTIONS FUNCTIONS
+  Interactionselect = new Select();
+  InteractionTranlate = new Translate({
+    features: this.Interactionselect.getFeatures(),
+  });
+  InteractionTransform;
   // MAP INTERACTIONS
   private map: Map;
   private draw: OlDraw;
   // FORMCONTROLS
-  output;
-  sketch;
-  measureTooltipElement: HTMLElement;
-  tooltipcoord;
-  measureTooltip: Overlay;
   typeSelectTekenen = new FormControl('');
   typeSelectStyle   = new FormControl('');
   kleurschema;
-  translate = new Translate({});
   // transform = new transform({});
   // TEKENFUNCTIES
   tekensource = new VectorSource({wrapX: false, });
@@ -111,7 +109,30 @@ export class KaartviewerComponent implements AfterViewInit {
      })
     })
   });
-
+  // MEET TOOLTIPS
+  MeetSource = new VectorSource({});
+  MeetLayer = new VectorLayer({
+    source: this.MeetSource,
+    style: new Style({
+     fill: new Fill({ color: 'rgba(255, 255, 255, 0.2)' }),
+     stroke: new Stroke({
+      color: 'rgba(0, 0, 0, 0.5)', lineDash: [10, 10], width: 2 }),
+       image: new Circle({
+        radius: 5,
+        stroke: new Stroke({
+         color: 'rgba(0, 0, 0, 0.7)'
+         }),
+         fill: new Fill({
+         color: 'rgba(255, 255, 255, 0.2)'
+        })
+      })
+    })
+  });
+  output;
+  sketch;
+  measureTooltipElement: HTMLElement;
+  tooltipcoord;
+  measureTooltip: Overlay;
   // UNDO-ARRAY
   undoArray = [];
   dataUndoArray = [];
@@ -195,6 +216,7 @@ export class KaartviewerComponent implements AfterViewInit {
         // DRAW FUNCTION
         this.tekenfunctie,
         this.highlight,
+        this.MeetLayer,
       ],
       view: this.mapconfig._view,
       controls: [
@@ -219,11 +241,12 @@ export class KaartviewerComponent implements AfterViewInit {
      }
      this.measureTooltipElement = document.createElement('div');
      this.measureTooltipElement.className = 'ol-tooltip ol-tooltip-measure';
-     const bottomcenter = 'bottom-center';
+     const bottom = 'bottom-right';
+     const center = bottom as OverlayPositioning;
      this.measureTooltip = new Overlay({
        element: this.measureTooltipElement,
        offset: [0, -15],
-       positioning: bottomcenter as OverlayPositioning,
+       positioning: center,
      });
      this.map.addOverlay(this.measureTooltip);
    }
@@ -231,9 +254,9 @@ export class KaartviewerComponent implements AfterViewInit {
    formatLength(line) {
      const length = getLength(line);
      if (length > 100) {
-       this.output = (Math.round(length / 1000 * 100) / 100) + '' + 'km';
+       this.output = (Math.round(length / 1000 * 1000) / 100) + '' + 'km';
      } else {
-       this.output = (Math.round(length * 100) / 100) + '' + 'm';
+       this.output = (Math.round(length * 1000) / 100) + '' + 'm';
      }
      return this.output;
    }
@@ -253,31 +276,32 @@ export class KaartviewerComponent implements AfterViewInit {
     if (this.typeSelectTekenen.value !== '') {
      const Drawtype = this.typeSelectTekenen.value;
      this.draw = new OlDraw({
-      source: this.tekensource,
+      source: this.MeetSource,
       type: (Drawtype as GeometryType),
       style: new Style({
-       fill: new Fill({
-        color: 'rgba(255, 255, 255, 0.2)'
-       }),
-       stroke: new Stroke({
-        color: 'rgba(0, 0, 0, 0.5)',
-        lineDash: [10, 10],
-        width: 2
-       }),
-       image: new Circle({
-        radius: 5,
+        fill: new Fill({
+          color: 'rgba(255, 255, 255, 0.2)'
+        }),
         stroke: new Stroke({
-        color: 'rgba(0, 0, 0, 0.7)'
-       }),
-       fill: new Fill({
-        color: 'rgba(255, 255, 255, 0.2)'
+          color: 'rgba(0, 0, 0, 0.5)',
+          lineDash: [10, 10],
+          width: 2
+        }),
+        image: new Circle({
+          radius: 5,
+          stroke: new Stroke({
+            color: 'rgba(0, 0, 0, 0.7)'
+          }),
+          fill: new Fill({
+            color: 'rgba(255, 255, 255, 0.2)'
+          })
         })
-       })
       })
      });
+     this.map.addInteraction(this.draw);
+     this.createMeasureTooltip();
 
      this.draw.on('drawstart', (event) => {
-      this.createMeasureTooltip();
       const Meetsketch = event.feature;
       Meetsketch.getGeometry().on('change', (_event) => {
         const geom = _event.target;
@@ -286,8 +310,6 @@ export class KaartviewerComponent implements AfterViewInit {
         if (geom instanceof Polygon) {
           this.output = this.formatArea(geom);
           this.tooltipcoord = geom.getInteriorPoint().getCoordinates();
-
-          // console.log(this.tooltipcoord);
 
         } else if (geom instanceof LineString) {
           this.output = this.formatLength(geom);
@@ -304,24 +326,8 @@ export class KaartviewerComponent implements AfterViewInit {
       this.sketch = null;
       this.measureTooltipElement = null;
       this.createMeasureTooltip();
-
-      // VANAF HIER HIER HIER
-
-      console.log(event.feature);
-      event.feature.setStyle(new Style({
-       fill: new Fill({color: 'yellow'}),
-        stroke: new Stroke({color: 'rgba(0, 0, 0, 0.5)', lineDash: [10, 10], width: 2}),
-        image: new Circle({radius: 5,
-         stroke: new Stroke({ color: 'rgba(0, 0, 0, 0.7)'}),
-         fill: new Fill({color: 'rgba(255, 255, 255, 0.2)'}) })
-      })
-      );
-      this.drawArray.push(event.feature);
-
+      // this.drawArray.push(event.feature);
      });
-
-     this.map.addInteraction(this.draw);
-     this.createMeasureTooltip();
      }
    }
   switchMeetMode(event: GeometryType) {
@@ -473,12 +479,20 @@ export class KaartviewerComponent implements AfterViewInit {
    });
   }
 
-  select() {
-    const translate = new Translate({features: this.Arrow.getFeatures() });
+  select(event) {
     this.map.removeInteraction(this.draw);
-    this.map.removeInteraction(translate);
-    this.map.removeInteraction(this.Arrow);
+    this.map.removeInteraction(this.Interactionselect);
+    this.map.removeInteraction(this.InteractionTranlate);
+    this.map.removeInteraction(this.InteractionTransform);
    }
+  transform(event) {
+    this.InteractionTransform = new Transform({
+     rotate: true, scale: true, translate: true,
+     noFlip: true,
+    });
+    // this.map.addInteraction(this.Interactionselect);
+    this.map.addInteraction(this.InteractionTransform);
+  }
    // TRANSFORM SELECT FUNCTIE MAKEN EN COMPONENT AAN MAKEN DIE CHECKT WELKE
    // SERVICE LAYERS EN SOURCE VAN DE KAARTLAGEN UIT EN STAAN OM ZO DE FEATURES MEE TEN GEVEN
 

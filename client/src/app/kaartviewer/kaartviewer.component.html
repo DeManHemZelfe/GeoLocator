@@ -35,7 +35,7 @@
 
 <app-dialog-component (_styleswitchDialog)="styleswitchDialog($event)" (_checkfu)="checkforupdate($event)" [TekenSource]="tekensource" [DrawArray]="drawArray" [DataActiveArray]="dataActiveArray" [DataUndoArray]="dataUndoArray"></app-dialog-component>
 <div #dragmenu><app-drag-menu [ObjectInformatie]="objectarray"></app-drag-menu></div>
-<div #drawmenu><app-draw-menu (_giveDrawValue)="switchDrawMode($event)" (_giveMeetValue)="switchMeetMode($event)" (_select)="select($event)"></app-draw-menu></div>
+<div #drawmenu><app-draw-menu (_giveDrawValue)="switchDrawMode($event)" (_giveMeetValue)="switchMeetMode($event)" (_select)="select($event)" (_transform)="transform($event)"></app-draw-menu></div>
 <div #geosetmenu><app-geoset-menu></app-geoset-menu></div>
 
 <div id="provincienaam">provincies</div>

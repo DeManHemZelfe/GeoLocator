@@ -16,6 +16,7 @@ export class DrawMenuComponent {
  @Output() _giveDrawValue: EventEmitter<any> = new EventEmitter<any>();
  @Output() _giveMeetValue: EventEmitter<any> = new EventEmitter<any>();
  @Output() _select: EventEmitter<any> = new EventEmitter<any>();
+ @Output() _transform: EventEmitter<any> = new EventEmitter<any>();
  public windowOpened = false;
  public dialogOpened = false;
 
@@ -47,6 +48,7 @@ export class DrawMenuComponent {
   }
  // Select
  Select() {return this._select.emit(); }
+ Transform() {return this._transform.emit(); }
  // Drawclick
  drawclick() {
   if (click) {
@@ -69,11 +71,6 @@ export class DrawMenuComponent {
    } else {
     return this._giveMeetValue.emit('');
    }
-  // const check = value === 'area' ? 'Polygon' : 'LineString';
-  // console.log(check);
-  // if (check !== '') {
-  // return this._giveMeetValue.emit(value); }
-  // return this._giveMeetValue.emit('');
  }
  OpenSettings() {
  console.log('Open Settings');
