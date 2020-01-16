@@ -9,10 +9,18 @@
     <h2>Informatie</h2>
     <div>
      <mat-grid-list cols="2" rowHeight="2:1" style="border: 1px solid black;" *ngFor="let informatie of ObjectInformatie">
-      <mat-grid-tile>Naam</mat-grid-tile><mat-grid-tile class="matborder">{{informatie.gemeentenaam}} {{informatie.provincienaam}}</mat-grid-tile>
-      <mat-grid-tile>id</mat-grid-tile><mat-grid-tile  class="matborder">{{informatie.geometry.ol_uid}}</mat-grid-tile>
-      <mat-grid-tile>code</mat-grid-tile><mat-grid-tile  class="matborder">{{informatie.code}}</mat-grid-tile>
-      <mat-grid-tile>Legenda</mat-grid-tile><mat-grid-tile class="matborder">imgage.</mat-grid-tile>
+      <mat-grid-tile>Naam</mat-grid-tile><mat-grid-tile class="matborder">
+       {{informatie.gemeentenaam}} {{informatie.provincienaam}} {{informatie.landsnaam}}
+      </mat-grid-tile>
+      <mat-grid-tile>id</mat-grid-tile><mat-grid-tile  class="matborder">
+        {{informatie.geometry.ol_uid}}
+      </mat-grid-tile>
+      <mat-grid-tile>code</mat-grid-tile><mat-grid-tile  class="matborder">
+        {{informatie.code}}
+      </mat-grid-tile>
+      <mat-grid-tile>Legenda</mat-grid-tile><mat-grid-tile class="matborder">
+        imgage
+      </mat-grid-tile>
      </mat-grid-list>
     </div>
   </div>

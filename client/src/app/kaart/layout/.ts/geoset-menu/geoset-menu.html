@@ -16,9 +16,13 @@
         </mat-expansion-panel-header>
         <mat-panel-description>
           <ul>
-            <li style="list-style: none;"><div class="dropdown"> DD Achtergrondkaart</div>
-              <fieldset id="layer0">
-                <label class="" for="visible0">
+            <li style="list-style: none;">
+              <div class="dropdown"><mat-checkbox (click)="show1 = !show1">
+                <h4>DD AchterGrondkaart</h4>
+              </mat-checkbox>
+            </div>
+              <fieldset *ngIf="show1" id="layer0">
+                <label for="visible0">
                   <mat-checkbox style="width: 100%;" *ngFor="let layer of getKaartButton()"
                   (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
                 </label>
@@ -39,8 +43,12 @@
             <li class="list" style="list-style: none;">
               <h2>WMS</h2>
               <fieldset>
-                <li>Grenzen
-                  <fieldset id="layer0"><label class="" for="visible0">
+                <li>
+                 <div class="dropdown"><mat-checkbox (click)="show2 = !show2">
+                  <h4>DD Grenzen</h4>
+                  </mat-checkbox>
+                </div>
+                  <fieldset *ngIf="show2" id="layer0" class="fieldsetcontent"><label class="" for="visible0">
                    <mat-checkbox style="width: 100%;" *ngFor="let layer of getGrenzenButton()"
                     (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
                     </label>
@@ -48,8 +56,12 @@
                 </li>
               </fieldset>
               <fieldset>
-                <li>Bag
-                  <fieldset id="layer0"><label class="" for="visible0">
+                <li>
+                  <div class="dropdown"><mat-checkbox (click)="show3 = !show3">
+                    <h4>DD Bag</h4>
+                    </mat-checkbox>
+                  </div>
+                  <fieldset *ngIf="show3" class="fieldsetcontent"  id="layer0"><label class="" for="visible0">
                    <mat-checkbox style="width: 100%;" *ngFor="let layer of getBagButton()"
                     (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
                     </label>

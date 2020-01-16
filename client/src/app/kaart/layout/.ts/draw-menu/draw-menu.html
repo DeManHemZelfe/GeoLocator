@@ -1,42 +1,56 @@
 <div class="drawmenu">
- <button (click)="Select($event)"><i class="material-icons" title="Select" style="font-size: 10px;" style="color: black;">zoom_out_map</i></button>
- <button (click)="Transform($event)"><i class="material-icons" title="Transform" style="font-size: 10px;" style="color: black;">tab_unselected</i></button>
+  <button (click)="Select($event)"><i class="material-icons" title="Select" style="font-size: 10px;" style="color: black;">zoom_out_map</i></button>
+  <button (click)="Transform($event)"><i class="material-icons" title="Transform" style="font-size: 10px;" style="color: black;">tab_unselected</i></button>
 
 
- <button (click)="show2 = !show2" class="button">
-  <i class="material-icons" title="Meten" style="font-size: 10px;" style="color: black;">timeline</i>
- </button>
-
- <div *ngIf="show2" class="draw-menu" id="menu">
-
-  <button (click)="switchMetenMode('length')" value="LineString" title="LineString" id="LineString"><i class="material-icons" style="font-size: 10px;" style="color: black;">call_made</i></button>
-  <button (click)="switchMetenMode('area')"    value="Polygon" title="Polygon" id="Polygon"><i class="material-icons" style="font-size: 10px;" style="color: black;">crop_square</i></button>
-
-</div>
-
-
- <button (click)="show1 = !show1" class="button">
-   <i class="material-icons" title="Edit" style="font-size: 10px;" style="color: black;">edit</i>
+  <button (click)="show2 = !show2" class="button">
+   <i class="material-icons" title="Meten" style="font-size: 10px;" style="color: black;">timeline</i>
   </button>
-  <div *ngIf="show1" class="draw-menu" id="menu">
-   <button (click)="switchMode('Point')" value="Point" title="Point" id="Point"><i class="material-icons" style="font-size: 10px;" style="color: black;">brightness_1</i></button>
-   <button (click)="switchMode('LineString')" value="LineString" title="LineString" id="LineString"><i class="material-icons" style="font-size: 10px;" style="color: black;">call_made</i></button>
-   <button (click)="switchMode('Polygon')" value="Polygon" title="Polygon" id="Polygon"> <i class="material-icons" style="font-size: 10px;" style="color: black;">crop_square</i></button>
-   <button (click)="switchMode('Circle')" value="Circle" title="Circle" id="Circle"> <i class="material-icons" style="font-size: 10px;" style="color: black;">panorama_fish_eye</i></button>
-  </div>
 
- <button><i class="material-icons" title="Color" style="font-size: 10px;" style="color: black;">color_lens</i></button>
+  <div *ngIf="show2" class="draw-menu" id="menu">
 
- <button><i class="material-icons" title="undo & redo" style="font-size: 10px;" style="color: black;">undo</i></button>
+   <button (click)="switchMetenMode('length')" value="LineString" title="LineString" id="LineString"><i class="material-icons" style="font-size: 10px;" style="color: black;">call_made</i></button>
+   <button (click)="switchMetenMode('area')"    value="Polygon" title="Polygon" id="Polygon"><i class="material-icons" style="font-size: 10px;" style="color: black;">crop_square</i></button>
 
- <button (click)="OpenSettings()"><i class="material-icons" title="draw options" style="font-size: 10px;" style="color: black;">settings</i></button>
-</div>
+ </div>
 
 
+  <button (click)="show1 = !show1" class="button">
+    <i class="material-icons" title="Edit" style="font-size: 10px;" style="color: black;">edit</i>
+   </button>
+   <div *ngIf="show1" class="draw-menu" id="menu">
+    <button (click)="switchMode('Point')" value="Point" title="Point" id="Point"><i class="material-icons" style="font-size: 10px;" style="color: black;">brightness_1</i></button>
+    <button (click)="switchMode('LineString')" value="LineString" title="LineString" id="LineString"><i class="material-icons" style="font-size: 10px;" style="color: black;">call_made</i></button>
+    <button (click)="switchMode('Polygon')" value="Polygon" title="Polygon" id="Polygon"> <i class="material-icons" style="font-size: 10px;" style="color: black;">crop_square</i></button>
+    <button (click)="switchMode('Circle')" value="Circle" title="Circle" id="Circle"> <i class="material-icons" style="font-size: 10px;" style="color: black;">panorama_fish_eye</i></button>
+   </div>
 
-<!-- <button kendoButton *ngIf="!dialogOpened && !windowOpened" (click)="open('window')">Open window</button>
-<kendo-window [minWidth]="200" [minHeight]="125" title="About" *ngIf="windowOpened" (close)="close('window')">
-  <p style="text-align: center;">Additional info</p>
-</kendo-window> -->
+  <button><i class="material-icons" title="Color" style="font-size: 10px;" style="color: black;">color_lens</i></button>
+
+  <button><i class="material-icons" title="undo & redo" style="font-size: 10px;" style="color: black;">undo</i></button>
+
+  <button *ngIf="opened2" (click)="open2()"><i class="material-icons" title="draw options" style="font-size: 10px;" style="color: black;">settings</i></button>
+
+ </div>
+ <kendo-window title="Draw Settings" *ngIf="!opened2" (close)="close2()" [minWidth]="250" [width]="450">
+
+   <form class="k-form">
+       <fieldset>
+           <legend>Draw Settings</legend>
+       </fieldset>
+
+       <div class="text-right">
+           <button type="button" class="k-button" (click)="close()">Cancel</button>
+           <button type="button" class="k-button k-primary" (click)="submit2()">Submit</button>
+       </div>
+   </form>
+
+   </kendo-window>
+
+
+ <!-- <button kendoButton *ngIf="!dialogOpened && !windowOpened" (click)="open('window')">Open window</button>
+ <kendo-window [minWidth]="200" [minHeight]="125" title="About" *ngIf="windowOpened" (close)="close('window')">
+   <p style="text-align: center;">Additional info</p>
+ </kendo-window> -->
 
 

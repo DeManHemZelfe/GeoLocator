@@ -138,9 +138,12 @@ export class KaartviewerComponent implements AfterViewInit {
   dataUndoArray = [];
   dataActiveArray = [];
   drawArray = [];
+  // currentData = this.dataUndoArray;
+  // currentData = this.dataUndoArray;
+  // GEO ARRAY
   objectarray = [];
-  // currentData = this.dataUndoArray;
-  // currentData = this.dataUndoArray;
+  BagArray = [];
+  LayerzIndex = [];
   // REDO-ARRAY
   RedoArray = [];
   dataRedoArray = [];
@@ -342,17 +345,19 @@ export class KaartviewerComponent implements AfterViewInit {
    this.addMeetInteraction();
   }
 
+   Settings(event) {
+     console.log('Settings');
+   }
    checkforupdate() {
-    // const f = this.tekensource.getFeatures(); const l = f.pop(); this.dataActiveArray.push(l);
-    // const p = l.getProperties(); console.log(p);
     const s = this.tekenfunctie.getSource();
     const f = s.getFeatures();
     const p = f.pop();
     const pr = p;
-
     console.log(pr);
-
    }
+
+
+
    mapClick() {
     this.map.on('singleclick', (evt) => {
      const viewResolution = this.mapconfig._view.getResolution();
@@ -371,15 +376,17 @@ export class KaartviewerComponent implements AfterViewInit {
 
           if (Bagname) {
            const pushNewFeature = features[0].getProperties();
-           const index = this.objectarray.findIndex(x => x === pushNewFeature);
-           this.objectarray.splice(index, 1);
-           this.objectarray.push(pushNewFeature);
+           const index = this.BagArray.findIndex(x => x === pushNewFeature);
+           this.BagArray.splice(index, 1);
+           this.BagArray.push(pushNewFeature);
            console.log(features[0].getProperties());
            console.log(Bagname);
           } else {
 
           if (features[0]) {
            document.getElementById('provincienaam').innerHTML = features[0].get('provincienaam');
+           console.log(features[0].getProperties());
+
            const pushNewFeature = features[0].getProperties();
            const index = this.objectarray.findIndex(x => x === pushNewFeature);
            this.objectarray.splice(index, 1);
@@ -487,8 +494,12 @@ export class KaartviewerComponent implements AfterViewInit {
    }
   transform(event) {
     this.InteractionTransform = new Transform({
-     rotate: true, scale: true, translate: true,
-     noFlip: true,
+     rotate: true,
+      scale: true,
+       translate: true,
+        noFlip: true,
+         stretch: true,
+          translateFeature: true,
     });
     // this.map.addInteraction(this.Interactionselect);
     this.map.addInteraction(this.InteractionTransform);

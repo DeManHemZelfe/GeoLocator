@@ -17,9 +17,11 @@ export class DrawMenuComponent {
  @Output() _giveMeetValue: EventEmitter<any> = new EventEmitter<any>();
  @Output() _select: EventEmitter<any> = new EventEmitter<any>();
  @Output() _transform: EventEmitter<any> = new EventEmitter<any>();
+ @Output() _settings: EventEmitter<any> = new EventEmitter<any>();
  public windowOpened = false;
  public dialogOpened = false;
-
+ opened2 = true;
+ dataSaved2 = false;
 
  maakopen = false;
  maakopen2 = false;
@@ -39,6 +41,16 @@ export class DrawMenuComponent {
  constructor(
   private dialogService: DialogService
   ) {}
+  close2() {
+   this.opened2 = true;
+  }
+  open2() {
+   this.opened2 = false;
+  }
+  submit2() {
+   this.dataSaved2 = true;
+   this.close2();
+  }
 
   public close(component) {
     this[component + 'Opened'] = false;
@@ -49,6 +61,11 @@ export class DrawMenuComponent {
  // Select
  Select() {return this._select.emit(); }
  Transform() {return this._transform.emit(); }
+ OpenSettings() {
+  console.log('OpenSettings');
+  return this._settings.emit();
+ }
+
  // Drawclick
  drawclick() {
   if (click) {
@@ -57,6 +74,7 @@ export class DrawMenuComponent {
    console.log('Wrong');
   }
  }
+
  // SwitchMode
  switchMode(value) {
   if (value !== '') {
@@ -72,10 +90,6 @@ export class DrawMenuComponent {
     return this._giveMeetValue.emit('');
    }
  }
- OpenSettings() {
- console.log('Open Settings');
- }
-
 } // Einde
 
 

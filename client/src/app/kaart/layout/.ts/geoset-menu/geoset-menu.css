@@ -35,3 +35,16 @@ mat-expansion-panel-header
 {
   width: 75%;
 }
+h4
+{
+  margin: 0px;
+}
+fieldset
+{
+  color: black;
+}
+.fieldsetcontent
+{
+ color: black;
+ margin-left: 16px;
+}

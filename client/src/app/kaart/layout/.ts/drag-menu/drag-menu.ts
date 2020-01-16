@@ -14,6 +14,7 @@ import { Align } from '@progress/kendo-angular-popup';
 export class DragMenuComponent {
   @Output() _submit: EventEmitter<any> = new EventEmitter<any>();
   @Input() ObjectInformatie;
+  @Input() BagObjectInformatie;
 
   anchorAlign: Align = { horizontal: 'center', vertical: 'top' };
   popupAlign: Align = { horizontal: 'center', vertical: 'bottom' };

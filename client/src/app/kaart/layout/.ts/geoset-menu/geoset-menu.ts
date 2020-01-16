@@ -22,66 +22,11 @@ import { GeocoderService } from 'angular-geocoder';
   styleUrls: ['./geoset-menu.css']
 })
 export class GeosetComponent {
-  checked = false;
-  disabled = false;
-
-  public checkedKeys: any[] = [''];
-  public checkedKeys2: any[] = [''];
-  public enableCheck = true;
-  public checkChildren = true;
-  public checkParents = true;
-  public checkOnClick = false;
-  public checkMode: any = 'multiple';
-  public selectionMode: any = 'single';
-
-  public get checkableSettings(): CheckableSettings {
-      return {
-          checkChildren: this.checkChildren,
-          checkParents: this.checkParents,
-          enabled: this.enableCheck,
-          mode: this.checkMode,
-          checkOnClick: this.checkOnClick
-      };
-  }
-
-  public data2: any[] = [{
-    text2: 'Achtergrond Kaarten',
-    items2: [
-          { text2: 'Brt' },
-          { text2: 'BrtWater' },
-          { text2: 'BrtGrijs' },
-          { text2: 'BrtPasteel' }
-       ]
-      }];
-
-  public data: any[] = [{
-    text: 'Overige Kaarten',
-    items: [
-        {
-            text: 'Bestuurlijke Grenzen',
-            items: [
-                { text: 'Landsgrens' },
-                { text: 'Gemeentegrens' },
-                { text: 'Provinciegrens' }
-            ]
-        },
-        {
-            text: 'Bag',
-            items: [
-                { text: 'woonplaats' },
-            ]
-        },
-        {
-            text: 'Spoor',
-            items: [
-                { text: 'spoorwegen' },
-            ]
-        }
-    ]
-  }];
-
-  public children = (dataItem: any): Observable<any[]> => of(dataItem.items);
-  public hasChildren = (dataItem: any): boolean => !!dataItem.items;
+  show1 = false;  show2 = false;   show3 = false;
+  show4 = false;  show5 = false;   show6 = false;
+  show7 = false;  show8 = false;   show9 = false;
+  show10 = false; show11 = false; show12 = false;
+  show13 = false; show14 = false; show15 = false;
 
   constructor(
     private spoorwegService: SpoorwegenService,
@@ -101,9 +46,6 @@ export class GeosetComponent {
   getDienstenButton() {return this.buttonforlayers.getLayerGroupOverigeDiensten(); }
   getSpoorButton() {return this.buttonforlayers.getLayerGroupSpoorwegen(); }
 
-  check() {
-    if (this.checked === false) {console.log('check'); }
-   }
   }
 
 
