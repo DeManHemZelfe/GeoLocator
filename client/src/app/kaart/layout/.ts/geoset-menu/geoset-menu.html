@@ -35,16 +35,16 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
          <mat-panel-title style="border-bottom: 1px solid black;">
-          Overige datasets
+          Overige WMS datasets
          </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-panel-description>
           <ul>
             <li class="list" style="list-style: none;">
-              <h2>WMS</h2>
+              <!-- <h2>WMS</h2> -->
               <fieldset>
                 <li>
-                 <div class="dropdown"><mat-checkbox (click)="show2 = !show2">
+                 <div class="dropdown"><mat-checkbox (click)="show2 = !show2" (change)="change()">
                   <h4>DD Grenzen</h4>
                   </mat-checkbox>
                 </div>
@@ -63,6 +63,19 @@
                   </div>
                   <fieldset *ngIf="show3" class="fieldsetcontent"  id="layer0"><label class="" for="visible0">
                    <mat-checkbox style="width: 100%;" *ngFor="let layer of getBagButton()"
+                    (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
+                    </label>
+                   </fieldset>
+                </li>
+              </fieldset>
+              <fieldset>
+                <li>
+                 <div class="dropdown"><mat-checkbox (click)="show4 = !show4">
+                  <h4>DD Adressen</h4>
+                  </mat-checkbox>
+                </div>
+                  <fieldset *ngIf="show4" id="layer0" class="fieldsetcontent"><label class="" for="visible0">
+                   <mat-checkbox style="width: 100%;" *ngFor="let layer of getAdresButton()"
                     (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
                     </label>
                    </fieldset>

@@ -18,14 +18,23 @@ export class DrawMenuComponent {
  @Output() _select: EventEmitter<any> = new EventEmitter<any>();
  @Output() _transform: EventEmitter<any> = new EventEmitter<any>();
  @Output() _settings: EventEmitter<any> = new EventEmitter<any>();
+ @Output() _Enable: EventEmitter<any> = new EventEmitter<any>();
+ @Output() _Disable: EventEmitter<any> = new EventEmitter<any>();
+
+
+ @Output() _Modify: EventEmitter<any> = new EventEmitter<any>();
+ @Output() _Snap: EventEmitter<any> = new EventEmitter<any>();
+
  public windowOpened = false;
  public dialogOpened = false;
+
  opened2 = true;
  dataSaved2 = false;
 
  maakopen = false;
  maakopen2 = false;
  maakopen3 = false;
+
  show1 = false;  show2 = false;   show3 = false;
  show4 = false;  show5 = false;   show6 = false;
  show7 = false;  show8 = false;   show9 = false;
@@ -41,23 +50,14 @@ export class DrawMenuComponent {
  constructor(
   private dialogService: DialogService
   ) {}
-  close2() {
-   this.opened2 = true;
-  }
-  open2() {
-   this.opened2 = false;
-  }
-  submit2() {
-   this.dataSaved2 = true;
-   this.close2();
-  }
 
-  public close(component) {
-    this[component + 'Opened'] = false;
+  close2() {this.opened2 = true; }
+  open2() {this.opened2 = false; }
+  submit2() {
+   this.dataSaved2 = true; this.close2();
   }
-  public open(component) {
-    this[component + 'Opened'] = true;
-  }
+  public close(component) { this[component + 'Opened'] = false; }
+  public open(component)  { this[component + 'Opened'] = true;  }
  // Select
  Select() {return this._select.emit(); }
  Transform() {return this._transform.emit(); }
@@ -65,7 +65,6 @@ export class DrawMenuComponent {
   console.log('OpenSettings');
   return this._settings.emit();
  }
-
  // Drawclick
  drawclick() {
   if (click) {
@@ -75,22 +74,40 @@ export class DrawMenuComponent {
   }
  }
 
- // SwitchMode
- switchMode(value) {
-  if (value !== '') {
-  return this._giveDrawValue.emit(value); }
-  return this._giveDrawValue.emit('');
+Enable(value) {
+ console.log(value);
+ if (value === 'modify') {
+  console.log(value);
+  return this._Enable.emit(value);
+ } else if (value === 'snap') {
+  console.log(value);
+  return this._Enable.emit(value);
+ } else if (value === 'holes') {
+  console.log(value);
+  return this._Enable.emit(value);
+ } else {
+  return this._Enable.emit('');
  }
- switchMetenMode(value: 'length' | 'area') {
-   if (value === 'length') {
-     return this._giveMeetValue.emit('LineString');
-   } else if (value === 'area') {
-    return this._giveMeetValue.emit('Polygon');
-   } else {
-    return this._giveMeetValue.emit('');
-   }
+}
+Disable() {
+ return this._Disable.emit('');
+}
+switchMode(value) {
+ if (value !== '') {
+ return this._giveDrawValue.emit(value); }
+ return this._giveDrawValue.emit('');
  }
-} // Einde
+switchMetenMode(value: 'length' | 'area') {
+ if (value === 'length') {
+  return this._giveMeetValue.emit('LineString');
+ } else if (value === 'area') {
+  return this._giveMeetValue.emit('Polygon');
+ } else {
+  return this._giveMeetValue.emit('');
+  }
+ }
+
+}
 
 
 

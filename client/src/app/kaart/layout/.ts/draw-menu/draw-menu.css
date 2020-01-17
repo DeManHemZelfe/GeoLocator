@@ -9,12 +9,8 @@
   z-index: 1;
   position: absolute;
 }
-/* .button:hover
+.label
 {
-  background-color: red;
+ width: 100%;
 }
-.button:hover #menu
-{
-  display: block;
-  background-color: royalblue;
-} */
+

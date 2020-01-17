@@ -67,6 +67,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatButtonModule} from '@angular/material/button';
 import { MobileMenuComponent } from './device/mobile/pages/components/mobile-menu/mobile-menu/mobile-menu.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { AdresService } from './kaarten/kaart-lagen/overig/adressen/adres.service';
 
 
 
@@ -152,6 +153,7 @@ export function tokenGetter() {
     BgService,
     MapconfigService,
     LayerconfigService,
+    AdresService,
   ],
   bootstrap: [AppComponent],
 })

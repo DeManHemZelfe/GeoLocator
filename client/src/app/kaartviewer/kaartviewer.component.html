@@ -18,6 +18,22 @@
       </kendo-window>
     </div>
 </div>
+<div #PopUpAdresMenu>
+  <div *ngFor="let informatie of AdresArray">
+   <kendo-window [minWidth]="130" [minHeight]="125" [height]="215" title="Adres"
+    style="height: 380px; background-color: white; color: black;">
+    <div class="kendocontent">
+      <table class="table">
+       <th>Titel</th>
+       <tr><td>Straatnaam</td><td>{{informatie.straatnaam}}</td></tr>
+       <tr><td>Bouwjaar</td><td>{{informatie.huisnummer}}</td></tr>
+       <tr><td>Woonplaats</td><td>{{informatie.woonplaats}}</td></tr>
+       <tr><td>PostCode</td><td>{{informatie.postcode}}</td></tr>
+      </table>
+    </div>
+    </kendo-window>
+  </div>
+</div>
 
 <div id="map" class="map"></div>
  <div #toolbarmenu class="toolbarmenu" kendoTooltip position="right" style="background-color:red;" style="width: 10%;">
@@ -36,7 +52,10 @@
 
 <app-dialog-component (_styleswitchDialog)="styleswitchDialog($event)" (_checkfu)="checkforupdate($event)" [TekenSource]="tekensource" [DrawArray]="drawArray" [DataActiveArray]="dataActiveArray" [DataUndoArray]="dataUndoArray"></app-dialog-component>
 <div #dragmenu><app-drag-menu [ObjectInformatie]="objectarray" [BagObjectInformatie]="BagArray"></app-drag-menu></div>
-<div #drawmenu><app-draw-menu (_giveDrawValue)="switchDrawMode($event)" (_giveMeetValue)="switchMeetMode($event)" (_select)="select($event)" (_transform)="transform($event)" (_settings)="Settings($event)"></app-draw-menu></div>
+<div #drawmenu><app-draw-menu
+ (_giveDrawValue)="switchDrawMode($event)" (_giveMeetValue)="switchMeetMode($event)" (_select)="select($event)"
+ (_transform)="transform($event)" (_settings)="Settings($event)"
+ (_Enable)="EnableInteractions($event)" (_Disable)="Disable()"></app-draw-menu></div>
 <div #geosetmenu><app-geoset-menu></app-geoset-menu></div>
 
 <div id="provincienaam">provincies</div>

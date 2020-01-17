@@ -48,6 +48,7 @@ import TileSource from 'ol/source/Tile';
 import { Polygon, LineString, Geometry } from 'ol/geom';
 import {getArea, getLength} from 'ol/sphere';
 import GeometryType from 'ol/geom/GeometryType';
+import { AdresService } from '../kaarten/kaart-lagen/overig/adressen/adres.service';
 
 @Component({
   selector: 'app-kaartviewer',
@@ -133,6 +134,12 @@ export class KaartviewerComponent implements AfterViewInit {
   measureTooltipElement: HTMLElement;
   tooltipcoord;
   measureTooltip: Overlay;
+
+  // MODIFY THE FEATURE
+  modify: Modify;
+  Meetmodify: Modify;
+  snap: Snap;
+  Meetsnap: Snap;
   // UNDO-ARRAY
   undoArray = [];
   dataUndoArray = [];
@@ -143,6 +150,7 @@ export class KaartviewerComponent implements AfterViewInit {
   // GEO ARRAY
   objectarray = [];
   BagArray = [];
+  AdresArray = [];
   LayerzIndex = [];
   // REDO-ARRAY
   RedoArray = [];
@@ -151,6 +159,7 @@ export class KaartviewerComponent implements AfterViewInit {
   // @VIEWCHILD
   @ViewChild('layerControlElement', { static: false }) layerControlElement: ElementRef;
   @ViewChild('PopUpMenu', { static: false }) PopUpMenu: ElementRef;
+  @ViewChild('PopUpAdresMenu', { static: false }) PopUpAdresMenu: ElementRef;
   @ViewChild('menu', { static: false }) menu: ElementRef;
   @ViewChild('searchmenu', { static: false }) searchmenu: ElementRef;
   @ViewChild('toolbarmenu', { static: false }) toolbarmenu: ElementRef;
@@ -171,6 +180,7 @@ export class KaartviewerComponent implements AfterViewInit {
   constructor(
    private spoorwegService: SpoorwegenService,
    private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
+   private adresService: AdresService,
    private bagService: BagService,
    private overigedienstenSerivce: OverigeDienstenService,
    private buttonforlayers: LayerButton,
@@ -204,6 +214,8 @@ export class KaartviewerComponent implements AfterViewInit {
         this.bagService.BagVerblijfsobjectLayer,
         this.bagService.BagWoonplaatsLayer,
         this.bagService.BagStandplaatsLayer,
+        // ADRESLAYERS
+        this.adresService.AdresLayer,
         // OVERIGELAYERS
         this.overigedienstenSerivce.OverheidsdienstenLayer,
         this.overigedienstenSerivce.AgrarischAreaalNederlandLayer,
@@ -224,6 +236,7 @@ export class KaartviewerComponent implements AfterViewInit {
       view: this.mapconfig._view,
       controls: [
         new Control({ element: this.PopUpMenu.nativeElement }),
+        new Control({ element: this.PopUpAdresMenu.nativeElement }),
         new Control({ element: this.toolbarmenu.nativeElement }),
         new Control({ element: this.dragmenu.nativeElement }),
         new Control({ element: this.drawmenu.nativeElement }),
@@ -333,6 +346,28 @@ export class KaartviewerComponent implements AfterViewInit {
      });
      }
    }
+  EnableInteractions(event) {
+   if (event === 'modify') {
+    console.log('modify', '+', event);
+    this.Meetmodify = new Modify({source: this.MeetSource});
+    this.modify = new Modify({ source: this.tekensource });
+    this.map.addInteraction(this.modify);
+    this.map.addInteraction(this.Meetmodify);
+   } else if (event === 'snap') {
+     console.log('snap', '+', event);
+   } else {
+    console.log('ik heb geen informatie');
+   }
+  }
+  Disable() {
+   console.log('Disable');
+   this.map.removeInteraction(this.modify);
+   this.map.removeInteraction(this.Meetmodify);
+   this.map.removeInteraction(this.snap);
+   this.map.removeInteraction(this.InteractionTranlate);
+   this.map.removeInteraction(this.InteractionTransform);
+   this.map.removeInteraction(this.Interactionselect);
+  }
   switchMeetMode(event: GeometryType) {
   //  console.log(event);
    if (event === 'LineString' || event === 'Polygon') {
@@ -373,6 +408,16 @@ export class KaartviewerComponent implements AfterViewInit {
          response.json().then((geojsonData) => {
           const features = new GeoJSON({dataProjection: 'EPSG:28992', featureProjection: 'EPSG:28992'}).readFeatures(geojsonData);
           const Bagname = features[0].get('bouwjaar');
+          const Adresnaam = features[0].get('huisnummer');
+
+          if (Adresnaam) {
+            const pushNewFeature = features[0].getProperties();
+            const index = this.AdresArray.findIndex(x => x === pushNewFeature);
+            this.AdresArray.splice(index, 1);
+            this.AdresArray.push(pushNewFeature);
+            console.log(features[0].getProperties());
+            console.log(Adresnaam);
+          }
 
           if (Bagname) {
            const pushNewFeature = features[0].getProperties();

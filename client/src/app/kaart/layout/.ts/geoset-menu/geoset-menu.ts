@@ -1,7 +1,7 @@
 import {Component, ViewChild, ElementRef, AfterViewInit, OnInit, Input, Optional, Output, EventEmitter,  Renderer2} from '@angular/core';
 import { DialogService, DialogRef, DialogCloseResult
 } from '@progress/kendo-angular-dialog';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { click } from 'ol/events/condition';
 import { Feature } from 'ol';
 
@@ -15,6 +15,7 @@ import { LayerButton } from 'src/app/functions/buttons-functions/layerbutton/lay
 import { ServiceService } from 'src/app/pdokmap/pdokmapconfigmap/service.service';
 import { BgService } from 'src/app/pdokmap/layer/bg.service';
 import { GeocoderService } from 'angular-geocoder';
+import { AdresService } from 'src/app/kaarten/kaart-lagen/overig/adressen/adres.service';
 
 @Component({
   selector: 'app-geoset-menu',
@@ -32,6 +33,7 @@ export class GeosetComponent {
     private spoorwegService: SpoorwegenService,
     private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
     private bagService: BagService,
+    private adresService: AdresService,
     private overigedienstenSerivce: OverigeDienstenService,
     private buttonforlayers: LayerButton,
     private mapconfig: ServiceService,
@@ -40,9 +42,13 @@ export class GeosetComponent {
   ) {}
 
   // MAPBUTTONS
+  change() {
+    if (click) { console.log('click'); } else { console.log('no click'); }
+  }
   getKaartButton() {return this.buttonforlayers.getLayerGroupKaart(); }
   getGrenzenButton() {return this.buttonforlayers.getLayerGroupGrenzen(); }
   getBagButton() {return this.buttonforlayers.getLayerGroupBag(); }
+  getAdresButton() {return this.buttonforlayers.getLayerGroupAdressen(); }
   getDienstenButton() {return this.buttonforlayers.getLayerGroupOverigeDiensten(); }
   getSpoorButton() {return this.buttonforlayers.getLayerGroupSpoorwegen(); }
 

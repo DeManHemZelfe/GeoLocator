@@ -7,6 +7,7 @@ import LayerGroup from 'ol/layer/Group';
 import { GeocoderService } from 'angular-geocoder';
 import { ServiceService } from 'src/app/pdokmap/pdokmapconfigmap/service.service';
 import { BgService } from 'src/app/pdokmap/layer/bg.service';
+import { AdresService } from 'src/app/kaarten/kaart-lagen/overig/adressen/adres.service';
 
 @Component({
   selector: 'app-layerbutton',
@@ -48,6 +49,11 @@ layergroupBag = new LayerGroup ({
      this.bagService.BagWoonplaatsLayer
     ]
   });
+  layergroupAdressen = new LayerGroup({
+    layers: [
+      this.adresService.AdresLayer
+    ]
+  });
 layergroupOverigeDiensten = new LayerGroup ({
     layers: [
       this.overigedienstenSerivce.OverheidsdienstenLayer,
@@ -60,6 +66,7 @@ layergroupOverigeDiensten = new LayerGroup ({
   private spoorwegService: SpoorwegenService,
   private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
   private bagService: BagService,
+  private adresService: AdresService,
   private mapconfig: ServiceService,
   private achterkaart: BgService,
   private overigedienstenSerivce: OverigeDienstenService,
@@ -73,6 +80,9 @@ layergroupOverigeDiensten = new LayerGroup ({
 }
 getLayerGroupBag() {
   return this.layergroupBag.getLayers().getArray();
+}
+getLayerGroupAdressen() {
+  return this.layergroupAdressen.getLayers().getArray();
 }
 getLayerGroupGrenzen() {
   return this.layergroupgrenzen.getLayers().getArray();
