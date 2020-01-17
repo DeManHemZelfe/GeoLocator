@@ -96,10 +96,24 @@ export class KaartviewerComponent implements AfterViewInit {
   // TEKENFUNCTIES
   tekensource = new VectorSource({wrapX: false, });
   tekenfunctie = new VectorLayer({
-    source: this.tekensource, style: new Style({fill: new Fill({color: 'yellow'}),
-     stroke: new Stroke({color: 'Black', width: 3}),
-     image: new Circle({radius: 7, fill: new Fill({color: '#ffcc33'})
-     })
+    source: this.tekensource,    style: new Style({
+      fill: new Fill({
+        color: 'rgba(255, 255, 255, 0.2)'
+      }),
+      stroke: new Stroke({
+        color: 'rgba(0, 0, 0, 0.5)',
+        lineDash: [10, 10],
+        width: 2
+      }),
+      image: new Circle({
+        radius: 5,
+        stroke: new Stroke({
+          color: 'rgba(0, 0, 0, 0.7)'
+        }),
+        fill: new Fill({
+          color: 'rgba(255, 255, 255, 0.2)'
+        })
+      })
     })
   });
   highlightsource = new VectorSource({wrapX: false, });
@@ -136,10 +150,20 @@ export class KaartviewerComponent implements AfterViewInit {
   measureTooltip: Overlay;
 
   // MODIFY THE FEATURE
-  modify: Modify;
-  Meetmodify: Modify;
-  snap: Snap;
-  Meetsnap: Snap;
+  Meetmodify = new Modify({source: this.MeetSource});
+  modify = new Modify({ source: this.tekensource });
+  snap = new Snap({
+   source: this.tekensource,
+    edge: true,
+     vertex: true,
+      pixelTolerance: 10
+      });
+  Meetsnap = new Snap({
+   source: this.MeetSource,
+    edge: true,
+     vertex: true,
+      pixelTolerance: 10
+      });
   // UNDO-ARRAY
   undoArray = [];
   dataUndoArray = [];
@@ -197,6 +221,7 @@ export class KaartviewerComponent implements AfterViewInit {
 
   initializeMap() { // BEGIN VAN DE MAP MAKEN
     addProjection(this.mapconfig.projection);
+
     this.map = new Map({ // MAAK DE MAP
       target: 'map',
       layers: [
@@ -317,8 +342,8 @@ export class KaartviewerComponent implements AfterViewInit {
      this.map.addInteraction(this.draw);
      this.createMeasureTooltip();
 
-     this.draw.on('drawstart', (event) => {
-      const Meetsketch = event.feature;
+     this.draw.on('drawstart', (evt) => {
+      const Meetsketch = evt.feature;
       Meetsketch.getGeometry().on('change', (_event) => {
         const geom = _event.target;
         console.log(geom);
@@ -347,26 +372,32 @@ export class KaartviewerComponent implements AfterViewInit {
      }
    }
   EnableInteractions(event) {
-   if (event === 'modify') {
-    console.log('modify', '+', event);
-    this.Meetmodify = new Modify({source: this.MeetSource});
-    this.modify = new Modify({ source: this.tekensource });
-    this.map.addInteraction(this.modify);
-    this.map.addInteraction(this.Meetmodify);
-   } else if (event === 'snap') {
-     console.log('snap', '+', event);
+    // kendo ui treeview en dan checkboxes, klik de 'checkOnclick'
+   const check = event.target.checked;
+   const value = event.target.value;
+   if (click) {
+     console.log('Ik ben aan', '=', check);
+     this.map.addInteraction(this.snap);
    } else {
-    console.log('ik heb geen informatie');
+     console.log('Ik ben uit', '=', check);
+     this.map.removeInteraction(this.snap);
    }
+
   }
+  CheckForCheckBox(event) {
+    console.log(event.target);
+  }
+
   Disable() {
    console.log('Disable');
-   this.map.removeInteraction(this.modify);
-   this.map.removeInteraction(this.Meetmodify);
-   this.map.removeInteraction(this.snap);
-   this.map.removeInteraction(this.InteractionTranlate);
-   this.map.removeInteraction(this.InteractionTransform);
-   this.map.removeInteraction(this.Interactionselect);
+  //  this.map.removeInteraction(this.draw);
+  //  this.map.removeInteraction(this.modify);
+  //  this.map.removeInteraction(this.Meetmodify);
+  //  this.map.removeInteraction(this.snap);
+  //  this.map.removeInteraction(this.Meetsnap);
+  //  this.map.removeInteraction(this.InteractionTranlate);
+  //  this.map.removeInteraction(this.InteractionTransform);
+  //  this.map.removeInteraction(this.Interactionselect);
   }
   switchMeetMode(event: GeometryType) {
   //  console.log(event);
@@ -390,8 +421,6 @@ export class KaartviewerComponent implements AfterViewInit {
     const pr = p;
     console.log(pr);
    }
-
-
 
    mapClick() {
     this.map.on('singleclick', (evt) => {
@@ -459,10 +488,16 @@ export class KaartviewerComponent implements AfterViewInit {
       });
       this.draw.on('drawend', (event) => {
        event.feature.setStyle(new Style({
-        fill: new Fill({color: schema}),
-        stroke: new Stroke({color: 'Black', width: 3}),
-        image: new Circle({radius: 7,
-        fill: new Fill({color: 'green'})
+        fill: new Fill({color: 'rgba(255, 255, 255, 0.2)'}), // normaal staat er schema
+        stroke: new Stroke({color: 'Red', width: 3}),
+        image: new Circle({
+          radius: 5,
+          stroke: new Stroke({
+            color: 'yellow'
+          }),
+          fill: new Fill({
+            color: 'rgba(255, 255, 255, 0.2)'
+          })
         })
        }));
        this.drawArray.push(event.feature);

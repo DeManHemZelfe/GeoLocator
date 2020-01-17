@@ -20,6 +20,7 @@ export class DrawMenuComponent {
  @Output() _settings: EventEmitter<any> = new EventEmitter<any>();
  @Output() _Enable: EventEmitter<any> = new EventEmitter<any>();
  @Output() _Disable: EventEmitter<any> = new EventEmitter<any>();
+ @Output() _check: EventEmitter<any> = new EventEmitter<any>();
 
 
  @Output() _Modify: EventEmitter<any> = new EventEmitter<any>();
@@ -30,6 +31,8 @@ export class DrawMenuComponent {
 
  opened2 = true;
  dataSaved2 = false;
+
+ Checkthebox;
 
  maakopen = false;
  maakopen2 = false;
@@ -44,8 +47,9 @@ export class DrawMenuComponent {
  spoorvisi = false;        dienstenvisi = false;
 
  tooltip;
-
-
+ EnablekleurArray  = false;   DisablekleurArray = false;
+ EnablekleurArray1  = false;  DisablekleurArray1 = false;
+ EnablekleurArray2  = false;  DisablekleurArray2 = false;
 
  constructor(
   private dialogService: DialogService
@@ -74,23 +78,40 @@ export class DrawMenuComponent {
   }
  }
 
-Enable(value) {
- console.log(value);
+ EnableBox(event) {
+  const value = event.target.value;
+  const check = event.target.checked;
+  console.log(value);
+  if (click) {
+  //  console.log(value);
+   this._Enable.emit(event);
+  } else {
+    console.log('Ik ben uit', '=', check);
+  }
+ }
+
+Disable(value) {
  if (value === 'modify') {
   console.log(value);
-  return this._Enable.emit(value);
+  this.EnablekleurArray = false;
+  this.DisablekleurArray = true;
+  return this._Disable.emit('');
+
  } else if (value === 'snap') {
   console.log(value);
-  return this._Enable.emit(value);
+  this.EnablekleurArray1 = false;
+  this.DisablekleurArray1 = true;
+  return this._Disable.emit('');
+
  } else if (value === 'holes') {
   console.log(value);
-  return this._Enable.emit(value);
+  this.EnablekleurArray2 = false;
+  this.DisablekleurArray2 = true;
+  return this._Disable.emit('');
+
  } else {
-  return this._Enable.emit('');
+  return this._Disable.emit('');
  }
-}
-Disable() {
- return this._Disable.emit('');
 }
 switchMode(value) {
  if (value !== '') {
