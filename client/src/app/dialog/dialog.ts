@@ -4,6 +4,7 @@ import { DialogService, DialogRef, DialogCloseResult
 import { FormControl } from '@angular/forms';
 import { click } from 'ol/events/condition';
 import { Feature } from 'ol';
+import { PaletteSettings } from '@progress/kendo-angular-inputs';
 
 @Component({
   selector: 'app-dialog-component',
@@ -33,7 +34,6 @@ export class DialogComponent {
     private dialogService: DialogService,
     private renderer: Renderer2,
     ) {}
-  public color: '#ff33';
 
   // PUBLIC
   opened  = false;
@@ -43,6 +43,7 @@ export class DialogComponent {
   public opened4 = false;
   public opened5 = false;
   // PRIVATE
+
 
   // OPEN
   open()   { this.opened = true; }

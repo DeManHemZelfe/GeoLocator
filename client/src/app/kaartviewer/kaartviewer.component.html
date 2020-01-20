@@ -1,64 +1,60 @@
-
 <div #PopUpMenu>
-    <div *ngFor="let informatie of BagArray">
-     <kendo-window [minWidth]="200" [minHeight]="125" [height]="380" title="Bag"
-      style="height: 380px; background-color: white; color: black;">
-      <div class="kendocontent">
-        <table class="table">
-         <th>Titel</th>
-         <tr><td>Identificatie</td><td>{{informatie.identificatie}}</td></tr>
-         <tr><td>Bouwjaar</td><td>{{informatie.bouwjaar}}</td></tr>
-         <tr><td>Status</td><td>{{informatie.status}}</td></tr>
-         <tr><td>Gebruiksdoel</td><td>{{informatie.gebruiksdoel}}</td></tr>
-         <tr><td>Oppervlakte_min</td><td>{{informatie.oppervlakte_min}}</td></tr>
-         <tr><td>Oppervlakte_min</td><td>{{informatie.oppervlakte_max}}</td></tr>
-         <tr><td>Aantal VerblijfsObjecten</td><td>{{informatie.aantal_verblijfsobjecten}}</td></tr>
-        </table>
-      </div>
-      </kendo-window>
-    </div>
+ <div *ngFor="let informatie of BagArray">
+  <kendo-window [minWidth]="200" [height]="380" title="Bag"style="height: 380px; background-color: white; color: black;">
+   <div class="kendocontent">
+    <table class="table">
+     <th>Titel</th>
+     <tr><td>Identificatie</td><td>{{informatie.identificatie}}</td></tr>
+     <tr><td>Bouwjaar</td><td>{{informatie.bouwjaar}}</td></tr>
+     <tr><td>Status</td><td>{{informatie.status}}</td></tr>
+     <tr><td>Gebruiksdoel</td><td>{{informatie.gebruiksdoel}}</td></tr>
+     <tr><td>Oppervlakte_min</td><td>{{informatie.oppervlakte_min}}</td></tr>
+     <tr><td>Oppervlakte_min</td><td>{{informatie.oppervlakte_max}}</td></tr>
+     <tr><td>Aantal VerblijfsObjecten</td><td>{{informatie.aantal_verblijfsobjecten}}</td></tr>
+    </table>
+   </div>
+  </kendo-window>
+ </div>
 </div>
+
 <div #PopUpAdresMenu>
-  <div *ngFor="let informatie of AdresArray">
-   <kendo-window [minWidth]="130" [minHeight]="125" [height]="215" title="Adres"
-    style="height: 380px; background-color: white; color: black;">
-    <div class="kendocontent">
-      <table class="table">
-       <th>Titel</th>
-       <tr><td>Straatnaam</td><td>{{informatie.straatnaam}}</td></tr>
-       <tr><td>Bouwjaar</td><td>{{informatie.huisnummer}}</td></tr>
-       <tr><td>Woonplaats</td><td>{{informatie.woonplaats}}</td></tr>
-       <tr><td>PostCode</td><td>{{informatie.postcode}}</td></tr>
-      </table>
-    </div>
-    </kendo-window>
-  </div>
+ <div *ngFor="let informatie of AdresArray">
+  <kendo-window [minWidth]="130" [height]="215" title="Adres" style="height: 380px; background-color: white; color: black;">
+   <div class="kendocontent">
+    <table class="table">
+     <th>Titel</th>
+     <tr><td>Straatnaam</td><td>{{informatie.straatnaam}}</td></tr>
+     <tr><td>Bouwjaar</td><td>{{informatie.huisnummer}}</td></tr>
+     <tr><td>Woonplaats</td><td>{{informatie.woonplaats}}</td></tr>
+     <tr><td>PostCode</td><td>{{informatie.postcode}}</td></tr>
+    </table>
+   </div>
+  </kendo-window>
+ </div>
 </div>
 
 <div id="map" class="map"></div>
- <div #toolbarmenu class="toolbarmenu" kendoTooltip position="right" style="background-color:red;" style="width: 10%;">
-  <app-toolbar-functions
-  (_placefound)="onPlaceFound($event)"
-  (_undo)="UndoButton($event)"          (_redo)="RedoButton($event)"
-  (_zoomin)="zoom_in($event)"           (_zoomout)="zoom_out($event)"
-  (_getButtonColorBlue)="getButtonColorBlue($event)"
-  (_getButtonColorGreen)="getButtonColorGreen($event)" (_getButtonColorRed)="getButtonColorRed($event)"
-  (_select)="select($event)" (_transform)="transformFunction($event)" (_translate)="translateFunction($event)"
-  (_info)="Info($event)">
+
+<div #toolbarmenu class="toolbarmenu" kendoTooltip position="right" style="background-color:red;" style="width: 10%;">
+ <app-toolbar-functions
+  (_placefound)="onPlaceFound($event)" (_select)="select($event)"
+  (_undo)="UndoButton($event)" (_redo)="RedoButton($event)">
  </app-toolbar-functions>
 </div>
 
+<app-dialog-component (_styleswitchDialog)="styleswitchDialog($event)" [TekenSource]="tekensource" [DrawArray]="drawArray" [DataActiveArray]="dataActiveArray" [DataUndoArray]="dataUndoArray"></app-dialog-component>
 
-
-<app-dialog-component (_styleswitchDialog)="styleswitchDialog($event)" (_checkfu)="checkforupdate($event)" [TekenSource]="tekensource" [DrawArray]="drawArray" [DataActiveArray]="dataActiveArray" [DataUndoArray]="dataUndoArray"></app-dialog-component>
 <div #dragmenu><app-drag-menu [ObjectInformatie]="objectarray" [BagObjectInformatie]="BagArray"></app-drag-menu></div>
-<div #drawmenu><app-draw-menu
-  [TekenSource]="tekensource" [DrawArray]="drawArray" [DataActiveArray]="dataActiveArray" [DataUndoArray]="dataUndoArray"
- (_giveDrawValue)="switchDrawMode($event)" (_giveMeetValue)="switchMeetMode($event)" (_select)="select($event)"
- (_transform)="transform($event)" (_settings)="Settings($event)"
- (_Enable)="EnableInteractions($event)" (_Disable)="Disable()" (_check)="CheckForCheckBox($event)"></app-draw-menu></div>
-<div #geosetmenu><app-geoset-menu></app-geoset-menu></div>
+<div #drawmenu>
+ <app-draw-menu
+  (_ColorDrawMenu)="StyleColorSwitch($event)" [TekenSource]="tekensource" [DrawArray]="drawArray"
+  [DataActiveArray]="dataActiveArray" [DataUndoArray]="dataUndoArray" (_giveDrawValue)="switchDrawMode($event)"
+  (_giveMeetValue)="switchMeetMode($event)" (_select)="select($event)" (_transform)="transform($event)"
+  (_settings)="Settings($event)" (_Enable)="EnableInteractions($event)">
+ </app-draw-menu>
+</div>
 
+<div #geosetmenu><app-geoset-menu></app-geoset-menu></div>
 <div id="provincienaam">provincies</div>
 
 

@@ -1,87 +1,74 @@
 <div class="drawmenu">
-  <button (click)="Select($event)"><i class="material-icons" title="Select" style="font-size: 10px;" style="color: black;">zoom_out_map</i></button>
-  <button (click)="Transform($event)"><i class="material-icons" title="Transform" style="font-size: 10px;" style="color: black;">tab_unselected</i></button>
+ <button (click)="Select($event)"><i class="material-icons" title="Select" style="font-size: 10px;" style="color: black;">zoom_out_map</i></button>
+ <button (click)="Transform($event)"><i class="material-icons" title="Transform" style="font-size: 10px;" style="color: black;">tab_unselected</i></button>
+ <button (click)="show2 = !show2" class="button"><i class="material-icons" title="Meten" style="font-size: 10px;" style="color: black;">timeline</i></button>
 
-
-  <button (click)="show2 = !show2" class="button">
-   <i class="material-icons" title="Meten" style="font-size: 10px;" style="color: black;">timeline</i>
-  </button>
-
-  <div *ngIf="show2" class="draw-menu" id="menu">
-
-   <button (click)="switchMetenMode('length')" value="LineString" title="LineString" id="LineString"><i class="material-icons" style="font-size: 10px;" style="color: black;">call_made</i></button>
-   <button (click)="switchMetenMode('area')"    value="Polygon" title="Polygon" id="Polygon"><i class="material-icons" style="font-size: 10px;" style="color: black;">crop_square</i></button>
-
+ <div *ngIf="show2" class="draw-menu" id="menu">
+  <button (click)="switchMetenMode('length')" value="LineString" title="LineString" id="LineString"><i class="material-icons" style="font-size: 10px;" style="color: black;">call_made</i></button>
+  <button (click)="switchMetenMode('area')"    value="Polygon" title="Polygon" id="Polygon"><i class="material-icons" style="font-size: 10px;" style="color: black;">crop_square</i></button>
  </div>
 
+ <button (click)="show1 = !show1" class="button"><i class="material-icons" title="Edit" style="font-size: 10px;" style="color: black;">edit</i></button>
 
-  <button (click)="show1 = !show1" class="button">
-    <i class="material-icons" title="Edit" style="font-size: 10px;" style="color: black;">edit</i>
-   </button>
-   <div *ngIf="show1" class="draw-menu" id="menu">
-    <button (click)="switchMode('Point')" value="Point" title="Point" id="Point"><i class="material-icons" style="font-size: 10px;" style="color: black;">brightness_1</i></button>
-    <button (click)="switchMode('LineString')" value="LineString" title="LineString" id="LineString"><i class="material-icons" style="font-size: 10px;" style="color: black;">call_made</i></button>
-    <button (click)="switchMode('Polygon')" value="Polygon" title="Polygon" id="Polygon"> <i class="material-icons" style="font-size: 10px;" style="color: black;">crop_square</i></button>
-    <button (click)="switchMode('Circle')" value="Circle" title="Circle" id="Circle"> <i class="material-icons" style="font-size: 10px;" style="color: black;">panorama_fish_eye</i></button>
-   </div>
+<div *ngIf="show1" class="draw-menu" id="menu">
+ <button (click)="switchMode('Point')" value="Point" title="Point" id="Point"><i class="material-icons" style="font-size: 10px;" style="color: black;">brightness_1</i></button>
+ <button (click)="switchMode('LineString')" value="LineString" title="LineString" id="LineString"><i class="material-icons" style="font-size: 10px;" style="color: black;">call_made</i></button>
+ <button (click)="switchMode('Polygon')" value="Polygon" title="Polygon" id="Polygon"> <i class="material-icons" style="font-size: 10px;" style="color: black;">crop_square</i></button>
+ <button (click)="switchMode('Circle')" value="Circle" title="Circle" id="Circle"> <i class="material-icons" style="font-size: 10px;" style="color: black;">panorama_fish_eye</i></button>
+</div>
 
-  <button><i class="material-icons" title="Color" style="font-size: 10px;" style="color: black;">color_lens</i></button>
+ <button *ngIf="opened3" (click)="open3()"><i class="material-icons" title="Color" style="font-size: 10px;" style="color: black;">color_lens</i></button>
+ <button *ngIf="opened2" (click)="open2()"><i class="material-icons" title="draw options" style="font-size: 10px;" style="color: black;">settings</i></button>
+</div>
 
-  <button *ngIf="opened2" (click)="open2()"><i class="material-icons" title="draw options" style="font-size: 10px;" style="color: black;">settings</i></button>
+<kendo-window title="Draw Settings" *ngIf="!opened2" (close)="close2()" [minWidth]="250" [width]="445" [height]="485">
+<form class="form">
+ <fieldset>
+ <legend>Draw Settings</legend>
 
+ <div class="modify">
+ <h3>Modify</h3>
+ <label class="label">
+  <span>Modify</span>
+  <input (change)="EnableBox($event)" id="modify" value="modify" type="checkbox"/>
+  <br>
+  <input (change)="EnableBox($event)" id="snap" value="snap" type="checkbox"/>
+  <span>Disable Snap - Enable Snap</span>
+  <br>
+
+  <div>
+  <h3>Active Draw</h3>
+  <table border="3px" style="margin-bottom: 10px;">
+  <tr><th>Naam</th><th>Color</th><th>OL_UID</th><th>Undo</th></tr>
+   <tr style="background-color: seashell;"  *ngFor="let draw of DrawArray">
+    <td>{{draw.geometryName_}}</td><td>{{draw.style_.fill_.color_}}</td><td>{{draw.ol_uid }}</td>
+   <td>
+    <button kendoButton style="background-color: lightblue;" (click)="undo(draw)">Undo</button>
+   </td>
+  </tr>
+  </table>
+  <h3>Deleted Draw</h3>
+  <table border="3px" style="margin-bottom: 10px;">
+  <tr><th>Naam</th><th>Color</th><th>OL_UID</th><th>Redo</th></tr>
+  <tr style="background-color: seashell;"  *ngFor="let array of DataUndoArray" >
+   <td>{{array.geometryName_}}</td><td>{{array.style_.fill_.color_}}</td><td>{{array.ol_uid }}</td>
+   <td>
+    <button kendoButton style="background-color: red;" (click)="redo(array)">Redo</button>
+   </td>
+  </tr>
+  </table>
  </div>
+ <br><br>
+ </label>
+ </div>
+ </fieldset>
+</form>
+</kendo-window>
 
- <kendo-window title="Draw Settings" *ngIf="!opened2" (close)="close2()" [minWidth]="250" [width]="445" [height]="485">
-   <form class="form">
-    <fieldset>
-           <legend>Draw Settings</legend>
-
-           <div class="modify">
-            <h3>Modify</h3>
-            <label class="label">
-             <span>Modify</span>
-             <input (change)="EnableBox($event)" id="modify" value="modify" type="checkbox"/>
-             <br>
-             <!-- <button kendoButton (click)="Disable('modify')" [primary]="DisablekleurArray" [toggleable]="true" value="modify"> Disable</button><br> -->
-             <input (change)="EnableBox($event)" id="snap" value="snap" type="checkbox"/>
-             <span>Disable Snap - Enable Snap</span>
-             <br>
-             <div>
-              <h3>Active Draw</h3>
-              <table border="3px" style="margin-bottom: 10px;">
-                <tr><th>Naam</th><th>Color</th><th>OL_UID</th><th>Undo</th></tr>
-                <tr style="background-color: seashell;"  *ngFor="let draw of DrawArray">
-                  <td>{{draw.geometryName_}}</td><td>{{draw.style_.fill_.color_}}</td><td>{{draw.ol_uid }}</td>
-                  <td>
-                   <button kendoButton style="background-color: lightblue;" (click)="undo(draw)">Undo</button>
-                 </td>
-                </tr>
-              </table>
-              <h3>Deleted Draw</h3>
-              <table border="3px" style="margin-bottom: 10px;">
-                <tr><th>Naam</th><th>Color</th><th>OL_UID</th><th>Redo</th></tr>
-                <tr style="background-color: seashell;"  *ngFor="let array of DataUndoArray" >
-                  <td>{{array.geometryName_}}</td><td>{{array.style_.fill_.color_}}</td><td>{{array.ol_uid }}</td>
-                 <td>
-                   <button kendoButton style="background-color: red;" (click)="redo(array)">Redo</button>
-                 </td>
-                </tr>
-              </table>
-             </div>
-             <!-- <button kendoButton (click)="Disable('snap')" [primary]="DisablekleurArray1" [toggleable]="true"  value="modify">Disable</button><br><br> -->
-
-
-             <br><br>
-            </label>
-           </div>
-
-
-       </fieldset>
-   </form>
-   </kendo-window>
-
-
-
-
-
+<kendo-window *ngIf="!opened3" title="Color" (close)="close3()" [minWidth]="150" [width]="250" [height]="150">
+<div>
+ <kendo-colorpicker [view]="'palette'" [format]="'hex'" [paletteSettings]="settings" [value]="selected" (valueChange)="onChange($event)">
+ </kendo-colorpicker>
+</div>
+</kendo-window>
 
