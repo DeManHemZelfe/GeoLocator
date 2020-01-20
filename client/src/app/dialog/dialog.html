@@ -4,10 +4,6 @@
 
 <kendo-dialog title="Color Schema" *ngIf="opened" (close)="close()">
  <div>
-
-  <label for="colorWell">Color:</label>
-  <input type="color" value="#ff0000" id="colorWell">
-
   <form class="form-inline"  style="background-color: white;">
    <select id="type" [formControl]="typeSelectDialogStyle" (change)="styleswitchDialog()" >
     <option value="blue" title="Point" style="color: blue; background-color: blue;">blue</option>
@@ -57,7 +53,7 @@
 
 
 
-  <div class="example-box" cdkDrag>
+  <!-- <div class="example-box" cdkDrag>
     <div class="test" style="position: absolute; top:10px; left: 10px">test</div>
 
 
@@ -88,7 +84,7 @@
         <path d="M0 0h24v24H0z" fill="none"></path>
       </svg>
     </div>
-  </div>
+  </div> -->
 
 
 

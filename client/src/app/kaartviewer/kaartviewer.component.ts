@@ -372,17 +372,18 @@ export class KaartviewerComponent implements AfterViewInit {
      }
    }
   EnableInteractions(event) {
-    // kendo ui treeview en dan checkboxes, klik de 'checkOnclick'
-   const check = event.target.checked;
-   const value = event.target.value;
-   if (click) {
-     console.log('Ik ben aan', '=', check);
-     this.map.addInteraction(this.snap);
+   // kendo ui treeview en dan checkboxes, klik de 'checkOnclick'
+   console.log(event);
+   if (event === 'snap') {
+     console.log('SNISNA');
+     this.snap.setActive(!this.snap.getActive());
+    //  this.map.addInteraction(this.snap);
+   } else if (event === 'modify') {
+     console.log('modimodimodi');
    } else {
-     console.log('Ik ben uit', '=', check);
-     this.map.removeInteraction(this.snap);
+    //  this.snap.setActive(true);
+     console.log('else');
    }
-
   }
   CheckForCheckBox(event) {
     console.log(event.target);
@@ -482,11 +483,13 @@ export class KaartviewerComponent implements AfterViewInit {
     const value = this.typeSelectTekenen.value;
     // console.log(getValue + 'interaction');
     if (value !== '') {
+      this.map.removeInteraction(this.snap);
       this.draw = new OlDraw({
        source: this.tekensource,
        type: value,
       });
       this.draw.on('drawend', (event) => {
+        // this.snap.addFeature(event.feature);
        event.feature.setStyle(new Style({
         fill: new Fill({color: 'rgba(255, 255, 255, 0.2)'}), // normaal staat er schema
         stroke: new Stroke({color: 'Red', width: 3}),
@@ -503,6 +506,7 @@ export class KaartviewerComponent implements AfterViewInit {
        this.drawArray.push(event.feature);
       });
       this.map.addInteraction(this.draw);
+      this.map.addInteraction(this.snap);
      }
    }
   switchDrawMode(event) {

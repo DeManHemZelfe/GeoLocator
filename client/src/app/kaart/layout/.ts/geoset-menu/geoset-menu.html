@@ -70,9 +70,9 @@
               </fieldset>
               <fieldset>
                 <li>
-                 <div class="dropdown"><mat-checkbox (click)="show4 = !show4">
+                 <div class="dropdown"><button (click)="show4 = !show4">
                   <h4>DD Adressen</h4>
-                  </mat-checkbox>
+                  </button>
                 </div>
                   <fieldset *ngIf="show4" id="layer0" class="fieldsetcontent"><label class="" for="visible0">
                    <mat-checkbox style="width: 100%;" *ngFor="let layer of getAdresButton()"

@@ -22,6 +22,11 @@ export class DrawMenuComponent {
  @Output() _Disable: EventEmitter<any> = new EventEmitter<any>();
  @Output() _check: EventEmitter<any> = new EventEmitter<any>();
 
+ @Input() DataUndoArray = [];
+ @Input() DrawArray;
+ @Input() DataActiveArray;
+ @Input() TekenSource;
+
 
  @Output() _Modify: EventEmitter<any> = new EventEmitter<any>();
  @Output() _Snap: EventEmitter<any> = new EventEmitter<any>();
@@ -51,6 +56,7 @@ export class DrawMenuComponent {
  EnablekleurArray1  = false;  DisablekleurArray1 = false;
  EnablekleurArray2  = false;  DisablekleurArray2 = false;
 
+
  constructor(
   private dialogService: DialogService
   ) {}
@@ -77,18 +83,34 @@ export class DrawMenuComponent {
    console.log('Wrong');
   }
  }
+ undo(value) {
+  console.log(value);
+  console.log(this.DrawArray);
+  const index = this.DrawArray.findIndex(x => x === value);
+  this.DrawArray.splice(index, 1);
+  this.DataUndoArray.push(value);
+  this.TekenSource.removeFeature(value);
+}
+redo(array) {
+ console.log(array);
+ console.log(this.DrawArray);
+ const index = this.DataUndoArray.findIndex(x => x === array);
+ this.DataUndoArray.splice(index, 1);
+ this.DrawArray.push(array);
+ this.TekenSource.addFeature(array);
+//  this.TekenSource.removeFeature(array);
+}
 
  EnableBox(event) {
   const value = event.target.value;
   const check = event.target.checked;
-  console.log(value);
-  if (click) {
-  //  console.log(value);
-   this._Enable.emit(event);
+  if (check === true) {
+    console.log(value);
+    this._Enable.emit(value);
   } else {
-    console.log('Ik ben uit', '=', check);
+    console.log('false');
   }
- }
+}
 
 Disable(value) {
  if (value === 'modify') {

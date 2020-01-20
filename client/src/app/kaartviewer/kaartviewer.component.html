@@ -53,16 +53,13 @@
 <app-dialog-component (_styleswitchDialog)="styleswitchDialog($event)" (_checkfu)="checkforupdate($event)" [TekenSource]="tekensource" [DrawArray]="drawArray" [DataActiveArray]="dataActiveArray" [DataUndoArray]="dataUndoArray"></app-dialog-component>
 <div #dragmenu><app-drag-menu [ObjectInformatie]="objectarray" [BagObjectInformatie]="BagArray"></app-drag-menu></div>
 <div #drawmenu><app-draw-menu
+  [TekenSource]="tekensource" [DrawArray]="drawArray" [DataActiveArray]="dataActiveArray" [DataUndoArray]="dataUndoArray"
  (_giveDrawValue)="switchDrawMode($event)" (_giveMeetValue)="switchMeetMode($event)" (_select)="select($event)"
  (_transform)="transform($event)" (_settings)="Settings($event)"
  (_Enable)="EnableInteractions($event)" (_Disable)="Disable()" (_check)="CheckForCheckBox($event)"></app-draw-menu></div>
 <div #geosetmenu><app-geoset-menu></app-geoset-menu></div>
 
-
-<button (click)="CheckForCheckBox()">test</button>
 <div id="provincienaam">provincies</div>
-
-<br><br><br>
 
 
 

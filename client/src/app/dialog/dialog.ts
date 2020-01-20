@@ -33,6 +33,7 @@ export class DialogComponent {
     private dialogService: DialogService,
     private renderer: Renderer2,
     ) {}
+  public color: '#ff33';
 
   // PUBLIC
   opened  = false;
@@ -94,14 +95,6 @@ export class DialogComponent {
     // stap 1) als je tekent dan push je de feature
   }
   checkForupdateDialog() { return this._checkfu.emit(); }
-
-
-
-
-
-
-
-
 } // EINDE
 
 
