@@ -1,5 +1,6 @@
 @media only screen and (min-width: 600px)
 {
+
 .Geo
 {
  margin-top: 60px;
@@ -38,6 +39,7 @@ margin: 0px;
 fieldset
 {
 color: black;
+width: 50%;
 }
 .fieldsetcontent
 {
@@ -85,6 +87,7 @@ color: black;
 {
 color: black;
 /* margin-left: 16px; */
+width: 50%;
 }
 
 }

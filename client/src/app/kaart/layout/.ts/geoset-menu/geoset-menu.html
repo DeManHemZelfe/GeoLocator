@@ -17,7 +17,7 @@
   <ul>
   <li style="list-style: none;">
   <div class="dropdown">
-   <a (click)="show1 = !show1"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">DD AchterGrondkaart</h4></a>
+   <a (click)="show1 = !show1"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">AchterGrondkaart</h4></a>
   </div>
    <fieldset *ngIf="show1" id="layer0">
     <label for="visible0">
@@ -41,7 +41,10 @@
   <fieldset>
   <li>
   <div class="dropdown">
-   <a (click)="show2 = !show2" (change)="change()"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">DD Grenzen</h4></a>
+   <a class="aatje" (click)="show2 = !show2" (change)="change()">
+    <h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">Grenzen</h4>
+    <span class="span"> > </span>
+   </a>
   </div>
   <fieldset *ngIf="show2" id="layer0" class="fieldsetcontent"><label class="" for="visible0">
   <mat-checkbox style="width: 100%;" *ngFor="let layer of getGrenzenButton()"
@@ -53,7 +56,7 @@
   <fieldset>
   <li>
   <div class="dropdown">
-   <a (click)="show3 = !show3"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">DD Bag</h4></a>
+   <a (click)="show3 = !show3"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">Bag</h4></a>
   </div>
   <fieldset *ngIf="show3" class="fieldsetcontent"  id="layer0"><label class="" for="visible0">
   <mat-checkbox style="width: 100%;" *ngFor="let layer of getBagButton()"
@@ -65,7 +68,7 @@
   <fieldset>
   <li>
   <div class="dropdown">
-  <a (click)="show4 = !show4"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">DD Adressen</h4></a>
+  <a (click)="show4 = !show4"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">Adressen</h4></a>
   </div>
   <fieldset *ngIf="show4" id="layer0" class="fieldsetcontent"><label class="" for="visible0">
   <mat-checkbox style="width: 100%;" *ngFor="let layer of getAdresButton()"
@@ -77,7 +80,7 @@
   <fieldset>
     <li>
     <div class="dropdown">
-     <a (click)="show5 = !show5"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">DD Diensten</h4></a>
+     <a (click)="show5 = !show5"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">Diensten</h4></a>
     </div>
     <fieldset *ngIf="show5" class="fieldsetcontent"  id="layer0"><label class="" for="visible0">
     <mat-checkbox style="width: 100%;" *ngFor="let layer of getDienstenButton()"
@@ -89,7 +92,7 @@
     <fieldset>
       <li>
       <div class="dropdown">
-       <a (click)="show6 = !show6"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">DD Spoor</h4></a>
+       <a (click)="show6 = !show6"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">Spoor</h4></a>
       </div>
       <fieldset *ngIf="show6" class="fieldsetcontent"  id="layer0" style="width: 50%;"><label class="" for="visible0">
       <mat-checkbox style="width: 100%;" *ngFor="let layer of getSpoorButton()"

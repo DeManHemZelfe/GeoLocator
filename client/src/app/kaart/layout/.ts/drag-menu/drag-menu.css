@@ -41,37 +41,33 @@ border: 1px solid rgba(0,0,0,.05);
 .content p {
 width: 100%;
 margin: 0;
-background: red;
 }
-.anchor {
-/* width: 180px; */
-/* height: 200px; */
+.anchor
+{
+height: 150px;
 width: 150px;
-background-color: royalblue;
 }
-   .buttonmat{
-    width: 56px;
-    height: 56px;
-    bottom: 3%;
-    left: 1%;
-    font-weight: 700;
-    position: absolute;
-   }
-   .material-icons{
-     font-size: 25px;
-   }
-   .mat-fab .mat-button-wrapper {
-     padding: 0px;
-     display: inline-block;
-     line-height: 24px;
-   }
-   .matborder
-   {
-     border-left: 1px black solid;
-   }
-
+.buttonmat{
+width: 56px;
+height: 56px;
+bottom: 3%;
+left: 1%;
+font-weight: 700;
+position: absolute;
 }
-
+.material-icons{
+font-size: 25px;
+}
+.mat-fab .mat-button-wrapper {
+padding: 0px;
+display: inline-block;
+line-height: 24px;
+}
+.matborder
+{
+border-left: 1px black solid;
+}
+}
 @media only screen and (min-width: 950px)
 {
 .mother{
