@@ -1,16 +1,60 @@
-.drawmenu{
-  position: absolute;
-  right: 1%;
-  z-index: 1;
-  margin-right: 15px;
+@media only screen and (min-width: 600px)
+{
+.drawmenu
+{
+display: grid;
+position: absolute;
+right: 1%;
 }
 .draw-menu{
-  background-color: red;
-  z-index: 1;
-  position: absolute;
+display: flex;
+position: absolute;
+top: 50%;
+right: 110%;
+}
+.draw-menu-meet{
+display: flex;
+position: absolute;
+top: 34%;
+right: 110%;
 }
 .label
 {
- width: 100%;
+width: 100%;
+}
+
+}
+
+@media only screen and (min-width: 950px)
+{
+.drawmenu
+{
+display: block;
+position: absolute;
+right: 1%;
+margin-right: 45px;
+top: 0%;
+}
+
+.draw-menu{
+display: block;
+background-color: red;
+position: absolute;
+top: 120%;
+right: 0%;
+border-left: black 2px solid;
+}
+.draw-menu-meet{
+display: block;
+background-color: red;
+position: absolute;
+top: 120%;
+right: 66%;
+}
+.label
+{
+width: 100%;
+}
+
 }
 

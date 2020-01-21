@@ -1,5 +1,80 @@
+@media only screen and (min-width: 600px)
+{
+.informatie
+{
+ background-color: red;
+}
 .mother{
- /* background-color: aqua; */
+  width: 20%;
+  height: 100px;
+  bottom: 4%;
+  border-radius: 0 0 4px 4px;
+  border-top: 0 solid #ccc!important;
+  margin-right: 1%;
+  height: 5%;
+  min-height: 35px;
+  text-align: left;
+  color: #212668;
+  font-weight: 700;
+  position: absolute;
+  pointer-events: all;
+  right: 1%
+}
+.btn-featureinfo.collapsed[_ngcontent-c7]
+{
+ border-top: 1px solid #ccc!important;
+ border-top-left-radius: 4px;
+ border-top-right-radius: 4px;
+}
+button, input, optgroup, select, textarea
+{
+margin: 0;
+font: inherit;
+color: inherit;
+}
+.content {
+width: 100%;
+color: #fff;
+background-color: blue;
+border: 1px solid rgba(0,0,0,.05);
+}
+.content p {
+width: 100%;
+margin: 0;
+background: red;
+}
+.anchor {
+/* width: 180px; */
+/* height: 200px; */
+width: 150px;
+background-color: royalblue;
+}
+   .buttonmat{
+    width: 56px;
+    height: 56px;
+    bottom: 3%;
+    left: 1%;
+    font-weight: 700;
+    position: absolute;
+   }
+   .material-icons{
+     font-size: 25px;
+   }
+   .mat-fab .mat-button-wrapper {
+     padding: 0px;
+     display: inline-block;
+     line-height: 24px;
+   }
+   .matborder
+   {
+     border-left: 1px black solid;
+   }
+
+}
+
+@media only screen and (min-width: 950px)
+{
+.mother{
  width: 12%;
  height: 100px;
  bottom: 4%;
@@ -15,57 +90,52 @@
  pointer-events: all;
  right: 1%;
 }
-
-
-
 .btn-featureinfo.collapsed[_ngcontent-c7] {
-  border-top: 1px solid #ccc!important;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+border-top: 1px solid #ccc!important;
+border-top-left-radius: 4px;
+border-top-right-radius: 4px;
 }
-
 button, input, optgroup, select, textarea {
-  width: 100%;
-  margin: 0;
-  font: inherit;
-  color: inherit;
+width: 100%;
+margin: 0;
+font: inherit;
+color: inherit;
 }
 .content {
-  width: 100%;
-  padding:10px;
-  color: #fff;
-  background-color: blue;
-  border: 1px solid rgba(0,0,0,.05);
+width: 100%;
+padding:10px;
+color: #fff;
+background-color: blue;
+border: 1px solid rgba(0,0,0,.05);
 }
-
 .content p {
- width: 100%;
- margin: 0;
- background: red;
+width: 100%;
+margin: 0;
+background: red;
 }
-
 .anchor {
-  background-color: rebeccapurple;
-  width: 208px;
-  height: 300px;
+background-color: rebeccapurple;
+width: 208px;
+height: 300px;
 }
 .buttonmat{
-  width: 56px;
-  height: 56px;
-  bottom: 2%;
-  margin-left: 4px;
-  font-weight: 700;
-  position: absolute;
+width: 56px;
+height: 56px;
+bottom: 3%;
+left: 1%;
+font-weight: 700;
+position: absolute;
 }
 .material-icons{
-  font-size: 25px;
+font-size: 25px;
 }
 .mat-fab .mat-button-wrapper {
-  padding: 0px;
-  display: inline-block;
-  line-height: 24px;
+padding: 0px;
+display: inline-block;
+line-height: 24px;
 }
 .matborder
 {
-  border-left: 1px black solid;
+border-left: 1px black solid;
+}
 }

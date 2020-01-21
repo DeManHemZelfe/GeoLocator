@@ -1,6 +1,24 @@
-.map {
-  width: 100vw;
-  height: 100vh;
+@media only screen and (min-width: 600px)
+{
+.zoekbalk
+{
+ position: absolute;
+ width: 200px;
+ z-index: 99;
+ padding: 0px;
+ margin: 0px;
+}
+}
+
+@media only screen and (min-width: 950px)
+{
+.zoekbalk
+{
+ top: 2%;
+ width: 20%;
+ position: absolute;
+ left: 2%;
+}
 }
 
 .options-menu {
@@ -159,11 +177,5 @@ i{
     }
 
 
-    .zoekbalk{
-    /* z-index: 100; */
-    position: absolute;
-    margin-top: 5px;
-    left: 1%;
-    right: 1%;
-    }
+
 

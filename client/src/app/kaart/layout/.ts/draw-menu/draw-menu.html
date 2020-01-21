@@ -1,14 +1,14 @@
 <div class="drawmenu">
- <button (click)="Select($event)"><i class="material-icons" title="Select" style="font-size: 10px;" style="color: black;">zoom_out_map</i></button>
- <button (click)="Transform($event)"><i class="material-icons" title="Transform" style="font-size: 10px;" style="color: black;">tab_unselected</i></button>
- <button (click)="show2 = !show2" class="button"><i class="material-icons" title="Meten" style="font-size: 10px;" style="color: black;">timeline</i></button>
+ <button style="background: snow;"  (click)="Select($event)"><i class="material-icons" title="Select" style="font-size: 10px;" style="color: black;">zoom_out_map</i></button>
+ <button style="background: snow;"  (click)="Transform($event)"><i class="material-icons" title="Transform" style="font-size: 10px;" style="color: black;">tab_unselected</i></button>
+ <button style="background: snow;"  (click)="show2 = !show2" class="button"><i class="material-icons" title="Meten" style="font-size: 10px;" style="color: black;">timeline</i></button>
 
- <div *ngIf="show2" class="draw-menu" id="menu">
+ <div *ngIf="show2" class="draw-menu-meet" id="menu">
   <button (click)="switchMetenMode('length')" value="LineString" title="LineString" id="LineString"><i class="material-icons" style="font-size: 10px;" style="color: black;">call_made</i></button>
   <button (click)="switchMetenMode('area')"    value="Polygon" title="Polygon" id="Polygon"><i class="material-icons" style="font-size: 10px;" style="color: black;">crop_square</i></button>
  </div>
 
- <button (click)="show1 = !show1" class="button"><i class="material-icons" title="Edit" style="font-size: 10px;" style="color: black;">edit</i></button>
+ <button style="background: snow;" (click)="show1 = !show1" class="button"><i class="material-icons" title="Edit" style="font-size: 10px;" style="color: black;">edit</i></button>
 
 <div *ngIf="show1" class="draw-menu" id="menu">
  <button (click)="switchMode('Point')" value="Point" title="Point" id="Point"><i class="material-icons" style="font-size: 10px;" style="color: black;">brightness_1</i></button>
@@ -17,8 +17,8 @@
  <button (click)="switchMode('Circle')" value="Circle" title="Circle" id="Circle"> <i class="material-icons" style="font-size: 10px;" style="color: black;">panorama_fish_eye</i></button>
 </div>
 
- <button *ngIf="opened3" (click)="open3()"><i class="material-icons" title="Color" style="font-size: 10px;" style="color: black;">color_lens</i></button>
- <button *ngIf="opened2" (click)="open2()"><i class="material-icons" title="draw options" style="font-size: 10px;" style="color: black;">settings</i></button>
+ <button style="background: snow;"  *ngIf="opened3" (click)="open3()"><i class="material-icons" title="Color" style="font-size: 10px;" style="color: black;">color_lens</i></button>
+ <button style="background: snow;"  *ngIf="opened2" (click)="open2()"><i class="material-icons" title="draw options" style="font-size: 10px;" style="color: black;">settings</i></button>
 </div>
 
 <kendo-window title="Draw Settings" *ngIf="!opened2" (close)="close2()" [minWidth]="250" [width]="445" [height]="485">

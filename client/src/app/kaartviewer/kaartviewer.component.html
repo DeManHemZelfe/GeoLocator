@@ -1,6 +1,7 @@
+<body>
 <div #PopUpMenu>
  <div *ngFor="let informatie of BagArray">
-  <kendo-window [minWidth]="200" [height]="380" title="Bag"style="height: 380px; background-color: white; color: black;">
+  <kendo-window (close)="close4()" *ngIf="!opened4" [left]="1585" [minWidth]="200" [height]="380" title="Bag"style="left: 75;background-color: white; color: black;">
    <div class="kendocontent">
     <table class="table">
      <th>Titel</th>
@@ -19,13 +20,14 @@
 
 <div #PopUpAdresMenu>
  <div *ngFor="let informatie of AdresArray">
-  <kendo-window [minWidth]="130" [height]="215" title="Adres" style="height: 380px; background-color: white; color: black;">
+  <kendo-window (close)="close5()" *ngIf="!opened5" [left]="1075" [minWidth]="130" [height]="215" title="Adres" style="height: 380px; background-color: white; color: black;">
    <div class="kendocontent">
     <table class="table">
      <th>Titel</th>
      <tr><td>Straatnaam</td><td>{{informatie.straatnaam}}</td></tr>
      <tr><td>Bouwjaar</td><td>{{informatie.huisnummer}}</td></tr>
-     <tr><td>Woonplaats</td><td>{{informatie.woonplaats}}</td></tr>
+     <tr><td>Plaats</td><td>{{informatie.woonplaats}} {{informatie.plaats}}</td></tr>
+     <tr><td>Huisnummer</td><td>{{informatie.nummer}} {{informatie.huisnummer}}</td></tr>
      <tr><td>PostCode</td><td>{{informatie.postcode}}</td></tr>
     </table>
    </div>
@@ -55,10 +57,11 @@
 </div>
 
 <div #geosetmenu><app-geoset-menu></app-geoset-menu></div>
-<div id="provincienaam">provincies</div>
+<div id="provincienaam" class="provincienaam"></div>
 
 
 
+</body>
 
 
 

@@ -1,50 +1,92 @@
+@media only screen and (min-width: 600px)
+{
 .Geo
 {
-  width: 20%;
-  position: absolute;
-  margin-top: 60px;
-  margin-left: 15px;
-  left: 1%;
-  /* height: 45%; */
+ margin-top: 60px;
+ background: antiquewhite;
+ padding: 0;
+ margin-left: -20px;
+ width: 216px;
+ background-color: #8BC34A;
+ display: list-item;
 }
-
-.mat-expansion-panel-header-description
+.mat-expansion-panel-body
 {
-  color: blue;
+padding: 0px;
+background-color: red;
 }
 .mat-expansion-panel:not([class*=mat-elevation-z])
 {
-  box-shadow: none;
+ box-shadow: none;
 }
 ul
 {
-  display: contents;
-  color: blue;
-  /* list-style-type: disc; */
-  /* margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 40px; */
+ display: contents;
 }
 mat-expansion-panel-header
 {
-  height: 0px;
+ height: 0px;
 }
 .list
 {
-  width: 75%;
+width: 75%;
 }
 h4
 {
-  margin: 0px;
+margin: 0px;
 }
 fieldset
 {
-  color: black;
+color: black;
 }
 .fieldsetcontent
 {
- color: black;
- margin-left: 16px;
+color: black;
 }
+}
+@media only screen and (min-width: 950px)
+{
+.Geo
+{
+width: 20%;
+position: absolute;
+margin-top: 60px;
+margin-left: 15px;
+left: 1%;
+display: block;
+top: 2%;
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z])
+{
+box-shadow: none;
+}
+ul
+{
+display: contents;
+}
+mat-expansion-panel-header
+{
+height: 0px;
+}
+.list
+{
+width: 75%;
+}
+h4
+{
+margin: 0px;
+}
+fieldset
+{
+color: black;
+}
+.fieldsetcontent
+{
+color: black;
+/* margin-left: 16px; */
+}
+
+}
+
+

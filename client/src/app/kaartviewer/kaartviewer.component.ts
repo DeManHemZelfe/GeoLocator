@@ -55,6 +55,11 @@ export class KaartviewerComponent implements AfterViewInit {
   public dialogOpened = false;
   public windowOpened = false;
   tooltip = 'dit is een tekst';
+  opened2 = true;
+  opened3 = true;
+  opened4 = true;
+  opened5 = true;
+  opened6 = true;
 
   // SHOW & HIDE
   show1  = false;  show2  = false;  show3  = false;
@@ -187,6 +192,19 @@ export class KaartviewerComponent implements AfterViewInit {
    private achterkaart: BgService,
    public geocoderService: GeocoderService,
   ) {}
+  //
+  open2()  { this.opened2 = false; }
+  open3()  { this.opened3 = false; }
+  open4()  { this.opened4 = false; }
+  open5()  { this.opened5 = false; }
+  open6()  { this.opened6 = false; }
+  //
+  close2() { this.opened2 = true; }
+  close3() { this.opened3 = true; }
+  close4() { this.opened4 = true; }
+  close5() { this.opened5 = true; }
+  close6() { this.opened6 = true; }
+  //
 
   ngAfterViewInit() {
    this.initializeMap();
@@ -313,6 +331,7 @@ export class KaartviewerComponent implements AfterViewInit {
    })
   });
   this.map.addInteraction(this.draw);
+  this.map.addInteraction(this.Meetsnap);
   this.createMeasureTooltip();
 
   this.draw.on('drawstart', (evt) => {
@@ -385,6 +404,7 @@ export class KaartviewerComponent implements AfterViewInit {
   const index = this.AdresArray.findIndex(x => x === pushNewFeature);
   this.AdresArray.splice(index, 1);
   this.AdresArray.push(pushNewFeature);
+  this.open5();
   console.log(features[0].getProperties());
   console.log(Adresnaam);
   }
@@ -396,6 +416,7 @@ export class KaartviewerComponent implements AfterViewInit {
   this.BagArray.push(pushNewFeature);
   this.highlightsource.clear();
   this.highlightsource.addFeature(features[0]);
+  this.open4();
   console.log(features[0].getProperties());
   console.log(Bagname);
   } else {
