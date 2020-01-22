@@ -28,40 +28,52 @@
 
  <div class="modify">
  <h3>Modify</h3>
- <label class="label">
+
   <span>Modify</span>
   <input (change)="EnableBox($event)" id="modify" value="modify" type="checkbox"/>
   <br>
-  <input (change)="EnableBox($event)" id="snap" value="snap" type="checkbox"/>
-  <span>Disable Snap - Enable Snap</span>
+  <input (change)="EnableBox($event)" [checked]='Checkthebox' id="snap" value="snap" type="checkbox"/>
+  <span>Enable Snap</span>
   <br>
 
-  <div>
-  <h3>Active Draw</h3>
-  <table border="3px" style="margin-bottom: 10px;">
-  <tr><th>Naam</th><th>Color</th><th>OL_UID</th><th>Undo</th></tr>
-   <tr style="background-color: seashell;"  *ngFor="let draw of DrawArray">
-    <td>{{draw.geometryName_}}</td><td>{{draw.style_.fill_.color_}}</td><td>{{draw.ol_uid }}</td>
-   <td>
-    <button kendoButton style="background-color: lightblue;" (click)="undo(draw)">Undo</button>
-   </td>
-  </tr>
-  </table>
-  <h3>Deleted Draw</h3>
-  <table border="3px" style="margin-bottom: 10px;">
-  <tr><th>Naam</th><th>Color</th><th>OL_UID</th><th>Redo</th></tr>
-  <tr style="background-color: seashell;"  *ngFor="let array of DataUndoArray" >
-   <td>{{array.geometryName_}}</td><td>{{array.style_.fill_.color_}}</td><td>{{array.ol_uid }}</td>
-   <td>
-    <button kendoButton style="background-color: red;" (click)="redo(array)">Redo</button>
-   </td>
-  </tr>
-  </table>
- </div>
- <br><br>
- </label>
- </div>
- </fieldset>
+<div>
+<h3>Active Draw</h3>
+<table border="3px" style="margin-bottom: 10px;">
+<tr><th>Naam</th><th>Color</th><th>OL_UID</th><th>Undo</th></tr>
+<tr style="background-color: seashell;"  *ngFor="let draw of DrawArray">
+<td>{{draw.geometryName_}}</td><td>{{draw.style_.fill_.color_}}</td><td>{{draw.ol_uid }}</td>
+<td>
+<button kendoButton style="background-color: lightblue;" (click)="undo(draw)">Undo</button>
+</td>
+</tr>
+<tr style="background-color: seashell;"  *ngFor="let draw of DrawMeetArray">
+<td>{{draw.geometryName_}}</td><td>{{draw.style_.fill_.color_}}</td><td>{{draw.ol_uid }}</td>
+<td>
+<button kendoButton style="background-color: lightblue;" (click)="undoMeet(draw)">Undo</button>
+</td>
+</tr>
+</table>
+<h3>Deleted Draw</h3>
+<table border="3px" style="margin-bottom: 10px;">
+<tr><th>Naam</th><th>Color</th><th>OL_UID</th><th>Redo</th></tr>
+<tr style="background-color: seashell;"  *ngFor="let array of DataUndoArray">
+<td>{{array.geometryName_}}</td><td>{{array.style_.fill_.color_}}</td><td>{{array.ol_uid }}</td>
+<td>
+<button kendoButton style="background-color: red;" (click)="redo(array)">Redo</button>
+</td>
+</tr>
+<tr style="background-color: seashell;"  *ngFor="let array of DataUndoMeetArray" >
+<td>{{array.geometryName_}}</td><td>{{array.style_.fill_.color_}}</td><td>{{array.ol_uid }}</td>
+<td>
+<button kendoButton style="background-color: red;" (click)="redoMeet(array)">Redo</button>
+</td>
+</tr>
+</table>
+</div>
+<br><br>
+
+</div>
+</fieldset>
 </form>
 </kendo-window>
 

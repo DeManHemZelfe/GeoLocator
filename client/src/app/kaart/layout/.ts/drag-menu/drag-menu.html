@@ -4,28 +4,25 @@
   </div>
 </div>
 
- <kendo-popup class="kendopopup" style="left: 1377.59px; top: 776.688px;" [anchor]="anchor" [anchorAlign]="anchorAlign" [popupAlign]="popupAlign" *ngIf="show">
-  <div class="anchor content">
-   <div class="informatie">
-    <h2>Informatie</h2>
-    <div>
-     <mat-grid-list cols="2" rowHeight="2:1" style="border: 1px solid black;" *ngFor="let informatie of ObjectInformatie">
-      <mat-grid-tile>Naam</mat-grid-tile><mat-grid-tile class="matborder">
-       {{informatie.gemeentenaam}} {{informatie.provincienaam}} {{informatie.landsnaam}}
-      </mat-grid-tile>
-      <mat-grid-tile>id</mat-grid-tile><mat-grid-tile  class="matborder">
-        {{informatie.geometry.ol_uid}}
-      </mat-grid-tile>
-      <mat-grid-tile>code</mat-grid-tile><mat-grid-tile  class="matborder">
-        {{informatie.code}}
-      </mat-grid-tile>
-      <mat-grid-tile>Legenda</mat-grid-tile><mat-grid-tile class="matborder">
-        imgage
-      </mat-grid-tile>
-     </mat-grid-list>
-    </div>
-   </div>
-  </div>
+<kendo-popup class="kendopopup" style="left: 1377.59px; top: 776.688px;" [anchor]="anchor" [anchorAlign]="anchorAlign" [popupAlign]="popupAlign" *ngIf="show">
+<div class="anchor content">
+<div class="informatie">
+<h2 class="titel">Informatie</h2>
+<div>
+<mat-grid-list cols="2" rowHeight="2:1" *ngFor="let informatie of ObjectInformatie">
+
+<mat-grid-tile class="matborderlinks">Naam</mat-grid-tile>
+<mat-grid-tile class="matborder">{{informatie.gemeentenaam}} {{informatie.provincienaam}} {{informatie.landsnaam}}</mat-grid-tile>
+
+<mat-grid-tile class="matborderlinks">id</mat-grid-tile><mat-grid-tile class="matborder">{{informatie.geometry.ol_uid}}</mat-grid-tile>
+
+<mat-grid-tile  class="matborderlinks">code</mat-grid-tile><mat-grid-tile  class="matborder">{{informatie.code}}</mat-grid-tile>
+
+
+</mat-grid-list>
+</div>
+</div>
+</div>
 </kendo-popup>
 
 <button mat-fab color="primary" class="buttonmat">

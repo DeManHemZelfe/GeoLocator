@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, ɵConsole, Output, EventEmitter, Input } from '@angular/core';
-import { Map, View, Collection,  MapBrowserEvent  } from 'ol';
+import { Map, View, Collection,  MapBrowserEvent, Feature  } from 'ol';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import Overlay from 'ol/Overlay';
 import OverlayPositioning from 'ol/OverlayPositioning';
@@ -92,7 +92,7 @@ export class KaartviewerComponent implements AfterViewInit {
   typeSelectTekenen = new FormControl('');
   typeSelectStyle   = new FormControl('');
   kleurschema;
-  ColorWheel;
+  ColorWheel = 'rgba(255, 255, 255, 0.2)';
   // transform = new transform({});
   // TEKENFUNCTIES
   tekensource = new VectorSource({wrapX: false, });
@@ -150,8 +150,10 @@ export class KaartviewerComponent implements AfterViewInit {
   // UNDO-ARRAY
   undoArray = [];
   dataUndoArray = [];
+  dataUndoMeetArray = [];
   dataActiveArray = [];
   drawArray = [];
+  drawMeetArray = [];
   // GEO ARRAY
   objectarray = [];
   BagArray = [];
@@ -180,6 +182,7 @@ export class KaartviewerComponent implements AfterViewInit {
   wmsLayer = new TileLayer({
    source: this.wmsSource,
   });
+  mysource;
 
   constructor(
    private spoorwegService: SpoorwegenService,
@@ -303,6 +306,7 @@ export class KaartviewerComponent implements AfterViewInit {
   }
 
   addMeetInteraction() {
+  const Fillcolor = this.ColorWheel;
   const Drawtype = this.typeSelectTekenen.value;
   if (this.typeSelectTekenen.value !== '') {
   this.draw = new OlDraw({
@@ -337,8 +341,14 @@ export class KaartviewerComponent implements AfterViewInit {
   this.draw.on('drawstart', (evt) => {
    const Meetsketch = evt.feature;
    Meetsketch.getGeometry().on('change', (_event) => {
+    evt.feature.setStyle(new Style({
+    fill: new Fill({color: Fillcolor}),
+    stroke: new Stroke({color:  'rgba(0, 0, 0, 0.5)', width: 3,  lineDash: [10, 10]}),
+    image: new Circle({radius: 5, stroke: new Stroke({color: 'yellow'}),
+    fill: new Fill({color: 'rgba(255, 255, 255, 0.2)'})
+    })
+    }));
     const geom = _event.target;
-    console.log(geom);
     if (geom instanceof Polygon) {
      this.output = this.formatArea(geom);
      this.tooltipcoord = geom.getInteriorPoint().getCoordinates();
@@ -357,19 +367,29 @@ export class KaartviewerComponent implements AfterViewInit {
    this.sketch = null;
    this.measureTooltipElement = null;
    this.createMeasureTooltip();
+   this.drawMeetArray.push(event.feature);
+   console.log(event.feature);
     });
    }
   }
 
   EnableInteractions(event) {
+  console.log(event);
   if (event === 'snap') {
    console.log('SNISNA');
-   this.snap.setActive(!this.snap.getActive());
-  } else if (event === 'modify') {
-   console.log('modimodimodi');
+   this.map.addInteraction(this.snap);
+   this.map.addInteraction(this.Meetsnap);
+  }
+  if (event === 'modify') {
+  console.log('modimodimodi');
+  }
+  if (event === '') {
+   this.map.removeInteraction(this.snap);
+   this.map.removeInteraction(this.Meetsnap);
+   console.log('AZSDRTRFGYUHJKL;JDVFXCGVHBJKL;');
   } else {
-   console.log('else');
-   }
+  console.log('else');
+  }
   }
 
   switchMeetMode(event: GeometryType) {
@@ -387,10 +407,21 @@ export class KaartviewerComponent implements AfterViewInit {
   const viewResolution = this.mapconfig._view.getResolution();
   this.map.forEachLayerAtPixel(evt.pixel, (layer) => {
   const source = layer.getSource();
+  // console.log(source);
+
+  if ((source as any).getLegendUrl) {
+  const legenda = (source as any).getLegendUrl(
+  viewResolution, { FORMAT: 'image/png'});
+  console.log(legenda);
+  this.mysource = legenda;
+
+
 
   if ((source as any).getFeatureInfoUrl) {
   const url = (source as any).getFeatureInfoUrl(
   evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'application/json' });
+  // console.log(url);
+
 
   if (url) {
   fetch(url).then((response) => {
@@ -422,8 +453,8 @@ export class KaartviewerComponent implements AfterViewInit {
   } else {
 
   if (features[0]) {
-  document.getElementById('provincienaam').innerHTML = features[0].get('provincienaam');
-  console.log(features[0].getProperties());
+  // document.getElementById('provincienaam').innerHTML = features[0].get('provincienaam');
+  // console.log(features[0].getProperties());
   const pushNewFeature = features[0].getProperties();
   const index = this.objectarray.findIndex(x => x === pushNewFeature);
   this.objectarray.splice(index, 1);
@@ -434,6 +465,7 @@ export class KaartviewerComponent implements AfterViewInit {
        });
       });
      }}
+    }
     });
    });
   }
@@ -517,5 +549,8 @@ export class KaartviewerComponent implements AfterViewInit {
    });
   this.map.addInteraction(this.InteractionTransform);
   }
-  onPlaceFound(place) {this.map.getView().animate({center: place.centroide_rd.coordinates, zoom: 12}); }
+  onPlaceFound(place) {
+  this.map.getView().animate({center: place.centroide_rd.coordinates, zoom: 12});
+  console.log(place);
+  }
 }

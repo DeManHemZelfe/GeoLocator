@@ -1,9 +1,6 @@
 @media only screen and (min-width: 600px)
 {
-.informatie
-{
- background-color: red;
-}
+
 .mother{
   width: 20%;
   height: 100px;
@@ -19,6 +16,10 @@
   position: absolute;
   pointer-events: all;
   right: 1%
+}
+.titel
+{
+border-bottom: black solid 2px;
 }
 .btn-featureinfo.collapsed[_ngcontent-c7]
 {
@@ -63,10 +64,6 @@ padding: 0px;
 display: inline-block;
 line-height: 24px;
 }
-.matborder
-{
-border-left: 1px black solid;
-}
 }
 @media only screen and (min-width: 950px)
 {
@@ -100,8 +97,8 @@ color: inherit;
 .content {
 width: 100%;
 padding:10px;
-color: #fff;
-background-color: blue;
+color: black;
+background-color: white;
 border: 1px solid rgba(0,0,0,.05);
 }
 .content p {
@@ -110,9 +107,9 @@ margin: 0;
 background: red;
 }
 .anchor {
-background-color: rebeccapurple;
+/* background-color: rebeccapurple; */
 width: 208px;
-height: 300px;
+height: 275px;
 }
 .buttonmat{
 width: 56px;
@@ -132,6 +129,12 @@ line-height: 24px;
 }
 .matborder
 {
-border-left: 1px black solid;
+border-bottom: black solid 1px;
+border-left: black solid 1px;
+}
+.matborderlinks
+{
+border-right: black 1px solid;
+border-bottom: black 1px solid;
 }
 }

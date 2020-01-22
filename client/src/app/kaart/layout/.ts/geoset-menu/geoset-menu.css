@@ -14,7 +14,6 @@
 .mat-expansion-panel-body
 {
 padding: 0px;
-background-color: red;
 }
 .mat-expansion-panel:not([class*=mat-elevation-z])
 {

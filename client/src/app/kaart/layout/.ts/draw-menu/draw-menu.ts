@@ -27,9 +27,14 @@ export class DrawMenuComponent {
 @Output() _Snap: EventEmitter<any> = new EventEmitter<any>();
 // INPUT
 @Input() DataUndoArray = [];
+@Input() DataUndoMeetArray = [];
+
 @Input() DrawArray;
+@Input() DrawMeetArray;
+
 @Input() DataActiveArray;
 @Input() TekenSource;
+@Input() MeetSource;
 //
 public windowOpened = false;
 public dialogOpened = false;
@@ -44,7 +49,7 @@ opened3 = true;
 opened4 = true;
 opened5 = true;
 //
-Checkthebox;
+Checkthebox = true;
 maakopen = false;
 maakopen2 = false;
 maakopen3 = false;
@@ -73,7 +78,7 @@ open2()  {this.opened2 = false; }
 open3()  { this.opened3 = false; }
 open4()  { this.opened4 = false; }
 //
-close2() {this.opened2 = true; }
+
 close3() { this.opened3 = true; }
 close4() { this.opened4 = true; }
 //
@@ -108,6 +113,14 @@ undo(value) {
  this.DataUndoArray.push(value);
  this.TekenSource.removeFeature(value);
 }
+undoMeet(value) {
+ console.log(value);
+ console.log(this.DrawMeetArray);
+ const index = this.DrawMeetArray.findIndex(x => x === value);
+ this.DrawMeetArray.splice(index, 1);
+ this.DataUndoMeetArray.push(value);
+ this.MeetSource.removeFeature(value);
+ }
 redo(array) {
  console.log(array);
  console.log(this.DrawArray);
@@ -116,15 +129,29 @@ redo(array) {
  this.DrawArray.push(array);
  this.TekenSource.addFeature(array);
 }
+redoMeet(array) {
+ console.log(array);
+ console.log(this.DrawMeetArray);
+ const index = this.DataUndoMeetArray.findIndex(x => x === array);
+ this.DataUndoMeetArray.splice(index, 1);
+ this.DrawMeetArray.push(array);
+ this.MeetSource.addFeature(array);
+ }
+close2() {
+this.opened2 = true;
+console.log(this.Checkthebox);
+}
 EnableBox(event) {
 const value = event.target.value;
 const check = event.target.checked;
+this.Checkthebox = check;
 if (check === true) {
- console.log(value);
  this._Enable.emit(value);
-} else {
- console.log('false');
- }
+}
+if (check === false) {
+  this.Checkthebox = false;
+  this._Enable.emit('');
+}
 }
 Disable(value) {
 if (value === 'modify') {

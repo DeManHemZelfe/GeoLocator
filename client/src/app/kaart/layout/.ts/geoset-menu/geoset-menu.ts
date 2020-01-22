@@ -29,6 +29,8 @@ export class GeosetComponent {
   show10 = false; show11 = false; show12 = false;
   show13 = false; show14 = false; show15 = false;
 
+
+
   constructor(
     private spoorwegService: SpoorwegenService,
     private bestuurlijkegrenzenservice: BestuurlijkegrenzenService,
