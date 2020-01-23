@@ -171,6 +171,7 @@ export class KaartviewerComponent implements AfterViewInit {
   @ViewChild('toolbarmenu', { static: false }) toolbarmenu: ElementRef;
   @ViewChild('dragmenu', { static: false }) dragmenu: ElementRef;
   @ViewChild('drawmenu', { static: false }) drawmenu: ElementRef;
+  @ViewChild('droplayermenu', { static: false }) droplayermenu: ElementRef;
   @ViewChild('geosetmenu', { static: false }) geosetmenu: ElementRef;
   // VECTORLAYER
   wmsSource = new TileWMS({
@@ -260,6 +261,7 @@ export class KaartviewerComponent implements AfterViewInit {
      new Control({ element: this.toolbarmenu.nativeElement }),
      new Control({ element: this.dragmenu.nativeElement }),
      new Control({ element: this.drawmenu.nativeElement }),
+     new Control({ element: this.droplayermenu.nativeElement }),
      new Control({ element: this.geosetmenu.nativeElement }),
      ]
     });
@@ -471,21 +473,29 @@ export class KaartviewerComponent implements AfterViewInit {
   }
   AddLayer(event) {
   const NewLayerTitle = event;
-  if (NewLayerTitle === 'gemeenten') {
+  const UserTile = new TileWMS({
+  params: { LAYERS: NewLayerTitle, TILED: true, title: NewLayerTitle },
+  crossOrigin: 'anonymous',
+  });
+  const UserLayer = new TileLayer({
+  source: UserTile,
+  title: 'UserLayerTitle',
+  visible: true,
+  } as ITileOptions);
 
-   const UserTile = new TileWMS({
-   url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?',
-   params: {LAYERS: NewLayerTitle, TILED: true, title: 'test'},
-   crossOrigin: 'anonymous',
-   });
-   const UserLayer = new TileLayer({
-    source: UserTile,
-    title: 'GemeentenGrens',
-    visible: true,
-   } as ITileOptions);
-   this.map.addLayer(UserLayer);
-
+  if (NewLayerTitle === 'gemeenten' || NewLayerTitle === 'provincies' || NewLayerTitle === 'landsgrens')  {
+  UserTile.setUrl('https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?');
+  this.map.addLayer(UserLayer);
   }
+  if (NewLayerTitle === 'bbg2015' || NewLayerTitle === 'BBG2015_hoofdgroep')  {
+  UserTile.setUrl('https://geodata.nationaalgeoregister.nl/bestandbodemgebruik2015/wfs?');
+  this.map.addLayer(UserLayer);
+  }
+  if (NewLayerTitle === 'bevolkingskernen2011:cbsbevolkingskernen2011')  {
+  UserTile.setUrl('	https://geodata.nationaalgeoregister.nl/bevolkingskernen2011/wms?');
+  this.map.addLayer(UserLayer);
+  }
+
   }
   addInteraction() {
   const Fillcolor = this.ColorWheel;

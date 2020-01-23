@@ -70,7 +70,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AdresService } from './kaarten/kaart-lagen/overig/adressen/adres.service';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { DropDownLayersComponent } from './kaart/layout/.ts/drop-down-layers/drop-down-layers/drop-down-layers.component';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatAutocompleteModule, AUTOCOMPLETE_OPTION_HEIGHT} from '@angular/material/autocomplete';
 
 
 
@@ -163,4 +163,5 @@ export function tokenGetter() {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+}
