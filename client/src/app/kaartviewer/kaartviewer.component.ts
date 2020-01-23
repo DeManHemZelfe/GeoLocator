@@ -469,6 +469,24 @@ export class KaartviewerComponent implements AfterViewInit {
     });
    });
   }
+  AddLayer(event) {
+  const NewLayerTitle = event;
+  if (NewLayerTitle === 'gemeenten') {
+
+   const UserTile = new TileWMS({
+   url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?',
+   params: {LAYERS: NewLayerTitle, TILED: true, title: 'test'},
+   crossOrigin: 'anonymous',
+   });
+   const UserLayer = new TileLayer({
+    source: UserTile,
+    title: 'GemeentenGrens',
+    visible: true,
+   } as ITileOptions);
+   this.map.addLayer(UserLayer);
+
+  }
+  }
   addInteraction() {
   const Fillcolor = this.ColorWheel;
   const value = this.typeSelectTekenen.value;

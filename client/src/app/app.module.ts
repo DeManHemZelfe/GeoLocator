@@ -69,6 +69,8 @@ import { MobileMenuComponent } from './device/mobile/pages/components/mobile-men
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AdresService } from './kaarten/kaart-lagen/overig/adressen/adres.service';
 import { InputsModule } from '@progress/kendo-angular-inputs';
+import { DropDownLayersComponent } from './kaart/layout/.ts/drop-down-layers/drop-down-layers/drop-down-layers.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 
@@ -99,11 +101,13 @@ export function tokenGetter() {
     MobileComponent,
     HomeComponent,
     GeosetComponent,
-    MobileMenuComponent
+    MobileMenuComponent,
+    DropDownLayersComponent
 
   ],
   imports: [
     RouterModule,
+    MatAutocompleteModule,
     InputsModule,
     MatGridListModule,
     MatButtonModule,

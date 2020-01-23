@@ -24,7 +24,7 @@ export class BestuurlijkegrenzenService {
     } as ITileOptions);
 
     gemeentenTile = new TileWMS({
-     url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?n',
+     url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?',
      params: {
       LAYERS: 'gemeenten',
       TILED: true,
