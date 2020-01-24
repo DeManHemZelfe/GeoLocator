@@ -16,6 +16,9 @@ import { ServiceService } from 'src/app/pdokmap/pdokmapconfigmap/service.service
 import { BgService } from 'src/app/pdokmap/layer/bg.service';
 import { GeocoderService } from 'angular-geocoder';
 import { AdresService } from 'src/app/kaarten/kaart-lagen/overig/adressen/adres.service';
+import LayerGroup from 'ol/layer/Group';
+import TileLayer from 'ol/layer/Tile';
+import { TileWMS } from 'ol/source';
 
 @Component({
   selector: 'app-geoset-menu',
@@ -29,7 +32,9 @@ export class GeosetComponent {
   show10 = false; show11 = false; show12 = false;
   show13 = false; show14 = false; show15 = false;
 
-
+  @Input() _UserLayer;
+  layerInput: LayerGroup;
+  ArrayInput = [];
 
   constructor(
     private spoorwegService: SpoorwegenService,
@@ -42,7 +47,6 @@ export class GeosetComponent {
     private achterkaart: BgService,
     public geocoderService: GeocoderService
   ) {}
-
   // MAPBUTTONS
   change() {
     if (click) { console.log('click'); } else { console.log('no click'); }
@@ -53,6 +57,21 @@ export class GeosetComponent {
   getAdresButton() {return this.buttonforlayers.getLayerGroupAdressen(); }
   getDienstenButton() {return this.buttonforlayers.getLayerGroupOverigeDiensten(); }
   getSpoorButton() {return this.buttonforlayers.getLayerGroupSpoorwegen(); }
+
+
+  getLayerGroupInputButton() {
+  if (this._UserLayer) {
+
+  this.layerInput = new LayerGroup({
+  layers: [
+  this._UserLayer,
+  ]
+  });
+  return this.layerInput.getLayers().getArray();
+  }
+  }
+  getInputButton() {return this.getLayerGroupInputButton(); }
+
 
   }
 

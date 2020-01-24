@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Input} from '@angular/core';
 import LayerGroup from 'ol/layer/Group';
 import { BestuurlijkegrenzenService } from '../../../layers/bestuurlijkegrenzen.service';
 import { BagService } from '../../../layers/bag.service';
@@ -14,7 +14,9 @@ import { AdresService } from '../../../kaarten/kaart-lagen/overig/adressen/adres
  providedIn: 'root'
 })
 
+
 export class LayerButton {
+ @Input()
  layergroupkaart = new LayerGroup ({
   layers: [
    this.achterkaart.baseLayer,
@@ -55,6 +57,13 @@ export class LayerButton {
    ]
  });
  layergroupOverigeDiensten = new LayerGroup ({
+  layers: [
+  this.overigedienstenSerivce.OverheidsdienstenLayer,
+  this.overigedienstenSerivce.AgrarischAreaalNederlandLayer,
+  this.overigedienstenSerivce.GeografischenamenLayer
+  ]
+ });
+ layergroupInput = new LayerGroup ({
   layers: [
   this.overigedienstenSerivce.OverheidsdienstenLayer,
   this.overigedienstenSerivce.AgrarischAreaalNederlandLayer,

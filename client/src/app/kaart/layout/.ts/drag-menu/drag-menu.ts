@@ -15,10 +15,12 @@ export class DragMenuComponent {
   @Output() _submit: EventEmitter<any> = new EventEmitter<any>();
   @Input() ObjectInformatie;
   @Input() BagObjectInformatie;
+  @Input() PhotoSource;
 
   anchorAlign: Align = { horizontal: 'center', vertical: 'top' };
   popupAlign: Align = { horizontal: 'center', vertical: 'bottom' };
   show = false;
+  foto;
 
 
   constructor(

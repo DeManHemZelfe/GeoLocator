@@ -183,6 +183,8 @@ export class KaartviewerComponent implements AfterViewInit {
   wmsLayer = new TileLayer({
    source: this.wmsSource,
   });
+  UserTile: TileWMS;
+  UserLayer: TileLayer;
   mysource;
 
   constructor(
@@ -415,9 +417,10 @@ export class KaartviewerComponent implements AfterViewInit {
   const legenda = (source as any).getLegendUrl(
   viewResolution, { FORMAT: 'image/png'});
   console.log(legenda);
+
+  if (legenda) {
   this.mysource = legenda;
-
-
+  }
 
   if ((source as any).getFeatureInfoUrl) {
   const url = (source as any).getFeatureInfoUrl(
@@ -473,29 +476,37 @@ export class KaartviewerComponent implements AfterViewInit {
   }
   AddLayer(event) {
   const NewLayerTitle = event;
-  const UserTile = new TileWMS({
+  this.UserTile = new TileWMS({
   params: { LAYERS: NewLayerTitle, TILED: true, title: NewLayerTitle },
   crossOrigin: 'anonymous',
   });
-  const UserLayer = new TileLayer({
-  source: UserTile,
-  title: 'UserLayerTitle',
+  this.UserLayer = new TileLayer({
+  source: this.UserTile,
+  title: NewLayerTitle,
   visible: true,
   } as ITileOptions);
 
-  if (NewLayerTitle === 'gemeenten' || NewLayerTitle === 'provincies' || NewLayerTitle === 'landsgrens')  {
-  UserTile.setUrl('https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?');
-  this.map.addLayer(UserLayer);
+  if (NewLayerTitle === 'lfroutes')  {
+  this.UserTile.setUrl('https://geodata.nationaalgeoregister.nl/lfroutes/wms?');
+  this.map.addLayer(this.UserLayer);
+  return this.UserLayer;
   }
   if (NewLayerTitle === 'bbg2015' || NewLayerTitle === 'BBG2015_hoofdgroep')  {
-  UserTile.setUrl('https://geodata.nationaalgeoregister.nl/bestandbodemgebruik2015/wfs?');
-  this.map.addLayer(UserLayer);
+  this.UserTile.setUrl('https://geodata.nationaalgeoregister.nl/bestandbodemgebruik2015/wms?');
+  this.map.addLayer(this.UserLayer);
   }
   if (NewLayerTitle === 'bevolkingskernen2011:cbsbevolkingskernen2011')  {
-  UserTile.setUrl('	https://geodata.nationaalgeoregister.nl/bevolkingskernen2011/wms?');
-  this.map.addLayer(UserLayer);
+  this.UserTile.setUrl('https://geodata.nationaalgeoregister.nl/bevolkingskernen2011/wms?');
+  this.map.addLayer(this.UserLayer);
   }
-
+  if (NewLayerTitle === 'weggegaantalrijbanen' || NewLayerTitle === 'weggegmaximumsnelheden')  {
+  this.UserTile.setUrl('https://geodata.nationaalgeoregister.nl/weggeg/wms?');
+  this.map.addLayer(this.UserLayer);
+  }
+  if (NewLayerTitle === 'bevolkingskernen2011:cbsbevolkingskernen2011')  {
+  this.UserTile.setUrl('https://geodata.nationaalgeoregister.nl/bevolkingskernen2011/wms?');
+  this.map.addLayer(this.UserLayer);
+    }
   }
   addInteraction() {
   const Fillcolor = this.ColorWheel;

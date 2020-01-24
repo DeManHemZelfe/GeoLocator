@@ -46,7 +46,7 @@
 
 <app-dialog-component (_styleswitchDialog)="styleswitchDialog($event)" [TekenSource]="tekensource" [DrawArray]="drawArray" [DataActiveArray]="dataActiveArray" [DataUndoArray]="dataUndoArray"></app-dialog-component>
 
-<div #dragmenu><app-drag-menu [ObjectInformatie]="objectarray" [BagObjectInformatie]="BagArray"></app-drag-menu></div>
+<div #dragmenu><app-drag-menu [ObjectInformatie]="objectarray" [BagObjectInformatie]="BagArray" [PhotoSource]="mysource"></app-drag-menu></div>
 <div #drawmenu>
  <app-draw-menu
   (_ColorDrawMenu)="StyleColorSwitch($event)" [TekenSource]="tekensource" [MeetSource]="MeetSource" [DrawArray]="drawArray"
@@ -56,7 +56,7 @@
  </app-draw-menu>
 </div>
 
-<div #geosetmenu><app-geoset-menu></app-geoset-menu></div>
+<div #geosetmenu><app-geoset-menu [_UserLayer]="UserLayer"></app-geoset-menu></div>
 <div #droplayermenu><app-drop-down-layers (_InputTitle)="AddLayer($event)"></app-drop-down-layers></div>
 <div class="img">
   <img id="legend" [src]="mysource">

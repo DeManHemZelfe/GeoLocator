@@ -1,10 +1,9 @@
 <div class="container">
-<input type="text" id="InputTitle" [formControl]="control" [matAutocomplete]="auto">
-<mat-autocomplete class="single-autocomplete"  #auto="matAutocomplete" panelWidth="190px">
-<mat-option *ngFor="let street of filteredStreets | async" [value]="street" class="option">
-{{street}}
-</mat-option>
-</mat-autocomplete>
-<button type="button" (click)="getInputValue()">Click To Add</button>
-</div>
-
+  <input type="text" id="InputTitle" [formControl]="Layercontrol" [matAutocomplete]="auto">
+  <mat-autocomplete class="single-autocomplete"  #auto="matAutocomplete" panelWidth="265px">
+  <mat-option *ngFor="let array of filteredLayerArray | async" [value]="array.layer" class="option">
+  {{array.naam}}
+  </mat-option>
+  </mat-autocomplete>
+  <button type="button" (click)="getInputValue()">Click To Add</button>
+  </div>

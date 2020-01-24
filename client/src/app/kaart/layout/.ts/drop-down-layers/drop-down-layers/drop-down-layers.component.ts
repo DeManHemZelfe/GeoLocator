@@ -23,40 +23,46 @@ InputTitle;
 InputLayer;
 InputUrl;
 
-control = new FormControl();
-streets: string[] = [
-  'gemeenten', 'provincies', 'landsgrens', 'bevolkingskernen2011:cbsbevolkingskernen2011',
-  'Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue',
-  'Champs-Élysées', 'Lombard Street', 'Abbey Road', 'Fifth Avenue',
+LayerArray: Array<{naam: string, layer: string}> =
+[
+ {naam: ('FiestRoutes'), layer: 'lfroutes'},
+ {naam: ('Aantal Rijbanen'), layer: 'weggegaantalrijbanen'},
+ {naam: ('Maximum Snelheden'), layer: 'weggegmaximumsnelheden'},
+ {naam: ('grond'), layer: 'bbg2015'},
+ {naam: ('Bag Hoofdgroep'), layer: 'BBG2015_hoofdgroep'},
+ {naam: ('Bevolkingskern'), layer: 'bevolkingskernen2011:cbsbevolkingskernen2011'},
 ];
-filteredStreets: Observable<string[]>;
-filteredOptions: Observable<User[]>;
+
+Layercontrol = new FormControl();
+filteredLayerArray: Observable<any[]>;
 
 constructor() {}
 ngOnInit() {
-this.filteredStreets = this.control.valueChanges.pipe(
+this.filteredLayerArray = this.Layercontrol.valueChanges.pipe(
 startWith(''),
-map(value => this._filter(value))
+map(naam => this._filter(naam))
 );
 }
 
-private _filter(value: string): string[] {
-const filterValue = this._normalizeValue(value);
+private _filter(naam: string) {
+const filterValue = this._normalizeValue(naam);
 
-return this.streets.filter(street => this._normalizeValue(street).includes(filterValue));
+return this.LayerArray.filter(value => this._normalizeValue(naam).includes(filterValue));
 }
 
-private _normalizeValue(value: string): string {
-return value.toLowerCase().replace(/\s/g, '');
+private _normalizeValue(naam: string) {
+return naam.toLowerCase().replace(/\s/g, '');
 }
 
 getInputValue() {
- this.InputTitle = (document.getElementById('InputTitle') as HTMLInputElement).value;
- if (this.InputTitle) {
-  console.log('INPUT GING GOED');
-  return this._InputTitle.emit(this.InputTitle);
+console.log(this.InputTitle);
+this.InputTitle = (document.getElementById('InputTitle') as HTMLInputElement).value;
+if (this.InputTitle) {
+ console.log('INPUT GING GOED');
+ return this._InputTitle.emit(this.InputTitle);
  } else {
-  console.log('else');
-  }
+ console.log('else');
  }
+}
+
 }
