@@ -77,13 +77,6 @@ border-radius: 5px;
 .container-geocoder {
   background-color: white;
 }
-
-/*
-.menu{
-  display: inline-block;
-  position: absolute;
-  max-width: 15%;
-} */
 .tweebuttons{
   display: grid;
   width: 100%;

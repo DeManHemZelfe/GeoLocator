@@ -137,4 +137,16 @@ border-left: black solid 1px;
 border-right: black 1px solid;
 border-bottom: black 1px solid;
 }
+.vliegrechts
+{
+position: absolute;
+display: flex;
+right: 0%;
+bottom: 60%;
+}
+.legenda-menu
+{
+background-color: antiquewhite;
+width: 10px;
+}
 }

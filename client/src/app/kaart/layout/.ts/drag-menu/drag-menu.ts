@@ -25,14 +25,18 @@ export class DragMenuComponent {
 
   constructor(
     private dialogService: DialogService
-    ) {}
-
-    check() {
-      console.log(this.ObjectInformatie);
+    ) {
+    if (this.PhotoSource) {
+    const Image = document.getElementById('legend') as HTMLImageElement;
+    Image.src = this.PhotoSource;
     }
-    onClick() {
-      this.show = !this.show;
-      console.log('doet het');
+    }
+
+
+  check() {console.log(this.ObjectInformatie); }
+  onClick() {
+  this.show = !this.show;
+  console.log('doet het');
   }
 
 }

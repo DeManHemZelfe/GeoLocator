@@ -411,7 +411,6 @@ export class KaartviewerComponent implements AfterViewInit {
   const viewResolution = this.mapconfig._view.getResolution();
   this.map.forEachLayerAtPixel(evt.pixel, (layer) => {
   const source = layer.getSource();
-  // console.log(source);
 
   if ((source as any).getLegendUrl) {
   const legenda = (source as any).getLegendUrl(
@@ -425,7 +424,6 @@ export class KaartviewerComponent implements AfterViewInit {
   if ((source as any).getFeatureInfoUrl) {
   const url = (source as any).getFeatureInfoUrl(
   evt.coordinate, viewResolution, 'EPSG:28992', { INFO_FORMAT: 'application/json' });
-  // console.log(url);
 
 
   if (url) {
