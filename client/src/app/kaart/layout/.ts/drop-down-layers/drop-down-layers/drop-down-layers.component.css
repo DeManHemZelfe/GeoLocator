@@ -1,6 +1,4 @@
-.mat-autocomplete-panel{
-  max-height:100px!important;
-}
+
 .container
 {
 background-color: burlywood;
@@ -9,29 +7,14 @@ position: absolute;
 left: 22%;
 top: 2%;
 }
-.single-autocomplete {
-  max-height: 150px !important;
-}
 .formpje
 {
 position: absolute;
 display: contents;
 }
-
-.divje
-{
-background-color: salmon !important;
-}
-
-.autocom
-{
-background-color: red !important;
-height: 40px !important;
-}
-
 .option
 {
-height: 40px;
+height: 41px;
 border: black 2px solid;
 }
 

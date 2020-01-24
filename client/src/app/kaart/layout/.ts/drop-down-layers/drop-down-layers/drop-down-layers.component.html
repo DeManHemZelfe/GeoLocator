@@ -1,16 +1,10 @@
 <div class="container">
-
-  <form class="formpje">
-    <input type="text" id="InputTitle" [formControl]="control" [matAutocomplete]="auto">
-    <div class="divje">
-      <mat-autocomplete class="single-autocomplete" #auto="matAutocomplete" panelWidth="50px" style="max-height:100px">
-        <mat-option *ngFor="let street of filteredStreets | async" [value]="street" class="option">
-          {{street}}
-        </mat-option>
-      </mat-autocomplete>
-    </div>
-    <button type="button" (click)="getInputValue()">Click To Add</button>
-  </form>
-
+<input type="text" id="InputTitle" [formControl]="control" [matAutocomplete]="auto">
+<mat-autocomplete class="single-autocomplete"  #auto="matAutocomplete" panelWidth="190px">
+<mat-option *ngFor="let street of filteredStreets | async" [value]="street" class="option">
+{{street}}
+</mat-option>
+</mat-autocomplete>
+<button type="button" (click)="getInputValue()">Click To Add</button>
 </div>
 
