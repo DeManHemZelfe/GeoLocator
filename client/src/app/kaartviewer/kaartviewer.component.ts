@@ -27,24 +27,7 @@ import { Polygon, LineString, Geometry } from 'ol/geom';
 import {getArea, getLength} from 'ol/sphere';
 import GeometryType from 'ol/geom/GeometryType';
 import { AdresService } from '../kaarten/kaart-lagen/overig/adressen/adres.service';
-// import Feature from 'ol/Feature';
-// import LayerGroup from 'ol/layer/Group';
-// import TileSource from 'ol/source/Tile';
-// import { TooltipDirective } from '@progress/kendo-angular-tooltip';
-// import { style } from '@angular/animations';
-// import {click, pointerMove, altKeyOnly, singleClick, doubleClick} from 'ol/events/condition';
-// import { ToolbarFunctionsComponent } from '../functions/toolbar-functions/toolbar-functions.component';
-// import { getLocaleId } from '@angular/common';
-// import { LayerbuttonComponent } from '../functions/buttons-functions/layerbutton/layerbutton.component';
-// import { transformGeom2D } from 'ol/geom/SimpleGeometry';
-// import ImageLayer from 'ol/layer/Image';
-// import WMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo';
-// import { Options as TileOptions } from 'ol/layer/Tile';
-// import LocationSuggestData from '../_interfaces/_datainterface/location-suggest-data-interface';
-// import WMTS, { optionsFromCapabilities } from 'ol/source/WMTS';
-// import Projection from 'ol/proj/Projection';
-// import { getTopLeft } from 'ol/extent';
-// import WMTSTileGrid from 'ol/tilegrid/WMTS';
+
 @Component({
   selector: 'app-kaartviewer',
   templateUrl: './kaartviewer.component.html',
@@ -183,8 +166,10 @@ export class KaartviewerComponent implements AfterViewInit {
   wmsLayer = new TileLayer({
    source: this.wmsSource,
   });
-  UserTile: TileWMS;
-  UserLayer: TileLayer;
+  public UserLayers = [];
+  public LegendaArray = [];
+  public ActiveLegenda = [];
+  titleArray = [];
   mysource;
 
   constructor(
@@ -415,10 +400,12 @@ export class KaartviewerComponent implements AfterViewInit {
   if ((source as any).getLegendUrl) {
   const legenda = (source as any).getLegendUrl(
   viewResolution, { FORMAT: 'image/png'});
-  console.log(legenda);
+  // console.log(legenda);
 
   if (legenda) {
   this.mysource = legenda;
+  this.LegendaArray.push(legenda);
+  this.ActiveLegenda.push(legenda);
   }
 
   if ((source as any).getFeatureInfoUrl) {
@@ -456,8 +443,6 @@ export class KaartviewerComponent implements AfterViewInit {
   } else {
 
   if (features[0]) {
-  // document.getElementById('provincienaam').innerHTML = features[0].get('provincienaam');
-  // console.log(features[0].getProperties());
   const pushNewFeature = features[0].getProperties();
   const index = this.objectarray.findIndex(x => x === pushNewFeature);
   this.objectarray.splice(index, 1);
@@ -472,39 +457,62 @@ export class KaartviewerComponent implements AfterViewInit {
     });
    });
   }
+
   AddLayer(event) {
   const NewLayerTitle = event;
-  this.UserTile = new TileWMS({
-  params: { LAYERS: NewLayerTitle, TILED: true, title: NewLayerTitle },
-  crossOrigin: 'anonymous',
-  });
-  this.UserLayer = new TileLayer({
-  source: this.UserTile,
-  title: NewLayerTitle,
-  visible: true,
-  } as ITileOptions);
+
+  const UserTile = new TileWMS({
+  params: { LAYERS: NewLayerTitle, TILED: true },
+  crossOrigin: 'anonymous'});
+
+  const UserLayer = new TileLayer({
+  source: UserTile,
+  visible: true } as ITileOptions);
+
 
   if (NewLayerTitle === 'lfroutes')  {
-  this.UserTile.setUrl('https://geodata.nationaalgeoregister.nl/lfroutes/wms?');
-  this.map.addLayer(this.UserLayer);
-  return this.UserLayer;
+  UserTile.setUrl('https://geodata.nationaalgeoregister.nl/lfroutes/wms?');
+  UserTile.setProperties({title: NewLayerTitle});
+  UserLayer.setProperties({title: NewLayerTitle});
+  this.UserLayers.push(UserLayer);
   }
   if (NewLayerTitle === 'bbg2015' || NewLayerTitle === 'BBG2015_hoofdgroep')  {
-  this.UserTile.setUrl('https://geodata.nationaalgeoregister.nl/bestandbodemgebruik2015/wms?');
-  this.map.addLayer(this.UserLayer);
+  UserTile.setUrl('https://geodata.nationaalgeoregister.nl/bestandbodemgebruik2015/wms?');
+  UserTile.setProperties({title: NewLayerTitle});
+  UserLayer.setProperties({title: NewLayerTitle});
+  this.UserLayers.push(UserLayer);
   }
   if (NewLayerTitle === 'bevolkingskernen2011:cbsbevolkingskernen2011')  {
-  this.UserTile.setUrl('https://geodata.nationaalgeoregister.nl/bevolkingskernen2011/wms?');
-  this.map.addLayer(this.UserLayer);
+  UserTile.setUrl('https://geodata.nationaalgeoregister.nl/bevolkingskernen2011/wms?');
+  UserTile.setProperties({title: NewLayerTitle});
+  UserLayer.setProperties({title: NewLayerTitle});
+  this.UserLayers.push(UserLayer);
   }
   if (NewLayerTitle === 'weggegaantalrijbanen' || NewLayerTitle === 'weggegmaximumsnelheden')  {
-  this.UserTile.setUrl('https://geodata.nationaalgeoregister.nl/weggeg/wms?');
-  this.map.addLayer(this.UserLayer);
+  UserTile.setUrl('https://geodata.nationaalgeoregister.nl/weggeg/wms?');
+  UserTile.setProperties({title: NewLayerTitle});
+  UserLayer.setProperties({title: NewLayerTitle});
+  this.UserLayers.push(UserLayer);
   }
   if (NewLayerTitle === 'bevolkingskernen2011:cbsbevolkingskernen2011')  {
-  this.UserTile.setUrl('https://geodata.nationaalgeoregister.nl/bevolkingskernen2011/wms?');
-  this.map.addLayer(this.UserLayer);
-    }
+  UserTile.setUrl('https://geodata.nationaalgeoregister.nl/bevolkingskernen2011/wms?');
+  UserTile.setProperties({title: NewLayerTitle});
+  UserLayer.setProperties({title: NewLayerTitle});
+  this.UserLayers.push(UserLayer);
+  }
+
+  const titles = UserLayer.get('title');
+  this.titleArray.push(titles);
+  console.log(titles);
+  console.log(NewLayerTitle);
+
+  for (const title of titles) {
+  if (title === NewLayerTitle) {
+  console.log('test');
+  }
+  }
+
+  this.map.addLayer(UserLayer);
   }
   addInteraction() {
   const Fillcolor = this.ColorWheel;

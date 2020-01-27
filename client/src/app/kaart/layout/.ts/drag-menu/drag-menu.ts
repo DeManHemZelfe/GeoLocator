@@ -12,32 +12,34 @@ import { Align } from '@progress/kendo-angular-popup';
   styleUrls: ['./drag-menu.css']
 })
 export class DragMenuComponent {
-  @Output() _submit: EventEmitter<any> = new EventEmitter<any>();
-  @Input() ObjectInformatie;
-  @Input() BagObjectInformatie;
-  @Input() PhotoSource;
+ @Output() _submit: EventEmitter<any> = new EventEmitter<any>();
+ @Input() ObjectInformatie;
+ @Input() BagObjectInformatie;
+ @Input() PhotoSource;
+ @Input() Legenda;
+ @Input() ActiveLegenda;
 
-  anchorAlign: Align = { horizontal: 'center', vertical: 'top' };
-  popupAlign: Align = { horizontal: 'center', vertical: 'bottom' };
-  show = false;
-  foto;
+ anchorAlign: Align = { horizontal: 'center', vertical: 'top' };
+ popupAlign: Align = { horizontal: 'center', vertical: 'bottom' };
+ show = false;
+ foto;
 
-
-  constructor(
-    private dialogService: DialogService
-    ) {
-    if (this.PhotoSource) {
-    const Image = document.getElementById('legend') as HTMLImageElement;
-    Image.src = this.PhotoSource;
-    }
-    }
-
-
-  check() {console.log(this.ObjectInformatie); }
-  onClick() {
-  this.show = !this.show;
-  console.log('doet het');
+ constructor(
+ private dialogService: DialogService
+ ) {
+ if (this.PhotoSource) {
+  const Image = document.getElementById('legend') as HTMLImageElement;
+  Image.src = this.PhotoSource;
   }
+ }
+
+ onClick() {
+ this.show = !this.show;
+ console.log('doet het');
+ }
+ OpenInfo() {
+ console.log('open');
+ }
 
 }
 

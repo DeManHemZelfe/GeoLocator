@@ -55,7 +55,6 @@ return naam.toLowerCase().replace(/\s/g, '');
 }
 
 getInputValue() {
-console.log(this.InputTitle);
 this.InputTitle = (document.getElementById('InputTitle') as HTMLInputElement).value;
 if (this.InputTitle) {
  console.log('INPUT GING GOED');

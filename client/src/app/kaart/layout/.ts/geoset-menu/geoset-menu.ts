@@ -35,6 +35,7 @@ export class GeosetComponent {
   @Input() _UserLayer;
   layerInput: LayerGroup;
   ArrayInput = [];
+  Checkthebox = true;
 
   constructor(
     private spoorwegService: SpoorwegenService,
@@ -58,20 +59,9 @@ export class GeosetComponent {
   getDienstenButton() {return this.buttonforlayers.getLayerGroupOverigeDiensten(); }
   getSpoorButton() {return this.buttonforlayers.getLayerGroupSpoorwegen(); }
 
-
-  getLayerGroupInputButton() {
-  if (this._UserLayer) {
-
-  this.layerInput = new LayerGroup({
-  layers: [
-  this._UserLayer,
-  ]
-  });
-  return this.layerInput.getLayers().getArray();
+  UserLayerFunction() {
+  if (this._UserLayer) {  console.log('test'); }
   }
-  }
-  getInputButton() {return this.getLayerGroupInputButton(); }
-
 
   }
 

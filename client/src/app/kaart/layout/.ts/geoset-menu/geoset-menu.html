@@ -105,18 +105,18 @@
   </mat-panel-description>
   </mat-expansion-panel>
 
-  <mat-panel-description>
-   <div class="containerbottom">
-    <div>Toegevoegd</div><br>
-    <mat-checkbox style="width: 40%;" *ngFor="let layer of getInputButton()"[checked]='true' (click)="layer.setVisible(!layer.getVisible())">
-     {{layer.get('title')}}
-    </mat-checkbox>
-   </div>
-  </mat-panel-description>
+<mat-panel-description>
+<div class="containerbottom">
+ <div>Toegevoegd</div><br>
+  <div *ngFor="let layer of _UserLayer">
+  <mat-checkbox [checked]='Checkthebox' (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
+  </div>
+</div>
+</mat-panel-description>
 
-  </mat-panel-description>
-  </mat-expansion-panel>
- </mat-accordion>
+</mat-panel-description>
+</mat-expansion-panel>
+</mat-accordion>
 </div>
 
 

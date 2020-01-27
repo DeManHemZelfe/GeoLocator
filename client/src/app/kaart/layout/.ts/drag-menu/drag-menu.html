@@ -24,11 +24,17 @@
 </div>
 </kendo-popup>
 
+
 <button mat-fab color="primary" class="buttonmat">
-  <i class="material-icons" title="Polygon" style="color: white;">info</i>
+  <i class="material-icons" title="Polygon" style="color: white;" (click)="OpenInfo()">info</i>
 </button>
 
 
-<!-- <div *ngFor="let informatie of ObjectInformatie" style="background-color: royalblue; color: gray;">
-  Objectinformatie: {{informatie.gemeentenaam}}
-</div> -->
+<div class="legenda-div">
+ <div>Legenda</div>
+ <div>tab1 tab2 </div>
+ <table *ngFor="let foto of Legenda">
+  <tr><td><img id="legend" [src]="foto"></td></tr>
+ </table>
+</div>
+

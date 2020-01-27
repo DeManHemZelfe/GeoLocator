@@ -149,4 +149,13 @@ bottom: 60%;
 background-color: antiquewhite;
 width: 10px;
 }
+
+.legenda-div
+{
+border: black dotted 2px;
+position: absolute;
+top: 20%;
+left: 2%;
+}
+
 }
