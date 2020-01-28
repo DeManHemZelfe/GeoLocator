@@ -51,7 +51,7 @@ private view = new View({
   projection: this.projection,
   zoom: 3,
   minZoom: 0,
-  maxZoom: 15
+  maxZoom: 15,
 });
 
 constructor() {

@@ -6,14 +6,23 @@
  height: 100vh;
  padding: 0px;
  margin: 0px;
+
 }
 }
 @media only screen and (min-width: 950px)
 {
 .map
 {
- width: 100vw;
- height: 100vh;
+ width: 90vw;
+ height: 98vh;
+ margin: auto;
+ border-radius: 35px;
+ /* overflow: hidden;
+ border-top: 50px solid #555;
+ border-left: 25px solid transparent;
+ border-right: 25px solid transparent;
+ height: 0;
+ width: 125px; */
 }
 .menu
 {
@@ -70,8 +79,6 @@ border-radius: 5px;
 }
 
 .searchmenu {
-  /* margin-left: 1227px; */
-  /* position: absolute; */
   width: 300%;
 }
 .container-geocoder {

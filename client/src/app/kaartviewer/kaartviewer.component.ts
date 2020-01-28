@@ -201,6 +201,7 @@ export class KaartviewerComponent implements AfterViewInit {
    this.initializeMap();
    this.addInteraction();
    this.addMeetInteraction();
+   this.MapLoading();
   }
 
   initializeMap() { // BEGIN VAN DE MAP MAKEN
@@ -257,6 +258,11 @@ export class KaartviewerComponent implements AfterViewInit {
   ArrayForUndo() { console.log('Array voor undo'); }
   ArrayForRedo() { console.log('Array voor undo'); }
   Settings(event) {console.log('Settings'); }
+
+  MapLoading() {
+   const port = this.map.getViewport();
+   console.log(port);
+  }
 
   createMeasureTooltip() {
   const bottom = 'bottom-right';
