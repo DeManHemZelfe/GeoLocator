@@ -295,3 +295,53 @@ mapClick() {
 
         }); }); } } }); });
    }
+
+
+ // const foundLayer = this.UserLayers.indexOf(this.UserLayers.find( layer => layer === UserLayer));
+  // const checkTeller = this.UserLayers.findIndex(title => title === UserLayer);
+  // if (checkTeller === -1) {
+  //   this.UserLayers.push(UserLayer);
+  //   for (const layer of this.UserLayers) {
+  //     const index = this.UserLayers.findIndex(x => x === layer);
+  //     console.log(index);
+  //     const array = this.UserLayers.slice(index, 1);
+  //     console.log(array);
+  //     if (index === 0) { console.log('test'); }
+  //   }
+  // }
+  // if (checkTeller > -1 ) {
+  //   const checkLayer = this.UserLayers.find(title => title === UserLayer);
+  //   console.log(checkLayer);
+  //   console.log(checkTeller);
+  // }
+
+  // for (const layer of this.UserLayers) {
+  //   const valueLayer = this.UserLayers.findIndex(value => value === UserLayer);
+  //   if (valueLayer > -1 ) {
+  //     const loopLayer = this.UserLayers.find(title => title === layer);
+  //     if (loopLayer === layer) {
+  //       this.map.addLayer(layer);
+  //       this.UserLayers.splice(loopLayer, 1);
+  //      }
+  //    }
+  // }
+
+  // console.log(foundLayer);
+
+
+  // const foundLayer = this.UserLayers.indexOf(this.UserLayers.find( layer => layer === UserLayer));
+  // console.log(this.UserLayers);
+  // if (foundLayer === -1) {
+  //  if (this.UserLayers.find( layer => layer === UserLayer ) === undefined) {
+  //   this.UserLayers.push(UserLayer);
+  //   if (foundLayer === -1) { console.log('2'); }
+  //    }
+
+  // }
+  // const result = this.UserLayers.indexOf(this.UserLayers.find( layer => layer === UserLayer));
+  // console.log(result, '+', 'result');
+  // if (result > -1) {
+  //   const laag = this.UserLayers.find( layer => layer === UserLayer);
+  //   console.log(result);
+  //   console.log(laag);
+  //  }

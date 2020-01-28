@@ -32,8 +32,8 @@
 
 <div class="legenda-div">
  <div>Legenda</div>
- <div>tab1 tab2 </div>
- <table *ngFor="let foto of Legenda">
+ <button kendoButton (click)=click($event)>tab1</button>
+ <table *ngFor="let foto of Legenda" [hidden]="hidden">
   <tr><td><img id="legend" [src]="foto"></td></tr>
  </table>
 </div>

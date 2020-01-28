@@ -404,6 +404,7 @@ export class KaartviewerComponent implements AfterViewInit {
 
   if (legenda) {
   this.mysource = legenda;
+  console.log(legenda);
   this.LegendaArray.push(legenda);
   this.ActiveLegenda.push(legenda);
   }
@@ -469,29 +470,25 @@ export class KaartviewerComponent implements AfterViewInit {
   source: UserTile,
   visible: true } as ITileOptions);
 
-
   if (NewLayerTitle === 'lfroutes')  {
   UserTile.setUrl('https://geodata.nationaalgeoregister.nl/lfroutes/wms?');
   UserTile.setProperties({title: NewLayerTitle});
   UserLayer.setProperties({title: NewLayerTitle});
   this.UserLayers.push(UserLayer);
+  this.map.addLayer(UserLayer);
   }
   if (NewLayerTitle === 'bbg2015' || NewLayerTitle === 'BBG2015_hoofdgroep')  {
   UserTile.setUrl('https://geodata.nationaalgeoregister.nl/bestandbodemgebruik2015/wms?');
   UserTile.setProperties({title: NewLayerTitle});
   UserLayer.setProperties({title: NewLayerTitle});
   this.UserLayers.push(UserLayer);
-  }
-  if (NewLayerTitle === 'bevolkingskernen2011:cbsbevolkingskernen2011')  {
-  UserTile.setUrl('https://geodata.nationaalgeoregister.nl/bevolkingskernen2011/wms?');
-  UserTile.setProperties({title: NewLayerTitle});
-  UserLayer.setProperties({title: NewLayerTitle});
-  this.UserLayers.push(UserLayer);
+  this.map.addLayer(UserLayer);
   }
   if (NewLayerTitle === 'weggegaantalrijbanen' || NewLayerTitle === 'weggegmaximumsnelheden')  {
   UserTile.setUrl('https://geodata.nationaalgeoregister.nl/weggeg/wms?');
   UserTile.setProperties({title: NewLayerTitle});
   UserLayer.setProperties({title: NewLayerTitle});
+  this.map.addLayer(UserLayer);
   this.UserLayers.push(UserLayer);
   }
   if (NewLayerTitle === 'bevolkingskernen2011:cbsbevolkingskernen2011')  {
@@ -500,20 +497,9 @@ export class KaartviewerComponent implements AfterViewInit {
   UserLayer.setProperties({title: NewLayerTitle});
   this.UserLayers.push(UserLayer);
   }
-
-  const titles = UserLayer.get('title');
-  this.titleArray.push(titles);
-  console.log(titles);
-  console.log(NewLayerTitle);
-
-  for (const title of titles) {
-  if (title === NewLayerTitle) {
-  console.log('test');
-  }
+  // DE FUNCTIE VIND JE IN TEXT
   }
 
-  this.map.addLayer(UserLayer);
-  }
   addInteraction() {
   const Fillcolor = this.ColorWheel;
   const value = this.typeSelectTekenen.value;

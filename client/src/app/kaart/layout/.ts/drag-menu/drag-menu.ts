@@ -18,6 +18,7 @@ export class DragMenuComponent {
  @Input() PhotoSource;
  @Input() Legenda;
  @Input() ActiveLegenda;
+ hidden = true;
 
  anchorAlign: Align = { horizontal: 'center', vertical: 'top' };
  popupAlign: Align = { horizontal: 'center', vertical: 'bottom' };
@@ -32,7 +33,16 @@ export class DragMenuComponent {
   Image.src = this.PhotoSource;
   }
  }
-
+ click(event) {
+   console.log('click');
+   if (click) {
+     if (this.hidden === false) {
+       this.hidden = true;
+       } else if (this.hidden === true) {
+         this.hidden = false;
+         }
+   }
+ }
  onClick() {
  this.show = !this.show;
  console.log('doet het');
