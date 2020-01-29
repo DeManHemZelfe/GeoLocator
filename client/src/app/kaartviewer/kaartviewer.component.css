@@ -13,16 +13,10 @@
 {
 .map
 {
- width: 90vw;
- height: 98vh;
+ width: 100vw;
+ height: 100vh;
  margin: auto;
  border-radius: 35px;
- /* overflow: hidden;
- border-top: 50px solid #555;
- border-left: 25px solid transparent;
- border-right: 25px solid transparent;
- height: 0;
- width: 125px; */
 }
 .menu
 {
