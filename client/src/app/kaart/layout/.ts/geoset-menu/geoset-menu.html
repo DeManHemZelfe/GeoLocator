@@ -1,124 +1,149 @@
 <div class="Geo">
- <mat-accordion>
-  <mat-expansion-panel>
-  <mat-expansion-panel-header>
-   <mat-panel-title style="border-bottom: 1px solid black;">
-   Selecteer een Geoset
-   </mat-panel-title>
-  </mat-expansion-panel-header>
- <mat-panel-description style="display: block;">
-  <mat-expansion-panel  >
-  <mat-expansion-panel-header>
-   <mat-panel-title style="border-bottom: 1px solid black;">
-   AchterGrondkaart
-   </mat-panel-title>
-  </mat-expansion-panel-header>
-  <mat-panel-description>
-  <ul>
-  <li style="list-style: none;">
-  <div class="dropdown">
-   <a (click)="show1 = !show1"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">AchterGrondkaart</h4></a>
-  </div>
-   <fieldset *ngIf="show1" id="layer0">
-    <label for="visible0">
-     <mat-checkbox style="width: 100%;" *ngFor="let layer of getKaartButton()" (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
-    </label>
-   </fieldset>
-  </li>
-  </ul>
-  </mat-panel-description>
-  </mat-expansion-panel>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title style="border-bottom: 1px solid black;">
+          Selecteer een Geoset
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-panel-description style="display: block;">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title style="border-bottom: 1px solid black;">
+              AchterGrondkaart
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-panel-description>
+            <ul>
+              <li style="list-style: none;">
+                <div class="dropdown">
+                  <a (click)="show1 = !show1">
+                    <h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">
+                      AchterGrondkaart
+                    </h4>
+                  </a>
+                </div>
+                <fieldset *ngIf="show1" id="layer0">
+                  <label for="visible0">
+                    <mat-checkbox style="width: 100%;" *ngFor="let layer of getKaartButton()"
+                      (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
+                  </label>
+                </fieldset>
+              </li>
+            </ul>
+          </mat-panel-description>
+        </mat-expansion-panel>
 
-  <mat-expansion-panel>
-  <mat-expansion-panel-header>
-   <mat-panel-title style="border-bottom: 1px solid black;">
-   Overige WMS datasets
-   </mat-panel-title>
-  </mat-expansion-panel-header>
-  <mat-panel-description>
-  <ul>
-  <li class="list" style="list-style: none;">
-  <fieldset>
-  <li>
-  <div class="dropdown">
-   <a class="aatje" (click)="show2 = !show2" (change)="change()">
-    <h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">Grenzen</h4>
-   </a>
-  </div>
-  <fieldset *ngIf="show2" id="layer0" class="fieldsetcontent"><label class="" for="visible0">
-  <mat-checkbox style="width: 100%;" *ngFor="let layer of getGrenzenButton()"
-  (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
-  </label>
-  </fieldset>
-  </li>
-  </fieldset>
-  <fieldset>
-  <li>
-  <div class="dropdown">
-   <a (click)="show3 = !show3"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">Bag</h4></a>
-  </div>
-  <fieldset *ngIf="show3" class="fieldsetcontent"  id="layer0"><label class="" for="visible0">
-  <mat-checkbox style="width: 100%;" *ngFor="let layer of getBagButton()"
-  (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
-  </label>
-  </fieldset>
-  </li>
-  </fieldset>
-  <fieldset>
-  <li>
-  <div class="dropdown">
-  <a (click)="show4 = !show4"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">Adressen</h4></a>
-  </div>
-  <fieldset *ngIf="show4" id="layer0" class="fieldsetcontent"><label class="" for="visible0">
-  <mat-checkbox style="width: 100%;" *ngFor="let layer of getAdresButton()"
-  (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
-  </label>
-  </fieldset>
-  </li>
-  </fieldset>
-  <fieldset>
-    <li>
-    <div class="dropdown">
-     <a (click)="show5 = !show5"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">Diensten</h4></a>
-    </div>
-    <fieldset *ngIf="show5" class="fieldsetcontent"  id="layer0"><label class="" for="visible0">
-    <mat-checkbox style="width: 100%;" *ngFor="let layer of getDienstenButton()"
-    (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
-    </label>
-    </fieldset>
-    </li>
-    </fieldset>
-    <fieldset>
-      <li>
-      <div class="dropdown">
-       <a (click)="show6 = !show6"><h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">Spoor</h4></a>
-      </div>
-      <fieldset *ngIf="show6" class="fieldsetcontent"  id="layer0" style="width: 50%;"><label class="" for="visible0">
-      <mat-checkbox style="width: 100%;" *ngFor="let layer of getSpoorButton()"
-      (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
-      </label>
-      </fieldset>
-      </li>
-      </fieldset>
-  </li>
-  </ul>
-  </mat-panel-description>
-  </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title style="border-bottom: 1px solid black;">
+              Overige WMS datasets
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-panel-description>
+            <ul>
+              <li class="list" style="list-style: none;">
+                <fieldset>
+              <li>
+                <div class="dropdown">
+                  <a class="aatje" (click)="show2 = !show2">
+                    <h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">
+                      Grenzen
+                    </h4>
+                  </a>
+                </div>
+                <fieldset *ngIf="show2" id="layer0" class="fieldsetcontent">
+                  <label class="" for="visible0">
+                    <mat-checkbox style="width: 100%;" *ngFor="let layer of getGrenzenButton()"
+                      (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
+                  </label>
+                </fieldset>
+              </li>
+              </fieldset>
+              <fieldset>
+                <li>
+                  <div class="dropdown">
+                    <a (click)="show3 = !show3">
+                      <h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">
+                        Bag
+                      </h4>
+                    </a>
+                  </div>
+                  <fieldset *ngIf="show3" class="fieldsetcontent" id="layer0">
+                    <label class="" for="visible0">
+                      <mat-checkbox style="width: 100%;" *ngFor="let layer of getBagButton()"
+                        (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
+                    </label>
+                  </fieldset>
+                </li>
+              </fieldset>
+              <fieldset>
+                <li>
+                  <div class="dropdown">
+                    <a (click)="show4 = !show4">
+                      <h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">
+                        Adressen
+                      </h4>
+                    </a>
+                  </div>
+                  <fieldset *ngIf="show4" id="layer0" class="fieldsetcontent">
+                    <label class="" for="visible0">
+                      <mat-checkbox style="width: 100%;" *ngFor="let layer of getAdresButton()"
+                        (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
+                    </label>
+                  </fieldset>
+                </li>
+              </fieldset>
+              <fieldset>
+                <li>
+                  <div class="dropdown">
+                    <a (click)="show5 = !show5">
+                      <h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">
+                        Diensten
+                      </h4>
+                    </a>
+                  </div>
+                  <fieldset *ngIf="show5" class="fieldsetcontent" id="layer0">
+                    <label class="" for="visible0">
+                      <mat-checkbox style="width: 100%;" *ngFor="let layer of getDienstenButton()"
+                        (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
+                    </label>
+                  </fieldset>
+                </li>
+              </fieldset>
+              <fieldset>
+                <li>
+                  <div class="dropdown">
+                    <a (click)="show6 = !show6">
+                      <h4 style="border-bottom: black solid 2px; margin-bottom: 5px;">
+                        Spoor
+                      </h4>
+                    </a>
+                  </div>
+                  <fieldset *ngIf="show6" class="fieldsetcontent" id="layer0" style="width: 50%;">
+                    <label class="" for="visible0">
+                      <mat-checkbox style="width: 100%;" *ngFor="let layer of getSpoorButton()"
+                        (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
+                    </label>
+                  </fieldset>
+                </li>
+              </fieldset>
+              </li>
+            </ul>
+          </mat-panel-description>
+        </mat-expansion-panel>
 
-<mat-panel-description>
-<div class="containerbottom">
- <div>Toegevoegd</div><br>
-  <div *ngFor="let layer of _UserLayer">
-  <mat-checkbox [checked]='Checkthebox' (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
-  </div>
+        <mat-panel-description>
+          <div class="containerbottom">
+            <div>Toegevoegd</div>
+            <br />
+            <div *ngFor="let layer of _UserLayer">
+              <mat-checkbox [checked]="Checkthebox" (click)="layer.setVisible(!layer.getVisible())">
+                {{layer.get('title')}}</mat-checkbox>
+            </div>
+          </div>
+        </mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>
-</mat-panel-description>
-
-</mat-panel-description>
-</mat-expansion-panel>
-</mat-accordion>
-</div>
-
-
-
-

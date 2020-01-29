@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import LayerGroup from 'ol/layer/Group';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -7,8 +6,6 @@ import { startWith, map } from 'rxjs/operators';
 export interface User {
   name: string;
 }
-export const AUTOCOMPLETE_OPTION_HEIGHT = 48;
-export const AUTOCOMPLETE_PANEL_HEIGHT = 48;
 
 @Component({
   selector: 'app-drop-down-layers',
@@ -19,9 +16,9 @@ export class DropDownLayersComponent implements OnInit {
 @Output() _InputTitle: EventEmitter<any> = new EventEmitter<any>();
 @Output() _InputLayer: EventEmitter<any> = new EventEmitter<any>();
 @Output() _InputUrl: EventEmitter<any> = new EventEmitter<any>();
-InputTitle;
-InputLayer;
-InputUrl;
+InputTitle: any;
+InputLayer: any;
+InputUrl: any;
 
 LayerArray: Array<{naam: string, layer: string}> =
 [
