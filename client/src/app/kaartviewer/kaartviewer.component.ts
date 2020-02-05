@@ -607,9 +607,7 @@ export class KaartviewerComponent implements AfterViewInit {
     this.map.addInteraction(this.InteractionTransform);
   }
   onPlaceFound(place: any) {
-    this.map
-      .getView()
-      .animate({ center: place.centroide_rd.coordinates, zoom: 12 });
+    this.map.getView().animate({ center: place.centroide_rd.coordinates, zoom: 12 });
     console.log(place);
   }
 }

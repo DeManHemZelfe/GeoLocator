@@ -25,11 +25,11 @@ export class BgService {
     layer: this.layers.brt,
     matrixSet: 'EPSG:28992',
     format: 'image/png',
-    projection: this.configservice._projection,
+    // projection: this.configservice._projection,
     tileGrid: new WMTSTileGrid({
      origin: getTopLeft(this.configservice._projectionExtent),
      resolutions: this.configservice._resolutions,
-     matrixIds: this.configservice._matrixIds
+      matrixIds: this.configservice._matrixIds,
   }),
    style: 'default',
    wrapX: false
@@ -38,7 +38,7 @@ export class BgService {
    source: this.baseTile,
    opacity: 0.7,
    visible: true,
-   title: 'BaseLayer'
+    title: 'BaseLayer',
   } as ITileOptions);
 
   brtWaterTile = new WMTS({ // BEGIN VAN DE KAARTTEGEL MAKEN

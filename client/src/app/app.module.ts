@@ -72,6 +72,7 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
 import { DropDownLayersComponent } from './kaart/layout/.ts/drop-down-layers/drop-down-layers/drop-down-layers.component';
 import {MatAutocompleteModule, AUTOCOMPLETE_OPTION_HEIGHT} from '@angular/material/autocomplete';
 import { Kaartviewer3dComponent } from './kaartviewer3d/kaartviewer3d/kaartviewer3d.component';
+import {AngularCesiumModule} from 'angular-cesium';
 
 
 
@@ -138,6 +139,7 @@ export function tokenGetter() {
     MenusModule,
     TooltipModule,
     NgbModule,
+    AngularCesiumModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter,
