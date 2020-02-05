@@ -26,7 +26,7 @@
                 <fieldset *ngIf="show1" id="layer0">
                   <label for="visible0">
                     <mat-checkbox style="width: 100%;" *ngFor="let layer of getKaartButton()"
-                      (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
+                      (click)="layer.setVisible(!layer.getVisible())" [checked]='layer.getVisible(layer.getVisible(true))' >{{layer.get('title')}}</mat-checkbox>
                   </label>
                 </fieldset>
               </li>
@@ -55,7 +55,7 @@
                 <fieldset *ngIf="show2" id="layer0" class="fieldsetcontent">
                   <label class="" for="visible0">
                     <mat-checkbox style="width: 100%;" *ngFor="let layer of getGrenzenButton()"
-                      (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
+                      (click)="layer.setVisible(!layer.getVisible())" (change)="changeLayer($event)">{{layer.get('title')}}</mat-checkbox>
                   </label>
                 </fieldset>
               </li>
@@ -72,7 +72,7 @@
                   <fieldset *ngIf="show3" class="fieldsetcontent" id="layer0">
                     <label class="" for="visible0">
                       <mat-checkbox style="width: 100%;" *ngFor="let layer of getBagButton()"
-                        (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
+                        (click)="layer.setVisible(!layer.getVisible())"(change)="changeLayer($event)">{{layer.get('title')}}</mat-checkbox>
                     </label>
                   </fieldset>
                 </li>
@@ -89,7 +89,7 @@
                   <fieldset *ngIf="show4" id="layer0" class="fieldsetcontent">
                     <label class="" for="visible0">
                       <mat-checkbox style="width: 100%;" *ngFor="let layer of getAdresButton()"
-                        (click)="layer.setVisible(!layer.getVisible())">{{layer.get('title')}}</mat-checkbox>
+                        (click)="layer.setVisible(!layer.getVisible())" (change)="changeLayer($event)">{{layer.get('title')}}</mat-checkbox>
                     </label>
                   </fieldset>
                 </li>

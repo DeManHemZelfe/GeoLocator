@@ -71,6 +71,7 @@ import { AdresService } from './kaarten/kaart-lagen/overig/adressen/adres.servic
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { DropDownLayersComponent } from './kaart/layout/.ts/drop-down-layers/drop-down-layers/drop-down-layers.component';
 import {MatAutocompleteModule, AUTOCOMPLETE_OPTION_HEIGHT} from '@angular/material/autocomplete';
+import { Kaartviewer3dComponent } from './kaartviewer3d/kaartviewer3d/kaartviewer3d.component';
 
 
 
@@ -102,7 +103,8 @@ export function tokenGetter() {
     HomeComponent,
     GeosetComponent,
     MobileMenuComponent,
-    DropDownLayersComponent
+    DropDownLayersComponent,
+    Kaartviewer3dComponent,
 
   ],
   imports: [

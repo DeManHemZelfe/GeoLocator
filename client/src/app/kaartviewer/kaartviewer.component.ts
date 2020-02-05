@@ -171,6 +171,7 @@ export class KaartviewerComponent implements AfterViewInit {
     private bagService: BagService,
     private overigedienstenSerivce: OverigeDienstenService,
     private mapconfig: ServiceService,
+    private button: LayerButton,
     private achterkaart: BgService,
     public geocoderService: GeocoderService
   ) {}
@@ -387,6 +388,7 @@ export class KaartviewerComponent implements AfterViewInit {
       const viewResolution = this.mapconfig._view.getResolution();
       this.map.forEachLayerAtPixel(evt.pixel, layer => {
         const source = layer.getSource();
+        if (layer.getVisible() === false) { this.highlightsource.clear(); }
 
         if ((source as any).getLegendUrl) {
           const legenda = (source as any).getLegendUrl(viewResolution, {
@@ -459,6 +461,13 @@ export class KaartviewerComponent implements AfterViewInit {
     });
   }
 
+  RemoveHighLight(event: any) {
+    if (event === true) {
+    } else if (event === false) {
+      this.highlightsource.clear();
+    }
+  }
+
   // Gebruiker maakt een layer aan
   AddLayer(event: any) {
     const NewLayerTitle = event;
@@ -515,6 +524,7 @@ export class KaartviewerComponent implements AfterViewInit {
     if (value !== '') {
       this.map.removeInteraction(this.snap);
       this.draw = new OlDraw({ source: this.tekensource, type: value });
+
       this.draw.on('drawend', event => {
         event.feature.setStyle(
           new Style({

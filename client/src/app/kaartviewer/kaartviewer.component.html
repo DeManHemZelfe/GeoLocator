@@ -98,7 +98,7 @@
   </div>
 
   <div #geosetmenu>
-    <app-geoset-menu [_UserLayer]="UserLayers"></app-geoset-menu>
+    <app-geoset-menu [_UserLayer]="UserLayers" (CheckEvent)="RemoveHighLight($event)"></app-geoset-menu>
   </div>
   <div #droplayermenu>
     <app-drop-down-layers (_InputTitle)="AddLayer($event)"></app-drop-down-layers>

@@ -4,7 +4,6 @@ import {
 } from '@progress/kendo-angular-dialog';
 import { FormControl } from '@angular/forms';
 import { click } from 'ol/events/condition';
-import { Feature } from 'ol';
 import { Align } from '@progress/kendo-angular-popup';
 
 @Component({
@@ -14,11 +13,11 @@ import { Align } from '@progress/kendo-angular-popup';
 })
 export class DragMenuComponent {
   @Output() _submit: EventEmitter<any> = new EventEmitter<any>();
-  @Input() ObjectInformatie;
-  @Input() BagObjectInformatie;
-  @Input() PhotoSource;
-  @Input() Legenda;
-  @Input() ActiveLegenda;
+  @Input() ObjectInformatie: any;
+  @Input() BagObjectInformatie: any;
+  @Input() PhotoSource: any;
+  @Input() Legenda: any;
+  @Input() ActiveLegenda: any;
   hidden = true;
 
   anchorAlign: Align = { horizontal: 'center', vertical: 'top' };
