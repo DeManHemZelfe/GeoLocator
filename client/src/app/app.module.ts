@@ -73,6 +73,7 @@ import { DropDownLayersComponent } from './kaart/layout/.ts/drop-down-layers/dro
 import {MatAutocompleteModule, AUTOCOMPLETE_OPTION_HEIGHT} from '@angular/material/autocomplete';
 import { Kaartviewer3dComponent } from './kaartviewer3d/kaartviewer3d/kaartviewer3d.component';
 import {AngularCesiumModule} from 'angular-cesium';
+import { CesiumViewerComponent } from './3dMap/cesium-viewer/cesium-viewer.component';
 
 
 
@@ -106,6 +107,7 @@ export function tokenGetter() {
     MobileMenuComponent,
     DropDownLayersComponent,
     Kaartviewer3dComponent,
+    CesiumViewerComponent,
 
   ],
   imports: [
