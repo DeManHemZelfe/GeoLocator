@@ -21,11 +21,11 @@ import proj4 from 'proj4';
 // http://3dbag.bk.tudelft.nl/data/wfs?request=getcapabilities wfs Bag3D
 
 // tslint:disable-next-line: max-line-length
-Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjlmMzhhNC05YWY2LTRjZGQtOWI0My1kOWMxNjFhODY2OWEiLCJpZCI6MjE5MTcsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1ODA4ODkzMDl9.N-ehOLXvjf8txkhRQlwv7yAiP2dvhYIxwES7iy_cxMg';
-proj4.defs('EPSG:28992',
-  `+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.999908 +x_0=155000 +y_0=463000
-  +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs`);
-register(proj4);
+// Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjlmMzhhNC05YWY2LTRjZGQtOWI0My1kOWMxNjFhODY2OWEiLCJpZCI6MjE5MTcsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1ODA4ODkzMDl9.N-ehOLXvjf8txkhRQlwv7yAiP2dvhYIxwES7iy_cxMg';
+// proj4.defs('EPSG:28992',
+//   `+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.999908 +x_0=155000 +y_0=463000
+//   +ellps=bessel +units=m +towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs`);
+// register(proj4);
 
 @Component({
   selector: 'app-cesium-viewer',
@@ -45,34 +45,60 @@ export class CesiumViewerComponent implements OnInit {
   ngOnInit() {
     this.bestuurlijkegrenzenservice.landsgrensLayer.setVisible(true);
 
-    const viewer = new Cesium.Viewer('cesiumContainer', {
-      // Toolbar functions
-      scene3DOnly: false,
-      selectionIndicator: false,
-      baseLayerPicker: false,
-      fullscreenButton: false,
-      animation: false,
-      timeline: false,
+    // const viewer = new Cesium.Viewer('cesiumContainer', {
+    //   // Toolbar functions
+    //   scene3DOnly: false,
+    //   selectionIndicator: false,
+    //   baseLayerPicker: false,
+    //   fullscreenButton: false,
+    //   animation: false,
+    //   timeline: false,
 
-      // Layers
-    terrainProvider: Cesium.createWorldTerrain({
-      url: '//cesiumjs.org/stk-terrain/tilesets/world/tiles',
-      requestWaterMask: true,
-      requestVertexNormals: true
-     }),
-    });
+    //   // Layers
+    // terrainProvider: Cesium.createWorldTerrain({
+    //   url: '//cesiumjs.org/stk-terrain/tilesets/world/tiles',
+    //   requestWaterMask: true,
+    //   requestVertexNormals: true
+    //  }),
+    // });
     // Asset Layers
-    const imageryLayer = viewer.imageryLayers.addImageryProvider(
-       new Cesium.IonImageryProvider({ assetId: 3 })
-    );
-    console.log(viewer);
+    // const imageryLayer = viewer.imageryLayers.addImageryProvider(
+    //    new Cesium.IonImageryProvider({ assetId: 3 })
+    // );
+
+    // WMTS hopelijk
+    // const rect = new Cesium.Math.Rectangle(
+    //   Cesium.Math.toRadians(3.3700),
+    //   Cesium.Math.toRadians(50.7500),
+    //   Cesium.Math.toRadians(7.2100),
+    //   Cesium.Math.toRadians(53.4700));
+    // const provider = new Cesium.WebMapTileServiceImageryProvider({
+    //   url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
+    //   layer: 'brtachtergrondkaart',
+    //   style: 'default',
+    //   format : 'image/png',
+    //   tileMatrixSetID: 'EPSG:28992',
+    //   tileMatrixLabels: [
+    //     'EPSG: 28992: 0', 'EPSG: 28992: 1', 'EPSG: 28992: 2',
+    //     'EPSG: 28992: 3', 'EPSG: 28992: 4', 'EPSG: 28992: 5',
+    //     'EPSG: 28992: 6', 'EPSG: 28992: 7', 'EPSG: 28992: 8',
+    //     'EPSG: 28992: 9', 'EPSG: 28992: 10', 'EPSG: 28992: 11',
+    //     'EPSG: 28992: 12', 'EPSG: 28992: 13', 'EPSG: 28992: 14'
+    //   ],
+    //   tilingScheme : new Cesium.GeographicTilingScheme(
+    //   { rectangle: rect }
+    //   ),
+    //   tileHeight: 256,
+    //   maximumLevel: 14,
+    //   tileWidth: 256,
+    // });
     // Camera View
-    const CameraView = {
-    destination: Cesium.Cartesian3.fromDegrees(5.2615304, 52.4034638, 50000.0)
-    };
-    // Viewer scene option
-    viewer.scene.globe.depthTestAgainstTerrain = true;
-    viewer.scene.globe.enableLighting = false;
-    viewer.scene.camera.setView(CameraView);
+    // const CameraView = {
+    // destination: Cesium.Cartesian3.fromDegrees(5.2615304, 52.4034638, 50000.0)
+    // };
+    // // // Viewer scene option
+    // viewer.scene.globe.depthTestAgainstTerrain = true;
+    // viewer.scene.globe.enableLighting = false;
+    // viewer.scene.camera.setView(CameraView);
   }
 }

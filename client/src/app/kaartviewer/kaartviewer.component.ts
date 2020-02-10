@@ -6,7 +6,7 @@ import OverlayPositioning from 'ol/OverlayPositioning';
 import { FormControl } from '@angular/forms';
 import OlDraw from 'ol/interaction/Draw';
 import TileWMS, { Options as TileWMSOptions } from 'ol/source/TileWMS';
-import { Vector as VectorSource } from 'ol/source';
+import { Vector as VectorSource, ImageWMS, WMTS } from 'ol/source';
 import { Stroke, Style, Fill, Circle } from 'ol/style';
 import { BestuurlijkegrenzenService } from '../layers/bestuurlijkegrenzen.service';
 import { BagService } from '../layers/bag.service';
@@ -27,6 +27,7 @@ import { Polygon, LineString } from 'ol/geom';
 import { getArea, getLength } from 'ol/sphere';
 import GeometryType from 'ol/geom/GeometryType';
 import { AdresService } from '../kaarten/kaart-lagen/overig/adressen/adres.service';
+import EsriJSON from 'ol/format/EsriJSON';
 
 @Component({
   selector: 'app-kaartviewer',
@@ -226,7 +227,7 @@ export class KaartviewerComponent implements AfterViewInit {
         // DRAW FUNCTION
         this.tekenfunctie,
         this.highlight,
-        this.MeetLayer
+        this.MeetLayer,
       ],
       view: this.mapconfig._view,
       controls: [
@@ -538,6 +539,10 @@ export class KaartviewerComponent implements AfterViewInit {
           })
         );
         this.drawArray.push(event.feature);
+        console.log(event.feature);
+        console.log(event.feature.getGeometry());
+        console.log(event.feature.getProperties());
+
       });
       this.map.addInteraction(this.draw);
       this.map.addInteraction(this.snap);

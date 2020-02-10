@@ -13,13 +13,15 @@ export class BestuurlijkegrenzenService {
       url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?',
       params: {
         LAYERS: 'landsgrens',
-         TILED: true,
+        TILED: true,
+         zIndex: 100,
         },
       crossOrigin: 'anonymous',
     });
     landsgrensLayer = new TileLayer({
      source: this.landsgrensTile,
-     title: 'LandsGrens',
+      title: 'LandsGrens',
+     zIndex: 100,
      visible: false,
     } as ITileOptions);
 
@@ -39,7 +41,6 @@ export class BestuurlijkegrenzenService {
 
     provinciesTile = new TileWMS({
      url: 'https://geodata.nationaalgeoregister.nl/bestuurlijkegrenzen/wfs?&GetFeature&typeName=provincies',
-
      params: {
        LAYERS: 'provincies',
        TILED: true,

@@ -25,7 +25,7 @@ export class BgService {
     layer: this.layers.brt,
     matrixSet: 'EPSG:28992',
     format: 'image/png',
-    // projection: this.configservice._projection,
+    projection: this.configservice._projection,
     tileGrid: new WMTSTileGrid({
      origin: getTopLeft(this.configservice._projectionExtent),
      resolutions: this.configservice._resolutions,
