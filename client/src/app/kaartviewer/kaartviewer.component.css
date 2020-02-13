@@ -191,5 +191,14 @@ k-content k-window-content ng-star-inserted
   background-color: red;
 }
 
-
 }
+button {
+  background-color: lightgreen;
+}
+
+/* .body { */
+  /*Background Red*/
+  /* background-color: rgb(255, 0, 0);  */
+  /*Color Lightblue*/
+  /* color: lightblue; */
+/* } */

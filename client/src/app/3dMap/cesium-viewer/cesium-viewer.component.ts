@@ -6,6 +6,7 @@ import { ServiceService } from 'src/app/pdokmap/pdokmapconfigmap/service.service
 import { ITileOptions, BestuurlijkegrenzenService } from 'src/app/layers/bestuurlijkegrenzen.service';
 import {register} from 'ol/proj/proj4';
 import proj4 from 'proj4';
+import TileLayer from 'ol/layer/Tile';
 
 // http://3dbag.bk.tudelft.nl/data/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng
 // & TRANSPARENT=true & LAYERS=pand3d & CRS=EPSG % 3A28992 & STYLES=& WIDTH=2372
@@ -43,20 +44,18 @@ export class CesiumViewerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.bestuurlijkegrenzenservice.landsgrensLayer.setVisible(true);
+    // this.bestuurlijkegrenzenservice.landsgrensLayer.setVisible(true);
 
     // const viewer = new Cesium.Viewer('cesiumContainer', {
-    //   // Toolbar functions
-    //   scene3DOnly: false,
-    //   selectionIndicator: false,
-    //   baseLayerPicker: false,
-    //   fullscreenButton: false,
-    //   animation: false,
-    //   timeline: false,
+    //  scene3DOnly: false,
+    //  selectionIndicator: false,
+    //  baseLayerPicker: false,
+    //  fullscreenButton: false,
+    //  animation: false,
+    //  timeline: false,
 
-    //   // Layers
-    // terrainProvider: Cesium.createWorldTerrain({
-    //   url: '//cesiumjs.org/stk-terrain/tilesets/world/tiles',
+    //  terrainProvider: Cesium.createWorldTerrain({
+    //   url : '//assets.agi.com/stk-terrain/world',
     //   requestWaterMask: true,
     //   requestVertexNormals: true
     //  }),
@@ -65,33 +64,75 @@ export class CesiumViewerComponent implements OnInit {
     // const imageryLayer = viewer.imageryLayers.addImageryProvider(
     //    new Cesium.IonImageryProvider({ assetId: 3 })
     // );
+    // const bag = viewer.imageryLayers.addImageryProvider(
+    //   new Cesium.WebMapServiceImageryProvider({
+    //     url: 'https://geodata.nationaalgeoregister.nl/bag/wms?',
+    //     layers: 'pand',
+    //     parameters: {
+    //       transparent: 'true',
+    //       format: 'image/png'
+    //     }
+    //   }),
+    // );
+  //   bag.style  = new Cesium.Cesium3DTileStyle({
+  //     color: {
+  //         conditions: [
+  //             ['${height} >= 300', 'rgba(45, 0, 75, 0.5)'],
+  //             ['${height} >= 200', 'rgb(102, 71, 151)'],
+  //             ['${height} >= 100', 'rgb(170, 162, 204)'],
+  //             ['${height} >= 50', 'rgb(224, 226, 238)'],
+  //             ['${height} >= 25', 'rgb(252, 230, 200)'],
+  //             ['${height} >= 10', 'rgb(248, 176, 87)'],
+  //             ['${height} >= 5', 'rgb(198, 106, 11)'],
+  //             ['true', 'rgb(127, 59, 8)']
+  //         ]
+  //     }
+  // });
+    // const scene = viewer.scene;
+    // const modelMatrix2 = Cesium.Transforms.eastNorthUpToFixedFrame(
+    //   Cesium.Cartesian3.fromDegrees(0, 0, 0));
 
-    // WMTS hopelijk
-    // const rect = new Cesium.Math.Rectangle(
-    //   Cesium.Math.toRadians(3.3700),
-    //   Cesium.Math.toRadians(50.7500),
-    //   Cesium.Math.toRadians(7.2100),
-    //   Cesium.Math.toRadians(53.4700));
-    // const provider = new Cesium.WebMapTileServiceImageryProvider({
-    //   url: 'https://geodata.nationaalgeoregister.nl/tiles/service/wmts',
-    //   layer: 'brtachtergrondkaart',
-    //   style: 'default',
-    //   format : 'image/png',
-    //   tileMatrixSetID: 'EPSG:28992',
-    //   tileMatrixLabels: [
-    //     'EPSG: 28992: 0', 'EPSG: 28992: 1', 'EPSG: 28992: 2',
-    //     'EPSG: 28992: 3', 'EPSG: 28992: 4', 'EPSG: 28992: 5',
-    //     'EPSG: 28992: 6', 'EPSG: 28992: 7', 'EPSG: 28992: 8',
-    //     'EPSG: 28992: 9', 'EPSG: 28992: 10', 'EPSG: 28992: 11',
-    //     'EPSG: 28992: 12', 'EPSG: 28992: 13', 'EPSG: 28992: 14'
-    //   ],
-    //   tilingScheme : new Cesium.GeographicTilingScheme(
-    //   { rectangle: rect }
-    //   ),
-    //   tileHeight: 256,
-    //   maximumLevel: 14,
-    //   tileWidth: 256,
+
+    // const model = scene.primitives.add(Cesium.Model.fromGltf({
+    //  url : bag,
+    //  modelMatrix: modelMatrix2,
+    //  scale : 1
+    // }));
+    // console.log(bag);
+
+    // const blueBox = viewer.entities.add({
+    //   name: 'Blue box',
+    //   position: Cesium.Cartesian3.fromDegrees(-114.0, 40.0, 300000.0),
+    //   box: {
+    //     dimensions: new Cesium.Cartesian3(400000.0, 300000.0, 200000.0),
+    //     material: Cesium.Color.BLUE
+    //   }
     // });
+
+    // De functie voor de styling van de bag
+    // Seed the random number generator for repeatable results.
+    // Cesium.Math.setRandomNumberSeed(0);
+
+    // const url = Cesium.GeoJsonDataSource.load('https://geodata.nationaalgeoregister.nl/bag/wms?');
+    // console.log(url);
+    // const fetch = url.then(dataSource => {
+    //   viewer.dataSources.add(dataSource);
+
+
+    //   // Get the array of entities
+    //   const entities = dataSource.entities.values;
+    //   const colorHash = {};
+    //   for (let i = 0; i < entities.length; i++) {
+    //    // For each entity, create a random color based on the state name.
+    //    // Some states have multiple entities, so we store the color in a
+    //    // hash so that we use the same color for the entire state.
+    //     const entity = entities[1];
+    //   }
+    // });
+
+
+    // viewer.scene.primitives.add(niels);
+    // viewer.zoomTo(tileset, new Cesium.HeadingPitchRange(0.0, -0.3, 0.0));
     // Camera View
     // const CameraView = {
     // destination: Cesium.Cartesian3.fromDegrees(5.2615304, 52.4034638, 50000.0)
@@ -101,4 +142,5 @@ export class CesiumViewerComponent implements OnInit {
     // viewer.scene.globe.enableLighting = false;
     // viewer.scene.camera.setView(CameraView);
   }
+  // Probeer de baglaag 3d te krijgen
 }

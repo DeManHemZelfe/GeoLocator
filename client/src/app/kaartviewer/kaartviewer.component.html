@@ -1,4 +1,4 @@
-<body>
+<body class="body" id="debody">
   <div #PopUpMenu>
     <div *ngFor="let informatie of BagArray">
       <kendo-window (close)="close4()" *ngIf="!opened4" [left]="1175" [minWidth]="200" [height]="380" title="Bag"
@@ -103,4 +103,32 @@
   <div #droplayermenu>
     <app-drop-down-layers (_InputTitle)="AddLayer($event)"></app-drop-down-layers>
   </div>
+
+
+<!-- Btn class -->
+<!-- <div class="background-light-theme" style="width: 35%;">
+ <div class="button-light-theme" style="width: 100%;">
+  <p style="text-align: center;">Button-light-theme</p>
+   <button mat-button color="primary">2</button>
+   <button mat-raised-button color="primary">2</button>
+   <button mat-button color="accent">2</button>
+   <button mat-raised-button color="accent">2</button>
+   <button mat-button color="warn">warn</button>
+   <button mat-raised-button color="warn">warn (raised)</button>
+  </div>
+</div>
+
+
+<br><br>
+ <div>
+  <button style="background-color: lemonchiffon;" (click)=" changeThemeColor($event)">
+    click me
+  </button>
+ </div>
+<br>
+ -->
+
+
+
+
 </body>

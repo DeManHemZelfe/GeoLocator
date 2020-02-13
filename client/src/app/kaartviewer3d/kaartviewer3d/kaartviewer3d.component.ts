@@ -18,6 +18,12 @@ import {register} from 'ol/proj/proj4';
 import proj4 from 'proj4';
 import ImageLayer from 'ol/layer/Image';
 import GeoJSON from 'ol/format/GeoJSON';
+import VectorSource from 'ol/source/Vector';
+import VectorLayer from 'ol/layer/Vector';
+import { Stroke, Style, Fill, Circle } from 'ol/style';
+import OlDraw from 'ol/interaction/Draw';
+import { FormControl } from '@angular/forms';
+import Attribution from 'ol/control/Attribution';
 
 // https://tiles.arcgis.com/tiles/nSZVuSZjHpEZZbRo/arcgis/rest/services/Amsterdam_RD/SceneServer
 // https://tiles.arcgis.com/tiles/nSZVuSZjHpEZZbRo/arcgis/rest/services/3D_Gebouwhoogte_NL/SceneServer
@@ -37,40 +43,30 @@ register(proj4);
   styleUrls: ['./kaartviewer3d.component.css']
 })
 export class Kaartviewer3dComponent implements OnInit {
-  map: Map;
+  private map: Map;
+  private draw: OlDraw;
 
-  // Amerikalayer = new ImageryLayer({
-  //  url: 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer',
-  //  format: 'jpgpng' // server exports in either jpg or png format
-  // });
+  buildings = new VectorLayer({
+    source: new VectorSource({
+    url: 'https://{s}.data.osmbuildings.org/0.2/dixw8kmb/tile/{z}/{x}/{y}.json',
+      format: new GeoJSON()
+    }),
+  });
+
 
   Worldraster = new TileLayer({
    source: new XYZ({
     attributions: 'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer">ArcGIS</a>',
-     url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
    })
   });
-  test = new TileLayer({
-    source: new XYZ({
-     attributions: 'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer">ArcGIS</a>',
-      url: ' https://tiles.arcgis.com/tiles/nSZVuSZjHpEZZbRo/arcgis/rest/services/3D_Gebouwhoogte_NL/SceneServer',
-    })
-  });
 
-  bagSource = new TileWMS({
-   url: 'https://tiles.arcgis.com/tiles/nSZVuSZjHpEZZbRo/arcgis/rest/services/3D_Gebouwhoogte_NL/SceneServer',
-   params: { LAYERS: '0', TILED: true },
-   serverType: 'geoserver',
-   crossOrigin: 'anonymous',
+  GebouwHoogte3D = new TileLayer({
+   source: new XYZ({
+    attributions: 'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer">ArcGIS</a>',
+    url: ' https://tiles.arcgis.com/tiles/nSZVuSZjHpEZZbRo/arcgis/rest/services/3D_Gebouwhoogte_NL/SceneServer',
+   })
   });
-
-  bag = new TileLayer({
-   source: this.bagSource,
-   format: new GeoJSON(),
-   zIndex: 2,
-   opacity: 2,
-   visible: true,
-  } as ITileOptions);
 
   constructor(
     private mapconfig: ServiceService,
@@ -86,6 +82,7 @@ export class Kaartviewer3dComponent implements OnInit {
     this.bagService.BagPandLayer.setVisible(true);
     this.initializeMap();
 
+
     // Const
     const ol3d = new OLCesium({map: this.map});
     const scene = ol3d.getCesiumScene();
@@ -96,8 +93,8 @@ export class Kaartviewer3dComponent implements OnInit {
     // Console
     console.log(scene);
     console.log(scene.imageryLayers);
-    console.log(this.bagSource.getUrls());
     // Enable
+    // this.map.addGeoJSONTiles('https://{s}.data.osmbuildings.org/0.2/dixw8kmb/tile/{z}/{x}/{y}.json');
     ol3d.setEnabled(true);
   }
 
@@ -106,10 +103,10 @@ export class Kaartviewer3dComponent implements OnInit {
     target: 'map',
     layers: [
       this.Worldraster,
-      // this.test,
       this.bestuurlijkegrenzenservice.landsgrensLayer,
+      this.buildings,
+
       // new TileLayer({ source: new OSM(), opacity: 0.7}),
-      // this.bag,
       // this.bagService.BagLigplaatsLayer,
       // this.bagService.BagPandLayer,
     ],
@@ -122,6 +119,8 @@ export class Kaartviewer3dComponent implements OnInit {
     })
   });
   }
+
+
 }
 
 

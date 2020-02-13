@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { Map } from 'ol';
+import { Map, Feature } from 'ol';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import Overlay from 'ol/Overlay';
 import OverlayPositioning from 'ol/OverlayPositioning';
@@ -23,12 +23,14 @@ import Select from 'ol/interaction/Select';
 import { addProjection } from 'ol/proj';
 import Translate from 'ol/interaction/Translate';
 import Transform from 'ol-ext/interaction/transform';
-import { Polygon, LineString } from 'ol/geom';
+import { Polygon, LineString, MultiPoint, Point } from 'ol/geom';
 import { getArea, getLength } from 'ol/sphere';
 import GeometryType from 'ol/geom/GeometryType';
 import { AdresService } from '../kaarten/kaart-lagen/overig/adressen/adres.service';
-import EsriJSON from 'ol/format/EsriJSON';
 
+// "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+// https://github.com/mirismaili/angular-material-dynamic-themes#demo de github demo
+// https://www.youtube.com/watch?v=ZKXv_ZHQ654 yt video
 @Component({
   selector: 'app-kaartviewer',
   templateUrl: './kaartviewer.component.html',
@@ -41,6 +43,8 @@ export class KaartviewerComponent implements AfterViewInit {
   opened4 = true;
   opened5 = true;
   opened6 = true;
+
+  // render3D = new render
 
   // MAP
   private map: Map;
@@ -156,6 +160,10 @@ export class KaartviewerComponent implements AfterViewInit {
   ActiveLegenda = [];
   mysource: any;
 
+
+  // Test omgeving
+  // theCircle = new Feature(new Circle([5e6, 7e6, 5e5], 1e6));
+  //
   // Controllers for the Map
   @ViewChild('PopUpMenu', { static: false }) PopUpMenu: ElementRef;
   @ViewChild('PopUpAdresMenu', { static: false }) PopUpAdresMenu: ElementRef;
@@ -242,10 +250,26 @@ export class KaartviewerComponent implements AfterViewInit {
     });
     this.mapClick();
   }
-  Settings() {
-    console.log('Settings');
-  }
+  Settings() { console.log('Settings'); }
+  changeThemeColor(event) {
+   const click = event.type;
+   if (click) {
+    const getId = document.getElementById('debody');
+    const getName = document.getElementsByClassName('body');
 
+    if (getName) {
+     const getBgStyle = window.getComputedStyle(getName[0], null).getPropertyValue('background-color');
+     const getCStyle = window.getComputedStyle(getName[0], null).getPropertyValue('color');
+     console.log(getBgStyle);
+     console.log(getCStyle);
+    }
+
+    if (getId.style) {
+     getId.style.backgroundColor = 'pink';
+     getId.style.color = 'blue';
+    }
+   }
+  }
   // Maak het tooltip divje
   createMeasureTooltip() {
     const bottom = 'bottom-right';
@@ -408,6 +432,7 @@ export class KaartviewerComponent implements AfterViewInit {
               'EPSG:28992',
               { INFO_FORMAT: 'application/json' }
             );
+            console.log(url);
 
             if (url) {
               fetch(url).then(response => {
@@ -526,6 +551,8 @@ export class KaartviewerComponent implements AfterViewInit {
       this.map.removeInteraction(this.snap);
       this.draw = new OlDraw({ source: this.tekensource, type: value });
 
+      this.draw.on('drawstart', evt => {});
+
       this.draw.on('drawend', event => {
         event.feature.setStyle(
           new Style({
@@ -539,9 +566,11 @@ export class KaartviewerComponent implements AfterViewInit {
           })
         );
         this.drawArray.push(event.feature);
-        console.log(event.feature);
-        console.log(event.feature.getGeometry());
         console.log(event.feature.getProperties());
+        console.log(event.feature.getGeometry());
+        // console.log(event.feature);
+        // console.log(event.feature.getGeometry());
+        // console.log(event.feature.getProperties());
 
       });
       this.map.addInteraction(this.draw);

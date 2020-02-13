@@ -4,11 +4,10 @@
 .Geo
 {
  margin-top: 60px;
- background: antiquewhite;
+ background: white;
  padding: 0;
  margin-left: -20px;
  width: 216px;
- background-color: #8BC34A;
  display: list-item;
 }
 .mat-expansion-panel-body

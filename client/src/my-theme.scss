@@ -1,0 +1,66 @@
+@import '~@angular/material/theming';
+
+// A primary palette: colors most widely used across all screens and components.
+// An accent palette: colors used for the floating action button and interactive elements.
+// A warn palette: colors used to convey error state.
+// A foreground palette: colors for text and icons.
+// A background palette: colors used for element backgrounds.
+
+@include mat-core();
+
+// Default theme
+// $my-theme-primary: mat-palette($mat-indigo);
+// $my-theme-accent:  mat-palette($mat-pink, A200, A100, A400);
+// $my-theme-warn:    mat-palette($mat-red);
+// $my-theme: mat-light-theme($my-theme-primary, $my-theme-accent);
+
+// @include angular-material-theme($my-theme);
+
+// // Dark theme
+// $dark-primary: mat-palette($mat-grey);
+// $dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+// $dark-warn:    mat-palette($mat-yellow);
+// $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+// .unicorn-dark-theme{@include angular-material-theme($dark-theme); }
+
+// // Button theme
+// $my-theme-button-primary: mat-palette($mat-blue);
+// $my-theme-button-accent:  mat-palette($mat-blue, A200, A100, A400);
+// $my-theme-button-warn:    mat-palette($mat-purple);
+// $my-theme-button-theme:   mat-light-theme($my-theme-button-primary, $my-theme-button-accent, $my-theme-button-warn);
+// .button-theme{@include mat-button-theme($my-theme-button-theme); }
+
+// Background light
+@mixin light-theme($light-theme) {
+
+  $primary: map-get($light-theme, primary);
+  $accent: map-get($light-theme, accent);
+
+  .background-light-theme {
+    background-color: mat-color($primary);
+    border-color: mat-color($accent, A400);
+  }
+}
+@mixin light-theme-typography($config) {
+  .background-light-theme {
+    font: {
+      family: mat-font-family($config, body-1);
+      size: mat-font-size($config, body-1);
+      weight: mat-font-weight($config, body-1);
+    }
+  }
+}
+$primary: mat-palette($mat-grey);
+$accent:  mat-palette($mat-pink);
+$light-theme: mat-light-theme($primary, $accent);
+@include light-theme($light-theme);
+
+// Btn-theme-light
+$Btn-theme-light-primary: mat-palette($mat-blue);
+$Btn-theme-light-accent:  mat-palette($mat-yellow);
+$Btn-theme-light-warn:    mat-palette($mat-purple);
+$Btn-light-theme:   mat-light-theme($Btn-theme-light-primary, $Btn-theme-light-accent, $Btn-theme-light-warn);
+.button-light-theme{@include mat-button-theme($Btn-light-theme); }
+// Globaal =  @include mat-button-theme($Btn-theme-light-theme);
+
+// Btn-theme-dark
