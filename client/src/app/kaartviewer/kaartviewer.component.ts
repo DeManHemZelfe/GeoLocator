@@ -27,6 +27,7 @@ import { Polygon, LineString, MultiPoint, Point } from 'ol/geom';
 import { getArea, getLength } from 'ol/sphere';
 import GeometryType from 'ol/geom/GeometryType';
 import { AdresService } from '../kaarten/kaart-lagen/overig/adressen/adres.service';
+import {render3D} from 'ol-ext/layer/Render3D.js';
 
 // "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
 // https://github.com/mirismaili/angular-material-dynamic-themes#demo de github demo
@@ -43,8 +44,6 @@ export class KaartviewerComponent implements AfterViewInit {
   opened4 = true;
   opened5 = true;
   opened6 = true;
-
-  // render3D = new render
 
   // MAP
   private map: Map;
