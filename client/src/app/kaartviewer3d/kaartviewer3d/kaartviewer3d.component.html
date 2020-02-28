@@ -1,8 +1,23 @@
 <div id="map" class="map"></div>
 
+<div class="blok" style="text-align: center; border: black solid 1px;">
+ <div>
+  <p>3D Buildinigs</p>
+   <button (click)="BuildingAnime('building3D')" mat-raised-button color="primary" style="border: black solid 1px;" mat-button>3D Buildings</button>
+   <button (click)="BuildingAnime('building2D')" mat-raised-button color="accent" style="border: black solid 1px;" mat-button>2D Buildings</button>
+  <p>Animate the Buildings</p>
+   <button (click)="doAnime('roof-0.25')" mat-raised-button color="warn" style="border: black solid 1px;" mat-button>Animate roof-0.25</button>
+   <button (click)="doAnime('roof-0.50')" mat-raised-button color="warn" style="border: black solid 1px;" mat-button>Animate roof-0.50</button>
+   <button (click)="doAnime('roof-0.75')" mat-raised-button color="warn" style="border: black solid 1px;" mat-button>Animate roof-0.75</button>
+   <button (click)="doAnime('roof-0.90')" mat-raised-button color="warn" style="border: black solid 1px;" mat-button>Animate roof-0.90</button>
+   <p>Nauwkeurig</p>
+   <button (click)="doAnime('roof-0.99')" mat-raised-button color="accent" style="border: black solid 1px;" mat-button>Animate roof-0.99</button>
+  <br><br>
+ </div>
+</div>
+
+
 <!-- <iframe width="500" height="400" frameborder="0" scrolling="no" allowfullscreen src="https://arcg.is/1f4arj"></iframe> -->
-
-
 <!-- DIT IS DE 3D BAG DINGES -->
 <!-- WGS -->
 <!-- https://tiles.arcgis.com/tiles/nSZVuSZjHpEZZbRo/arcgis/rest/services/BAG_3D_WGS/SceneServer -->

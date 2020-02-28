@@ -27,7 +27,9 @@ import { Polygon, LineString, MultiPoint, Point } from 'ol/geom';
 import { getArea, getLength } from 'ol/sphere';
 import GeometryType from 'ol/geom/GeometryType';
 import { AdresService } from '../kaarten/kaart-lagen/overig/adressen/adres.service';
-import {render3D} from 'ol-ext/layer/Render3D.js';
+import {WFS} from 'ol/format';
+import {WriteTransactionOptions} from 'ol/format/WFS';
+// import {writeFilter, WriteTransactionOptions} from 'ol/format/WFS';
 
 // "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
 // https://github.com/mirismaili/angular-material-dynamic-themes#demo de github demo
@@ -47,6 +49,7 @@ export class KaartviewerComponent implements AfterViewInit {
 
   // MAP
   private map: Map;
+  // WriteOption = new WFS();
 
   // MAP INTERACTIONS FUNCTIONS
   Interactionselect = new Select();
@@ -158,7 +161,6 @@ export class KaartviewerComponent implements AfterViewInit {
   LegendaArray = [];
   ActiveLegenda = [];
   mysource: any;
-
 
   // Test omgeving
   // theCircle = new Feature(new Circle([5e6, 7e6, 5e5], 1e6));
@@ -412,6 +414,7 @@ export class KaartviewerComponent implements AfterViewInit {
       const viewResolution = this.mapconfig._view.getResolution();
       this.map.forEachLayerAtPixel(evt.pixel, layer => {
         const source = layer.getSource();
+        console.log(source);
         if (layer.getVisible() === false) { this.highlightsource.clear(); }
 
         if ((source as any).getLegendUrl) {
@@ -550,7 +553,9 @@ export class KaartviewerComponent implements AfterViewInit {
       this.map.removeInteraction(this.snap);
       this.draw = new OlDraw({ source: this.tekensource, type: value });
 
-      this.draw.on('drawstart', evt => {});
+      this.draw.on('drawstart', evt => {
+        console.log(evt.feature.getProperties());
+      });
 
       this.draw.on('drawend', event => {
         event.feature.setStyle(
